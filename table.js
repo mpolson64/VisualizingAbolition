@@ -116,7 +116,7 @@ d3.csv("boc.csv").then((data) => {
     table = new Tabulator("#table", {
         height: "200px",
 
-        data: tableData,
+        data: data,
         columns: cols,
     });
 });
