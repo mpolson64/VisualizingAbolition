@@ -60,6 +60,10 @@ tableData = [{
     }
 ]
 
+d3.csv("boc.csv").then((data) => {
+    console.log(data[0]);
+});
+
 table = new Tabulator("#table", {
     height: "200px",
 
