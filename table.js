@@ -1,18 +1,18 @@
 tableData = [{
-        "ID": 1,
-        "Master": "Plácido Sotero Pacheco",
-        "Master Residence": "Santa Carolina",
-        "Registree": "Naxoá",
-        "Status": "Slave",
-        "Sex": "Female",
-        "Origin": "Mambone",
-        "Age": "8",
-        "Occupation": "None",
-        "Registration Date": "1856-08-09",
-        "Registration District": "Bazaruto",
-        "Sources": "AHM, Fundo do Século XIX, Códices, 11-1166, ff. 0v-1."
+    "ID": 1,
+    "Master": "Plácido Sotero Pacheco",
+    "Master Residence": "Santa Carolina",
+    "Registree": "Naxoá",
+    "Status": "Slave",
+    "Sex": "Female",
+    "Origin": "Mambone",
+    "Age": "8",
+    "Occupation": "None",
+    "Registration Date": "1856-08-09",
+    "Registration District": "Bazaruto",
+    "Sources": "AHM, Fundo do Século XIX, Códices, 11-1166, ff. 0v-1."
 
-    },
+},
     {
         "ID": 2,
         "Master": "Plácido Sotero Pacheco",
@@ -60,12 +60,7 @@ tableData = [{
     }
 ]
 
-
-table = new Tabulator("#table", {
-    height: "200px",
-
-    data: tableData,
-    columns: [
+const cols = [
     {
         title: "ID",
         field: "ID",
@@ -114,9 +109,14 @@ table = new Tabulator("#table", {
         title: "Sources",
         field: "Sources",
     },
-    ],
-});
+]
 
+    
 d3.csv("boc.csv").then((data) => {
-    table.setData(data);
+    table = new Tabulator("#table", {
+        height: "200px",
+
+        data: tableData,
+        columns: cols,
+    });
 });
