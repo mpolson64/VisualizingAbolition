@@ -1,65 +1,3 @@
-tableData = [{
-    "ID": 1,
-    "Master": "Plácido Sotero Pacheco",
-    "Master Residence": "Santa Carolina",
-    "Registree": "Naxoá",
-    "Status": "Slave",
-    "Sex": "Female",
-    "Origin": "Mambone",
-    "Age": "8",
-    "Occupation": "None",
-    "Registration Date": "1856-08-09",
-    "Registration District": "Bazaruto",
-    "Sources": "AHM, Fundo do Século XIX, Códices, 11-1166, ff. 0v-1."
-
-},
-    {
-        "ID": 2,
-        "Master": "Plácido Sotero Pacheco",
-        "Master Residence": "Santa Carolina",
-        "Registree": "Mácia",
-        "Status": "Slave",
-        "Sex": "Female",
-        "Origin": "Mambone",
-        "Age": "6",
-        "Occupation": "None",
-        "Registration Date": "1856-08-09",
-        "Registration District": "Bazaruto",
-        "Sources": "AHM, Fundo do Século XIX, Códices, 11-1166, ff. 0v-1."
-
-    },
-    {
-        "ID": 3,
-        "Master": "Plácido Sotero Pacheco",
-        "Master Residence": "Santa Carolina",
-        "Registree": "Murrende",
-        "Status": "Slave",
-        "Sex": "Male",
-        "Origin": "Mambone",
-        "Age": "20",
-        "Occupation": "None",
-        "Registration Date": "1856-08-09",
-        "Registration District": "Bazaruto",
-        "Sources": "AHM, Fundo do Século XIX, Códices, 11-1166, ff. 0v-1."
-
-    },
-    {
-        "ID": 4,
-        "Master": "Plácido Sotero Pacheco",
-        "Master Residence": "Santa Carolina",
-        "Registree": "Cipriano",
-        "Status": "Slave",
-        "Sex": "Male",
-        "Origin": "Macuane",
-        "Age": "20",
-        "Occupation": "Bleeder",
-        "Registration Date": "1856-08-09",
-        "Registration District": "Bazaruto",
-        "Sources": "AHM, Fundo do Século XIX, Códices, 11-1166, ff. 0v-1."
-
-    }
-]
-
 const cols = [
     {
         title: "ID",
@@ -111,12 +49,26 @@ const cols = [
     },
 ]
 
-    
-d3.csv("boc.csv").then((data) => {
-    table = new Tabulator("#table", {
+const table = new Tabulator(
+    "#table",
+    {
         height: "200px",
-
-        data: data,
         columns: cols,
-    });
+    }
+);
+
+const logCheck = (obj) => {
+    console.log("Checked by: " + obj.id);
+}
+
+const foobar = () => {
+    const checkIds = [
+        "idCheck",
+        "registreeCheck",
+        "statusCheck"
+    ];
+}
+
+d3.csv("boc.csv").then((data) => {
+    table.setData(data);
 });
