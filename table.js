@@ -1,74 +1,43 @@
-const cols = [
-    {
-        title: "ID",
-        field: "ID",
-    },
-    {
-        title: "Registree",
-        field: "Registree",
-    },
-    {
-        title: "Status",
-        field: "Status",
-    },
-    {
-        title: "Sex",
-        field: "Sex",
-    },
-    {
-        title: "Origin",
-        field: "Origin",
-    },
-    {
-        title: "Age",
-        field: "Age",
-    },
-    {
-        title: "Occupation",
-        field: "Occupation",
-    },
-    {
-        title: "Master",
-        field: "Master",
-    },
-    {
-        title: "Master Residence",
-        field: "Master Residence",
-    },
-    {
-        title: "Registration Date",
-        field: "Registration Date",
-    },
-    {
-        title: "Registration District",
-        field: "Registration District",
-    },
-    {
-        title: "Sources",
-        field: "Sources",
-    },
-]
-
 const table = new Tabulator(
     "#table",
     {
         height: "200px",
-        columns: cols,
+        layout: "fitColumns"
     }
 );
 
-const logCheck = (obj) => {
-    console.log("Checked by: " + obj.id);
-}
-
-const foobar = () => {
+const updateCols = () => {
+    const newColumns = [];
     const checkIds = [
         "idCheck",
         "registreeCheck",
-        "statusCheck"
+        "statusCheck",
+        "sexCheck",
+        "originCheck",
+        "ageCheck",
+        "occupationCheck",
+        "masterCheck",
+        "masterResidenceCheck",
+        "registrationDateCheck",
+        "registrationDistrictCheck",
+        "sourcesCheck",
     ];
+
+    checkIds.forEach((checkId) => {
+        const checkbox = document.getElementById(checkId);
+
+        if (checkbox.checked) {
+            newColumns.push({
+                title: checkbox.value,
+                field: checkbox.value,
+            });
+        }
+    });
+
+    table.setColumns(newColumns);
 }
 
 d3.csv("boc.csv").then((data) => {
     table.setData(data);
+    updateCols();
 });

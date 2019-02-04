@@ -6,16 +6,24 @@
 </head>
 
 <body>
-    <script type="text/javascript" src="table.js"></script>
-    Checkbox: <input type="checkbox" id="myCheck" onclick="logCheck(this)" checked>
-
-    Other Checkbox: <input type="checkbox" id="myOtherCheck" onclick="logCheck(this)">
-
-
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.0.5/dist/js/tabulator.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/d3@5.8.0/dist/d3.min.js"></script>
 
+    ID: <input type="checkbox" id="idCheck" value="ID" onclick="updateCols()" checked><br>
+    Registree: <input type="checkbox" id="registreeCheck" value="Registree" onclick="updateCols()" checked><br>
+    Status: <input type="checkbox" id="statusCheck" value="Status" onclick="updateCols()" checked><br>
+    Sex: <input type="checkbox" id="sexCheck" value="Sex" onclick="updateCols()" checked><br>
+    Origin: <input type="checkbox" id="originCheck" value="Origin" onclick="updateCols()" checked><br>
+    Age: <input type="checkbox" id="ageCheck" value="Age" onclick="updateCols()" checked><br>
+    Occupation: <input type="checkbox" id="occupationCheck" value="Occupation" onclick="updateCols()" checked><br>
+    Master: <input type="checkbox" id="masterCheck" value="Master" onclick="updateCols()" checked><br>
+    Master Residence: <input type="checkbox" id="masterResidenceCheck" value="Master Residence" onclick="updateCols()" checked><br>
+    Registration Date: <input type="checkbox" id="registrationDateCheck" value="Registration Date" onclick="updateCols()" checked><br>
+    Registration District: <input type="checkbox" id="registrationDistrictCheck" value="Registration District" onclick="updateCols()" checked><br>
+    Sources: <input type="checkbox" id="sourcesCheck" value="Sources" onclick="updateCols()" checked><br>
     <div id="table"></div>
+
+    <script type="text/javascript" src="table.js"></script>
 </body>
 
 </html>
