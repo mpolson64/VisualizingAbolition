@@ -25,7 +25,7 @@ const updateCols = () => {
 
     checkIds.forEach((checkId) => {
         const checkbox = document.getElementById(checkId);
-
+        
         if (checkbox.checked) {
             newColumns.push({
                 title: checkbox.value,
