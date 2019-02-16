@@ -13,5 +13,5 @@ d3.csv("boc.csv").then((rawData) => {
     filteredData = rawData;
 
     table.setData(rawData);
-    updateCols();
+    updateCols(table);
 });
