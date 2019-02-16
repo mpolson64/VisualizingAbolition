@@ -18,12 +18,12 @@
             <tr>
                 <td>ID</td>
                 <td><input type="checkbox" id="idCheck" value="ID" onclick="updateCols(table)" checked></td>
-                <td><input type="number" id="idFilter" onchange='updateFilterSet(predicates, "id", (obj) => this.value === "" : true ? obj.ID == this.value, table)'></td>
+                <td><input type="number" id="idFilter" onchange='updateFilterSet(predicates, "id", (obj) => this.value === "" ? true : obj.ID == this.value, table)'></td>
             </tr>
             <tr>
                 <td>Registree</td>
                 <td><input type="checkbox" id="registreeCheck" value="Registree" onclick="updateCols(table)" checked></td>
-                <td><input list="registreeDatalist" id="registreeFilter" onchange='updateFilterSet(predicates, "registree", (obj) => this.value === "" : true ? obj.Registree === this.value)'><datalist id="registreeDatalist" data-key="Registree"></datalist></td>
+                <td><input list="registreeDatalist" id="registreeFilter" onchange='updateFilterSet(predicates, "registree", (obj) => this.value === "" ? true : obj.Registree === this.value, table)'><datalist id="registreeDatalist" data-key="Registree"></datalist></td>
             </tr>
             <tr>
                 <td>Status</td>
