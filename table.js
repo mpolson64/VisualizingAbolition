@@ -8,39 +8,10 @@ const table = new Tabulator(
     }
 );
 
-const updateCols = () => {
-    const newColumns = [];
-    const checkIds = [
-        "idCheck",
-        "registreeCheck",
-        "statusCheck",
-        "sexCheck",
-        "originCheck",
-        "ageCheck",
-        "occupationCheck",
-        "masterCheck",
-        "masterResidenceCheck",
-        "registrationDateCheck",
-        "registrationDistrictCheck",
-        "sourcesCheck",
-    ];
+d3.csv("boc.csv").then((rawData) => {
+    data = rawData;
+    filteredData = rawData;
 
-    checkIds.forEach((checkId) => {
-        const checkbox = document.getElementById(checkId);
-
-        if (checkbox.checked) {
-            newColumns.push({
-                title: checkbox.value,
-                field: checkbox.value,
-                bottomCalc: checkbox.value == "ID" ? "count" : null,
-            });
-        }
-    });
-
-    table.setColumns(newColumns);
-}
-
-d3.csv("boc.csv").then((data) => {
-    table.setData(data);
+    table.setData(rawData);
     updateCols();
 });

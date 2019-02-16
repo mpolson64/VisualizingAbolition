@@ -18,7 +18,7 @@
             <tr>
                 <td>ID</td>
                 <td><input type="checkbox" id="idCheck" value="ID" onclick="updateCols(table)" checked></td>
-                <td><input type="number" id="idFilter" onchange='updateFilterSet(predicates, "id", (obj) => obj.ID == this.value, table)'></td>
+                <td><input type="text" id="idFilter"></td>
             </tr>
             <tr>
                 <td>Registree</td>
