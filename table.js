@@ -2,7 +2,9 @@ const table = new Tabulator(
     "#table",
     {
         height: "200px",
-        layout: "fitColumns"
+        layout: "fitColumns",
+        pagination: "local",
+        paginationSize: 20,
     }
 );
 
@@ -25,11 +27,12 @@ const updateCols = () => {
 
     checkIds.forEach((checkId) => {
         const checkbox = document.getElementById(checkId);
-        
+
         if (checkbox.checked) {
             newColumns.push({
                 title: checkbox.value,
                 field: checkbox.value,
+                bottomCalc: checkbox.value == "ID" ? "count" : null,
             });
         }
     });
