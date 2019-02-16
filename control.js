@@ -74,6 +74,7 @@ const fillDatalists = (data) => {
             const option = document.createElement("option");
             option.value = row[list.attributes["data-key"].value];
             list.appendChild(option);
+            console.log("Appending " + row[list.apptributes["data-key"].value]);
         });
     });
 }
