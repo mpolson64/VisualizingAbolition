@@ -58,3 +58,24 @@ const updateFilterSet = (predicates, key, predicate, table) => {
     predicates[key] = predicate;
     filterDataAndSetTableData(predicates, table);
 }
+
+const fillDatalists = (data) => {
+    const datalistIds = [
+        "registreeDatalist",
+    ];
+
+    datalistIds.forEach((datalistId) => {
+        const list = document.getElementById(datalistId);
+
+        console.log(datalistId);
+        console.log(list.attributes["data-key"].value);
+
+        data.forEach((row) => {
+            const option = document.createElement("option");
+            option.value = row[list.attributes["data-key"].value];
+            list.appendChild(option);
+        });
+    });
+}
+
+fillDatalists(filteredData);
