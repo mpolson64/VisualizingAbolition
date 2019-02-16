@@ -79,4 +79,3 @@ const fillDatalists = (data) => {
     });
 }
 
-fillDatalists(filteredData);
