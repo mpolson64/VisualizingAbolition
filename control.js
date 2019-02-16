@@ -69,12 +69,13 @@ const fillDatalists = (data) => {
 
         console.log(datalistId);
         console.log(list.attributes["data-key"].value);
-
-        data.forEach((row) => {
+        
+        [...new Set(data.map((row) => row[list.attributes["data-key"].value]))].forEach((val) => {
             const option = document.createElement("option");
-            option.value = row[list.attributes["data-key"].value];
+            option.value = val;
             list.appendChild(option);
-            console.log("Appending " + row[list.attributes["data-key"].value]); });
+        });
+
     });
 }
 
