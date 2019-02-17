@@ -73,7 +73,6 @@ const fillDatalists = (data) => {
 
     datalistIds.forEach((datalistId) => {
         const list = document.getElementById(datalistId);
-        console.log(datalistId);
 
         [...new Set(data.map((row) => row[list.attributes["data-key"].value]))].forEach((val) => {
             const option = document.createElement("option");
