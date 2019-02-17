@@ -38,7 +38,7 @@
             <tr>
                 <td>Origin</td>
                 <td><input type="checkbox" id="originCheck" value="Origin" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="originFilter"></td>
+                <td><input list="originDatalist" id="originFilter" onchange='updateFilterSet(predicates, "registree", (obj) => this.value === "" ? true : obj.Origin === this.value, table)'><datalist id="registreeDatalist" data-key="Origin"></datalist></td>
             </tr>
             <tr>
                 <td>Age</td>
@@ -48,32 +48,32 @@
             <tr>
                 <td>Occupation</td>
                 <td><input type="checkbox" id="occupationCheck" value="Occupation" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="occupationFilter"></td>
+                <td><input list="occupationDatalist" id="occupationFilter" onchange='updateFilterSet(predicates, "occupation", (obj) => this.value === "" ? true : obj.Occupation === this.value, table)'><datalist id="occupationDatalist" data-key="Occupation"></datalist></td>
             </tr>
             <tr>
                 <td>Master</td>
                 <td><input type="checkbox" id="masterCheck" value="Master" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="masterFilter"></td>
+                <td><input list="masterDatalist" id="masterFilter" onchange='updateFilterSet(predicates, "master", (obj) => this.value === "" ? true : obj.Master === this.value, table)'><datalist id="masterDatalist" data-key="Master"></datalist></td>
             </tr>
             <tr>
                 <td>Master Residence</td>
                 <td><input type="checkbox" id="masterResidenceCheck" value="Master Residence" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="masterResidenceFilter"></td>
+                <td><input list="masterResidenceDatalist" id="masterResidenceFilter" onchange='updateFilterSet(predicates, "masterResidence", (obj) => this.value === "" ? true : obj["Master Residence"] === this.value, table)'><datalist id="masterResidenceDatalist" data-key="Master Residence"></datalist></td>
             </tr>
             <tr>
                 <td>Registration Date</td>
                 <td><input type="checkbox" id="registrationDateCheck" value="Registration Date" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="registrationDateFilter"></td>
+                <td><input list="registrationDateDatalist" id="registrationDateFilter" onchange='updateFilterSet(predicates, "registrationDate", (obj) => this.value === "" ? true : obj["Registration Date"] === this.value, table)'><datalist id="registrationDateDatalist" data-key="Registration Date"></datalist></td>
             </tr>
             <tr>
                 <td>Registration District</td>
                 <td><input type="checkbox" id="registrationDistrictCheck" value="Registration District" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="registationDistrictFilter"></td>
+                <td><input list="registrationDistrictDatalist" id="registrationDistrictFilter" onchange='updateFilterSet(predicates, "registrationDistrict", (obj) => this.value === "" ? true : obj["Registration District"] === this.value, table)'><datalist id="registrationDistrictDatalist" data-key="Registration District"></datalist></td>
             </tr>
             <tr>
                 <td>Sources</td>
                 <td><input type="checkbox" id="sourcesCheck" value="Sources" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="sourcesFilter"></td>
+                <td><input list="sourcesDatalist" id="sourcesFilter" onchange='updateFilterSet(predicates, "sources", (obj) => this.value === "" ? true : obj.Sources === this.value, table)'><datalist id="sourcesDatalist" data-key="Sources"></datalist></td>
             </tr>
         </table>
     </form>

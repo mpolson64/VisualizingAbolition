@@ -62,11 +62,18 @@ const updateFilterSet = (predicates, key, predicate, table) => {
 const fillDatalists = (data) => {
     const datalistIds = [
         "registreeDatalist",
+        "originDatalist",
+        "occupationDatalist",
+        "masterDatalist",
+        "masterResidenceDatalist",
+        "registrationDateDatalist",
+        "registrationDistrictDatalist",
+        "sourcesDatalist",
     ];
 
     datalistIds.forEach((datalistId) => {
         const list = document.getElementById(datalistId);
-        
+
         [...new Set(data.map((row) => row[list.attributes["data-key"].value]))].forEach((val) => {
             const option = document.createElement("option");
             option.value = val;
