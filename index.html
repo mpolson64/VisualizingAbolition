@@ -31,13 +31,18 @@
                 <td>
                     <input type="radio" id="freedRadio" name="status" onclick='updateFilterSet(predicates, "status", (obj) => obj.Status === "Freed", table)'> Freed
                     <input type="radio" id="slaveRadio" name="status" onclick='updateFilterSet(predicates, "status", (obj) => obj.Status === "Slave", table)'> Slave
-                    <input type="radio" id="eitherStatusRadio" name="status" onclick='updateFilterSet(predicates, "status", (obj) => true, table)'> Either
+                    <input type="radio" id="anyStatusRadio" name="status" onclick='updateFilterSet(predicates, "status", (obj) => true, table)'> Any
                 </td>
             </tr>
             <tr>
                 <td>Sex</td>
                 <td><input type="checkbox" id="sexCheck" value="Sex" onclick="updateCols(table)" checked></td>
-                <td><input type="text" id="sexFilter"></td>
+                <td>
+                    <input type="radio" id="maleRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => obj.Sex === "Male", table)'> Male
+                    <input type="radio" id="femaleRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => obj.Sex === "Female", table)'> Female
+                    <input type="radio" id="unspecifiedRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => obj.Sex === "Unspecified", table)'> Unspecified
+                    <input type="radio" id="anySexRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => true, table)'> Any
+                </td>
             </tr>
             <tr>
                 <td>Origin</td>
