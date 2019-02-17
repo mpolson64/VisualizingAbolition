@@ -57,6 +57,7 @@ const filterDataAndSetTableData = (predicates, table) => {
 const updateFilterSet = (predicates, key, predicate, table) => {
     predicates[key] = predicate;
     filterDataAndSetTableData(predicates, table);
+    fillDatalists(filteredData);
 }
 
 const fillDatalists = (data) => {
@@ -73,6 +74,7 @@ const fillDatalists = (data) => {
 
     datalistIds.forEach((datalistId) => {
         const list = document.getElementById(datalistId);
+        list.innerHTML = '';
 
         [...new Set(data.map((row) => row[list.attributes["data-key"].value]))].forEach((val) => {
             const option = document.createElement("option");
