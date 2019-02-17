@@ -38,7 +38,7 @@
             <tr>
                 <td>Origin</td>
                 <td><input type="checkbox" id="originCheck" value="Origin" onclick="updateCols(table)" checked></td>
-                <td><input list="originDatalist" id="originFilter" onchange='updateFilterSet(predicates, "registree", (obj) => this.value === "" ? true : obj.Origin === this.value, table)'><datalist id="registreeDatalist" data-key="Origin"></datalist></td>
+                <td><input list="originDatalist" id="originFilter" onchange='updateFilterSet(predicates, "origin", (obj) => this.value === "" ? true : obj.Origin === this.value, table)'><datalist id="originDatalist" data-key="Origin"></datalist></td>
             </tr>
             <tr>
                 <td>Age</td>
