@@ -1,3 +1,14 @@
+noUiSlider.create(document.getElementById("ageSlider"),{
+    start: [20, 80],
+    connect: true,
+    range: {
+        min: 0,
+        max: 100,
+    },
+    tooltips: true,
+    step: 1,
+});
+
 const showChanged = (table) => {
     const newColumns = [];
     const checkIds = [

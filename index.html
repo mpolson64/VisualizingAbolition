@@ -3,11 +3,14 @@
 
 <head>
     <link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nouislider@13.1.1/distribute/nouislider.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.0.5/dist/js/tabulator.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/d3@5.8.0/dist/d3.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.0.5/dist/js/tabulator.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/nouislider@13.1.1/distribute/nouislider.min.js"></script>
+
     <form>
         <table>
             <tr>
@@ -52,7 +55,7 @@
             <tr>
                 <td>Age</td>
                 <td><input type="checkbox" id="ageCheck" value="Age" onclick="showChanged(table)" checked></td>
-                <td><input type="text" id="ageFilter"></td>
+                <td><div class="noUiSlider" id="ageSlider" onclick='filtersChanged(predicates, "age", (obj) => obj.Age >= this.noUiSlider.get()[0] && obj.Age <= this.noUiSlider.get()[1], table)'></div></td>
             </tr>
             <tr>
                 <td>Occupation</td>
