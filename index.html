@@ -17,72 +17,72 @@
             </tr>
             <tr>
                 <td>ID</td>
-                <td><input type="checkbox" id="idCheck" value="ID" onclick="updateCols(table)" checked></td>
-                <td><input type="number" id="idFilter" onchange='updateFilterSet(predicates, "id", (obj) => this.value === "" ? true : obj.ID == this.value, table)'></td>
+                <td><input type="checkbox" id="idCheck" value="ID" onclick="showChanged(table)" checked></td>
+                <td><input type="number" id="idFilter" onchange='filtersChanged(predicates, "id", (obj) => this.value === "" ? true : obj.ID == this.value, table)'></td>
             </tr>
             <tr>
                 <td>Registree</td>
-                <td><input type="checkbox" id="registreeCheck" value="Registree" onclick="updateCols(table)" checked></td>
-                <td><input list="registreeDatalist" id="registreeFilter" onchange='updateFilterSet(predicates, "registree", (obj) => this.value === "" ? true : obj.Registree === this.value, table)'><datalist id="registreeDatalist" data-key="Registree"></datalist></td>
+                <td><input type="checkbox" id="registreeCheck" value="Registree" onclick="showChanged(table)" checked></td>
+                <td><input list="registreeDatalist" id="registreeFilter" onchange='filtersChanged(predicates, "registree", (obj) => this.value === "" ? true : obj.Registree === this.value, table)'><datalist id="registreeDatalist" data-key="Registree"></datalist></td>
             </tr>
             <tr>
                 <td>Status</td>
-                <td><input type="checkbox" id="statusCheck" value="Status" onclick="updateCols(table)" checked></td>
+                <td><input type="checkbox" id="statusCheck" value="Status" onclick="showChanged(table)" checked></td>
                 <td>
-                    <input type="radio" id="freedRadio" name="status" onclick='updateFilterSet(predicates, "status", (obj) => obj.Status === "Freed", table)'> Freed
-                    <input type="radio" id="slaveRadio" name="status" onclick='updateFilterSet(predicates, "status", (obj) => obj.Status === "Slave", table)'> Slave
-                    <input type="radio" id="anyStatusRadio" name="status" onclick='updateFilterSet(predicates, "status", (obj) => true, table)'> Any
+                    <input type="radio" id="freedRadio" name="status" onclick='filtersChanged(predicates, "status", (obj) => obj.Status === "Freed", table)'> Freed
+                    <input type="radio" id="slaveRadio" name="status" onclick='filtersChanged(predicates, "status", (obj) => obj.Status === "Slave", table)'> Slave
+                    <input type="radio" id="anyStatusRadio" name="status" onclick='filtersChanged(predicates, "status", (obj) => true, table)'> Any
                 </td>
             </tr>
             <tr>
                 <td>Sex</td>
-                <td><input type="checkbox" id="sexCheck" value="Sex" onclick="updateCols(table)" checked></td>
+                <td><input type="checkbox" id="sexCheck" value="Sex" onclick="showChanged(table)" checked></td>
                 <td>
-                    <input type="radio" id="maleRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => obj.Sex === "Male", table)'> Male
-                    <input type="radio" id="femaleRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => obj.Sex === "Female", table)'> Female
-                    <input type="radio" id="unspecifiedRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => obj.Sex === "Unspecified", table)'> Unspecified
-                    <input type="radio" id="anySexRadio" name="sex" onclick='updateFilterSet(predicates, "sex", (obj) => true, table)'> Any
+                    <input type="radio" id="maleRadio" name="sex" onclick='filtersChanged(predicates, "sex", (obj) => obj.Sex === "Male", table)'> Male
+                    <input type="radio" id="femaleRadio" name="sex" onclick='filtersChanged(predicates, "sex", (obj) => obj.Sex === "Female", table)'> Female
+                    <input type="radio" id="unspecifiedRadio" name="sex" onclick='filtersChanged(predicates, "sex", (obj) => obj.Sex === "Unspecified", table)'> Unspecified
+                    <input type="radio" id="anySexRadio" name="sex" onclick='filtersChanged(predicates, "sex", (obj) => true, table)'> Any
                 </td>
             </tr>
             <tr>
                 <td>Origin</td>
-                <td><input type="checkbox" id="originCheck" value="Origin" onclick="updateCols(table)" checked></td>
-                <td><input list="originDatalist" id="originFilter" onchange='updateFilterSet(predicates, "origin", (obj) => this.value === "" ? true : obj.Origin === this.value, table)'><datalist id="originDatalist" data-key="Origin"></datalist></td>
+                <td><input type="checkbox" id="originCheck" value="Origin" onclick="showChanged(table)" checked></td>
+                <td><input list="originDatalist" id="originFilter" onchange='filtersChanged(predicates, "origin", (obj) => this.value === "" ? true : obj.Origin === this.value, table)'><datalist id="originDatalist" data-key="Origin"></datalist></td>
             </tr>
             <tr>
                 <td>Age</td>
-                <td><input type="checkbox" id="ageCheck" value="Age" onclick="updateCols(table)" checked></td>
+                <td><input type="checkbox" id="ageCheck" value="Age" onclick="showChanged(table)" checked></td>
                 <td><input type="text" id="ageFilter"></td>
             </tr>
             <tr>
                 <td>Occupation</td>
-                <td><input type="checkbox" id="occupationCheck" value="Occupation" onclick="updateCols(table)" checked></td>
-                <td><input list="occupationDatalist" id="occupationFilter" onchange='updateFilterSet(predicates, "occupation", (obj) => this.value === "" ? true : obj.Occupation === this.value, table)'><datalist id="occupationDatalist" data-key="Occupation"></datalist></td>
+                <td><input type="checkbox" id="occupationCheck" value="Occupation" onclick="showChanged(table)" checked></td>
+                <td><input list="occupationDatalist" id="occupationFilter" onchange='filtersChanged(predicates, "occupation", (obj) => this.value === "" ? true : obj.Occupation === this.value, table)'><datalist id="occupationDatalist" data-key="Occupation"></datalist></td>
             </tr>
             <tr>
                 <td>Master</td>
-                <td><input type="checkbox" id="masterCheck" value="Master" onclick="updateCols(table)" checked></td>
-                <td><input list="masterDatalist" id="masterFilter" onchange='updateFilterSet(predicates, "master", (obj) => this.value === "" ? true : obj.Master === this.value, table)'><datalist id="masterDatalist" data-key="Master"></datalist></td>
+                <td><input type="checkbox" id="masterCheck" value="Master" onclick="showChanged(table)" checked></td>
+                <td><input list="masterDatalist" id="masterFilter" onchange='filtersChanged(predicates, "master", (obj) => this.value === "" ? true : obj.Master === this.value, table)'><datalist id="masterDatalist" data-key="Master"></datalist></td>
             </tr>
             <tr>
                 <td>Master Residence</td>
-                <td><input type="checkbox" id="masterResidenceCheck" value="Master Residence" onclick="updateCols(table)" checked></td>
-                <td><input list="masterResidenceDatalist" id="masterResidenceFilter" onchange='updateFilterSet(predicates, "masterResidence", (obj) => this.value === "" ? true : obj["Master Residence"] === this.value, table)'><datalist id="masterResidenceDatalist" data-key="Master Residence"></datalist></td>
+                <td><input type="checkbox" id="masterResidenceCheck" value="Master Residence" onclick="showChanged(table)" checked></td>
+                <td><input list="masterResidenceDatalist" id="masterResidenceFilter" onchange='filtersChanged(predicates, "masterResidence", (obj) => this.value === "" ? true : obj["Master Residence"] === this.value, table)'><datalist id="masterResidenceDatalist" data-key="Master Residence"></datalist></td>
             </tr>
             <tr>
                 <td>Registration Date</td>
-                <td><input type="checkbox" id="registrationDateCheck" value="Registration Date" onclick="updateCols(table)" checked></td>
-                <td><input list="registrationDateDatalist" id="registrationDateFilter" onchange='updateFilterSet(predicates, "registrationDate", (obj) => this.value === "" ? true : obj["Registration Date"] === this.value, table)'><datalist id="registrationDateDatalist" data-key="Registration Date"></datalist></td>
+                <td><input type="checkbox" id="registrationDateCheck" value="Registration Date" onclick="showChanged(table)" checked></td>
+                <td><input list="registrationDateDatalist" id="registrationDateFilter" onchange='filtersChanged(predicates, "registrationDate", (obj) => this.value === "" ? true : obj["Registration Date"] === this.value, table)'><datalist id="registrationDateDatalist" data-key="Registration Date"></datalist></td>
             </tr>
             <tr>
                 <td>Registration District</td>
-                <td><input type="checkbox" id="registrationDistrictCheck" value="Registration District" onclick="updateCols(table)" checked></td>
-                <td><input list="registrationDistrictDatalist" id="registrationDistrictFilter" onchange='updateFilterSet(predicates, "registrationDistrict", (obj) => this.value === "" ? true : obj["Registration District"] === this.value, table)'><datalist id="registrationDistrictDatalist" data-key="Registration District"></datalist></td>
+                <td><input type="checkbox" id="registrationDistrictCheck" value="Registration District" onclick="showChanged(table)" checked></td>
+                <td><input list="registrationDistrictDatalist" id="registrationDistrictFilter" onchange='filtersChanged(predicates, "registrationDistrict", (obj) => this.value === "" ? true : obj["Registration District"] === this.value, table)'><datalist id="registrationDistrictDatalist" data-key="Registration District"></datalist></td>
             </tr>
             <tr>
                 <td>Sources</td>
-                <td><input type="checkbox" id="sourcesCheck" value="Sources" onclick="updateCols(table)" checked></td>
-                <td><input list="sourcesDatalist" id="sourcesFilter" onchange='updateFilterSet(predicates, "sources", (obj) => this.value === "" ? true : obj.Sources === this.value, table)'><datalist id="sourcesDatalist" data-key="Sources"></datalist></td>
+                <td><input type="checkbox" id="sourcesCheck" value="Sources" onclick="showChanged(table)" checked></td>
+                <td><input list="sourcesDatalist" id="sourcesFilter" onchange='filtersChanged(predicates, "sources", (obj) => this.value === "" ? true : obj.Sources === this.value, table)'><datalist id="sourcesDatalist" data-key="Sources"></datalist></td>
             </tr>
         </table>
     </form>

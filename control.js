@@ -1,4 +1,4 @@
-const updateCols = (table) => {
+const showChanged = (table) => {
     const newColumns = [];
     const checkIds = [
         "idCheck",
@@ -54,7 +54,7 @@ const filterDataAndSetTableData = (predicates, table) => {
     table.setData(filteredData);
 }
 
-const updateFilterSet = (predicates, key, predicate, table) => {
+const filtersChanged = (predicates, key, predicate, table) => {
     predicates[key] = predicate;
     filterDataAndSetTableData(predicates, table);
     fillDatalists(filteredData);
