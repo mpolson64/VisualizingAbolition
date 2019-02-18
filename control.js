@@ -1,5 +1,5 @@
 noUiSlider.create(document.getElementById("ageSlider"),{
-    start: [20, 80],
+    start: [0, 100],
     connect: true,
     range: {
         min: 0,
