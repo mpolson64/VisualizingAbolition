@@ -24,7 +24,7 @@ const drawHistogram = (data) => {
     const g = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    const x = d3.scaleTime().rangeRound([0, width]);
+    const x = d3.scaleLinear().rangeRound([0, width]);
     const y = d3.scaleLinear().rangeRound([height, 0]);
 
     x.domain(d3.extent(hist, (d) => d.key));
