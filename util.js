@@ -16,7 +16,7 @@ const histogram = (data, key, transform) => {
     Object.keys(temp).forEach((key) => {
         res.push({
             key: key,
-            count: temp.key,
+            count: temp[key],
         });
     })
 
