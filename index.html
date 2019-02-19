@@ -55,12 +55,12 @@
             <tr>
                 <td>Age</td>
                 <td><input type="checkbox" id="ageCheck" value="Age" onclick="showChanged(table)" checked></td>
-                <td><div class="noUiSlider" id="ageSlider" onclick='filtersChanged(predicates, "age",
-                        (obj) => {
-                            range = this.noUiSlider.get();
-                            return obj.Age >= range[0] && obj.Age <= range[1];
-                        },
-                        table)'></div></td>
+                <td><div class="noUiSlider" id="ageSlider" onclick=
+                        '
+                        const res = this.noUiSlider.get();
+                        filtersChanged(predicates, "age", (obj) => this.Age >= res[0] && this.Age <= res[1], table);
+                        '
+                        ></div></td>
             </tr>
             <tr>
                 <td>Occupation</td>
