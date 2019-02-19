@@ -57,8 +57,8 @@
                 <td><input type="checkbox" id="ageCheck" value="Age" onclick="showChanged(table)" checked></td>
                 <td><div class="noUiSlider" id="ageSlider" onclick=
                         '
-                        const res = this.noUiSlider.get();
-                        filtersChanged(predicates, "age", (obj) => obj.Age >= res[0] && obj.Age <= res[1], table);
+                        const res = this.noUiSlider.get().map((x) => parseFloat(x));
+                        filtersChanged(predicates, "age", (obj) => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1], table);
                         '
                         ></div></td>
             </tr>
