@@ -1,14 +1,24 @@
-const histogram = (data, key) => {
-    res = {};
+const histogram = (data, key, transform) => {
+    res = [];
+    temp = {};
 
     data.forEach((obj) => {
-        if (obj[key] in res) {
-            res[obj[key]] += 1;
+        const transformed = transform(obj[key]);
+
+        if (transformed in temp) {
+            temp[transformed] += 1;
         }
         else {
-            res[obj[key]] = 1;
+            temp[transformed] = 1;
         }
     });
+
+    Object.keys(temp).forEach((key) => {
+        res.push({
+            key: key,
+            count: temp.key,
+        });
+    })
 
     return res;
 }
