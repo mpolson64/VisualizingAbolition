@@ -58,6 +58,7 @@
                 <td><div class="noUiSlider" id="ageSlider" onclick=
                         '
                         const res = this.noUiSlider.get();
+                        console.log(res);
                         filtersChanged(predicates, "age", (obj) => this.Age >= res[0] && this.Age <= res[1], table);
                         '
                         ></div></td>
