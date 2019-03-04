@@ -80,7 +80,18 @@
             <tr>
                 <td>Registration Date</td>
                 <td><input type="checkbox" id="registrationDateCheck" value="Registration Date" onclick="showChanged(table)" checked></td>
-                <td><input list="registrationDateDatalist" id="registrationDateFilter" onchange='filtersChanged(predicates, "registrationDate", (obj) => this.value === "" ? true : obj["Registration Date"] === this.value, table)'><datalist id="registrationDateDatalist" data-key="Registration Date"></datalist></td>
+                <td><div class="noUiSlider" id="dateSlider" onclick=
+                        '
+                        const res = this.noUiSlider.get().map((x) => parseFloat(x));
+                        filtersChanged(predicates, "age", (obj) => {
+                            const year = obj["Registration Date"].substr(0, 4);
+                            return year >= res[0] && year <= res[1];
+                        }
+                        , table);
+                        '
+                        ></div></td>
+ 
+
             </tr>
             <tr>
                 <td>Registration District</td>

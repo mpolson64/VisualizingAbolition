@@ -9,6 +9,18 @@ noUiSlider.create(document.getElementById("ageSlider"),{
     step: 1,
 });
 
+noUiSlider.create(document.getElementById("dateSlider"),{
+    start: [1856, 1875],
+    connect: true,
+    range: {
+        min: 1856,
+        max: 1875,
+    },
+    tooltips: true,
+    step: 1,
+});
+
+
 const showChanged = (table) => {
     const newColumns = [];
     const checkIds = [
