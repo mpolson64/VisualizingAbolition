@@ -90,7 +90,6 @@ const fillDatalists = (data) => {
         "occupationDatalist",
         "masterDatalist",
         "masterResidenceDatalist",
-        "registrationDateDatalist",
         "registrationDistrictDatalist",
         "sourcesDatalist",
     ];
