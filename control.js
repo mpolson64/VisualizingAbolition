@@ -6,7 +6,7 @@ noUiSlider.create(document.getElementById("ageSlider"), {
         max: 100,
     },
     tooltips: true,
-    ariaFormat: wNumb({
+    format: wNumb({
         decimals: 0,
     }),
     step: 1,
@@ -20,7 +20,7 @@ noUiSlider.create(document.getElementById("dateSlider"), {
         max: 1875,
     },
     tooltips: true,
-    ariaFormat: wNumb({
+    format: wNumb({
         decimals: 0,
     }),
     step: 1,
