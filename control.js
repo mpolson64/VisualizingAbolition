@@ -1,4 +1,4 @@
-noUiSlider.create(document.getElementById("ageSlider"),{
+noUiSlider.create(document.getElementById("ageSlider"), {
     start: [0, 100],
     connect: true,
     range: {
@@ -6,10 +6,13 @@ noUiSlider.create(document.getElementById("ageSlider"),{
         max: 100,
     },
     tooltips: true,
+    ariaFormat: wNumb({
+        decimals: 0,
+    }),
     step: 1,
 });
 
-noUiSlider.create(document.getElementById("dateSlider"),{
+noUiSlider.create(document.getElementById("dateSlider"), {
     start: [1856, 1875],
     connect: true,
     range: {
@@ -17,6 +20,9 @@ noUiSlider.create(document.getElementById("dateSlider"),{
         max: 1875,
     },
     tooltips: true,
+    ariaFormat: wNumb({
+        decimals: 0,
+    }),
     step: 1,
 });
 
