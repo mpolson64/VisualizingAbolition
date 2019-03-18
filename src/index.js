@@ -1,7 +1,7 @@
-const d3 = require('d3');
-const Tabulator = require('tabulator-tables');
-const noUiSlider = require('nouislider');
-const wNumb = require('wnumb');
+import * as d3 from 'd3';
+import Tabulator from 'tabulator-tables';
+import noUiSlider from 'nouislider';
+import wNumb from 'wnumb';
 
 // import drawHistogram from './histogramLineChart';
 
@@ -91,7 +91,9 @@ noUiSlider.create(dateSlider, {
   step: 1,
 });
 
-// HELPER FUNCTIONS
+/*
+ * HELPER FUNCTIONS
+ */
 // Fill datalists for dropdowns on control panel
 const fillDatalists = () => {
   datalistIds.forEach((datalistId) => {
