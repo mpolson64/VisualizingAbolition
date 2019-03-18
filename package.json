@@ -1,0 +1,34 @@
+{
+  "name": "oceansandcontinentstestbed",
+  "version": "1.0.0",
+  "description": "Testing playground for Oceans and Continents database page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpolson64/OceansAndContinentsTESTBED.git"
+  },
+  "author": "mpolson64",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mpolson64/OceansAndContinentsTESTBED/issues"
+  },
+  "homepage": "https://github.com/mpolson64/OceansAndContinentsTESTBED#readme",
+  "devDependencies": {
+    "csv-loader": "^3.0.2",
+    "eslint": "^5.15.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "d3": "^5.9.2",
+    "nouislider": "^13.1.3",
+    "tabulator-tables": "^4.2.3",
+    "wnumb": "^1.1.0"
+  }
+}

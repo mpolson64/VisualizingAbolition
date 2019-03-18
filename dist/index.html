@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/nouislider@13.1.1/distribute/nouislider.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <form>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Show?</th>
+                <th>Filter</th>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td><input type="checkbox" id="idCheck" value="ID" checked></td>
+                <td><input type="number" id="idFilter"></td>
+            </tr>
+            <tr>
+                <td>Registree</td>
+                <td><input type="checkbox" id="registreeCheck" value="Registree" checked></td>
+                <td><input list="registreeDatalist" id="registreeFilter"><datalist id="registreeDatalist" data-key="Registree"></datalist></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td><input type="checkbox" id="statusCheck" value="Status" checked></td>
+                <td>
+                    <input type="radio" id="freedRadio" name="status"> Freed
+                    <input type="radio" id="slaveRadio" name="status"> Slave
+                    <input type="radio" id="anyStatusRadio" name="status"> Any
+                </td>
+            </tr>
+            <tr>
+                <td>Sex</td>
+                <td><input type="checkbox" id="sexCheck" value="Sex" checked></td>
+                <td>
+                    <input type="radio" id="maleRadio" name="sex"> Male
+                    <input type="radio" id="femaleRadio" name="sex"> Female
+                    <input type="radio" id="unspecifiedRadio" name="sex"> Unspecified
+                    <input type="radio" id="anySexRadio" name="sex"> Any
+                </td>
+            </tr>
+            <tr>
+                <td>Origin</td>
+                <td><input type="checkbox" id="originCheck" value="Origin" checked></td>
+                <td><input list="originDatalist" id="originFilter"><datalist id="originDatalist" data-key="Origin"></datalist></td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td><input type="checkbox" id="ageCheck" value="Age" checked></td>
+                <td><div class="noUiSlider" id="ageSlider"></div></td>
+            </tr>
+            <tr>
+                <td>Occupation</td>
+                <td><input type="checkbox" id="occupationCheck" value="Occupation" checked></td>
+                <td><input list="occupationDatalist" id="occupationFilter"><datalist id="occupationDatalist" data-key="Occupation"></datalist></td>
+            </tr>
+            <tr>
+                <td>Master</td>
+                <td><input type="checkbox" id="masterCheck" value="Master" checked></td>
+                <td><input list="masterDatalist" id="masterFilter"><datalist id="masterDatalist" data-key="Master"></datalist></td>
+            </tr>
+            <tr>
+                <td>Master Residence</td>
+                <td><input type="checkbox" id="masterResidenceCheck" value="Master Residence" checked></td>
+                <td><input list="masterResidenceDatalist" id="masterResidenceFilter"><datalist id="masterResidenceDatalist" data-key="Master Residence"></datalist></td>
+            </tr>
+            <tr>
+                <td>Registration Date</td>
+                <td><input type="checkbox" id="registrationDateCheck" value="Registration Date" checked></td>
+                <td><div class="noUiSlider" id="dateSlider"></div></td>
+ 
+
+            </tr>
+            <tr>
+                <td>Registration District</td>
+                <td><input type="checkbox" id="registrationDistrictCheck" value="Registration District" checked></td>
+                <td><input list="registrationDistrictDatalist" id="registrationDistrictFilter"><datalist id="registrationDistrictDatalist" data-key="Registration District"></datalist></td>
+            </tr>
+            <tr>
+                <td>Sources</td>
+                <td><input type="checkbox" id="sourcesCheck" value="Sources" checked></td>
+                <td><input list="sourcesDatalist" id="sourcesFilter"><datalist id="sourcesDatalist" data-key="Sources"></datalist></td>
+            </tr>
+        </table>
+    </form>
+
+    <div id="table"></div>
+
+    <div id="histogramLineChart"></div>
+
+    <!-- <script type="text/javascript" src="../src/index.js"></script> -->
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
