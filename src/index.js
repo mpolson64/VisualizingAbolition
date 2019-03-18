@@ -3,10 +3,10 @@ import Tabulator from 'tabulator-tables';
 import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
 
+import * as histogramOverTime from './viz/histogramOverTime';
+
 import 'tabulator-tables/dist/css/tabulator.min.css';
 import 'nouislider/distribute/nouislider.min.css';
-
-// import drawHistogram from './histogramLineChart';
 
 // initialize helper values
 const checkIds = [
@@ -53,8 +53,8 @@ const predicates = {
 let data = [];
 let filteredData = [];
 
-//initialize viz state
-let viz = "histogramOverTime";
+// initialize viz state
+let activeViz = 'histogramOverTime';
 
 // initialize table
 const table = new Tabulator(
@@ -104,18 +104,24 @@ noUiSlider.create(dateSlider, {
  * HELPER FUNCTIONS
  */
 // Fill datalists for dropdowns on control panel
+const updateActiveChart = () => {
+  if (activeViz === 'histogramOverTime') {
+    histogramOverTime.update(data, filteredData);
+  }
+};
+
 const fillDatalists = () => {
   datalistIds.forEach((datalistId) => {
     const list = document.getElementById(datalistId);
     list.innerHTML = '';
 
     Array.from([...new Set(filteredData.map(row => row[list.attributes['data-key'].value]))])
-    .sort()
-    .forEach((val) => {
-      const option = document.createElement('option');
-      option.value = val;
-      list.appendChild(option);
-    });
+      .sort()
+      .forEach((val) => {
+        const option = document.createElement('option');
+        option.value = val;
+        list.appendChild(option);
+      });
   });
 };
 
@@ -150,6 +156,8 @@ const filtersChanged = (key, newPredicate) => {
   // update affected items
   table.setData(filteredData);
   fillDatalists(filteredData);
+
+  updateActiveChart();
 };
 
 // initialize onclicks for checkboxes
@@ -248,10 +256,11 @@ dateSlider.noUiSlider.on('set', (values) => {
 });
 
 // initialize onclick for viz tabs
+/* eslint-disable */
 Array.from(document.getElementsByClassName('w3-bar-item')).forEach((button) => {
   button.onclick = () => {
     Array.from(document.getElementsByClassName('viz')).forEach((elem) => {
-      elem.style.display = "none";
+      elem.style.display = 'none';
     });
     Array.from(document.getElementsByClassName('w3-bar-item')).forEach((elem) => {
       elem.className = 'w3-bar-item w3-button w3-light-gray';
@@ -259,8 +268,12 @@ Array.from(document.getElementsByClassName('w3-bar-item')).forEach((button) => {
 
     document.getElementById(button.id.substring(0, button.id.length - 6)).style.display = 'block';
     button.className = 'w3-bar-item w3-button w3-dark-gray';
+
+    activeViz = button.id.substring(0, button.id.length - 6);
+    updateActiveChart();
   };
 });
+/* eslint-enable */
 
 // load data
 d3.csv('boc.csv').then((rawData) => {
@@ -272,5 +285,5 @@ d3.csv('boc.csv').then((rawData) => {
   fillDatalists();
   showChanged();
 
-  // drawHistogram(data);
+  histogramOverTime.init(data, filteredData);
 });

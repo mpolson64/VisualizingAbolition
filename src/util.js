@@ -1,15 +1,13 @@
-const histogram = (data, extractor, transform) => {
+const histogram = (data, filteredData, extractor, transform) => {
   const res = [];
   const temp = {};
 
   data.forEach((obj) => {
-    const transformed = transform(obj[extractor]);
+    temp[transform(obj[extractor])] = 0;
+  });
 
-    if (transformed in temp) {
-      temp[transformed] += 1;
-    } else {
-      temp[transformed] = 1;
-    }
+  filteredData.forEach((obj) => {
+    temp[transform(obj[extractor])] += 1;
   });
 
   Object.keys(temp).forEach((key) => {
@@ -22,4 +20,26 @@ const histogram = (data, extractor, transform) => {
   return res;
 };
 
-export { histogram as default };
+const histogramNumberic = (data, filteredData, extractor, transform) => {
+  const res = [];
+  const temp = {};
+
+  data.forEach((obj) => {
+    temp[transform(obj[extractor])] = 0;
+  });
+
+  filteredData.forEach((obj) => {
+    temp[transform(obj[extractor])] += 1;
+  });
+
+  Object.keys(temp).forEach((key) => {
+    res.push({
+      x: parseFloat(key),
+      y: temp[key],
+    });
+  });
+
+  return res;
+};
+
+export { histogram, histogramNumberic };
