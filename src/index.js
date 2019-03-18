@@ -53,6 +53,9 @@ const predicates = {
 let data = [];
 let filteredData = [];
 
+//initialize viz state
+let viz = "histogramOverTime";
+
 // initialize table
 const table = new Tabulator(
   '#table',
