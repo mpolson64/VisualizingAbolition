@@ -243,21 +243,19 @@ anySexRadio.onclick = () => {
 };
 
 // initialize onchange for slider filtering
-// ageSlider.noUiSlider.on('change', () => {
-//   const res = this.noUiSlider.get().map((x) => parseFloat(x));
-//   filtersChanged("age", (obj) => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1]);
-// });
+ageSlider.noUiSlider.on('set', (values, handles) => {
+  const res = values.map((x) => parseFloat(x));
+  filtersChanged("age", (obj) => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1]);
+});
 
 dateSlider.noUiSlider.on('set', (values, handles) => {
   const res = values.map(x => parseFloat(x));
 
   filtersChanged('registrationDate',
     (obj) => {
-  //     const year = obj['Registration Date'].substr(0, 4);
-  //     return year >= res[0] && year <= res[1];
-  return true;
+      const year = obj['Registration Date'].substr(0, 4);
+      return year >= res[0] && year <= res[1];
     });
-  console.log(values);
 });
 
 // load data
