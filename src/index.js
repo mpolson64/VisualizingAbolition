@@ -29,6 +29,8 @@ const datalistIds = [
   'registrationDistrictDatalist',
   'sourcesDatalist',
 ];
+
+/* eslint-disable */
 const predicates = {
   id: x => true,
   registree: x => true,
@@ -42,6 +44,7 @@ const predicates = {
   registrationDistrict: x => true,
   sources: x => true,
 };
+/* eslint-enable */
 
 // initialize datastores
 let data = [];
@@ -131,7 +134,9 @@ const showChanged = () => {
 const filtersChanged = (key, newPredicate) => {
   // set predicates and filter data
   predicates[key] = newPredicate;
-  const reducedPredicate = Object.values(predicates).reduce((composed, predicate) => item => composed(item) && predicate(item));
+  const reducedPredicate = Object
+    .values(predicates)
+    .reduce((composed, predicate) => item => composed(item) && predicate(item));
   filteredData = data.filter(item => reducedPredicate(item));
 
   // update affected items
@@ -148,109 +153,83 @@ checkIds.forEach((checkId) => {
 // initialize onchange for id filtering
 const idFilter = document.getElementById('idFilter');
 idFilter.onchange = () => {
-  filtersChanged("id", (obj) => {
-    return idFilter.value === "" ? true : obj.ID == idFilter.value;
-  });
+  filtersChanged('id', obj => (idFilter.value === '' ? true : obj.ID === idFilter.value));
 };
 
 // initialize onchange for all string matching filtering
 const registreeFilter = document.getElementById('registreeFilter');
 registreeFilter.onchange = () => {
-  filtersChanged("registree", (obj) => {
-    return registreeFilter.value === "" ? true : obj.Registree == registreeFilter.value;
-  });
+  filtersChanged('registree', obj => (registreeFilter.value === '' ? true : obj.Registree === registreeFilter.value));
 };
 
 const originFilter = document.getElementById('originFilter');
 originFilter.onchange = () => {
-  filtersChanged("origin", (obj) => {
-    return originFilter.value === "" ? true : obj.Origin == originFilter.value;
-  });
+  filtersChanged('origin', obj => (originFilter.value === '' ? true : obj.Origin === originFilter.value));
 };
 
 const occupationFilter = document.getElementById('occupationFilter');
 occupationFilter.onchange = () => {
-  filtersChanged("occupation", (obj) => {
-    return occupationFilter.value === "" ? true : obj.Occupation == occupationFilter.value;
-  });
+  filtersChanged('occupation', obj => (occupationFilter.value === '' ? true : obj.Occupation === occupationFilter.value));
 };
 
 const masterFilter = document.getElementById('masterFilter');
 masterFilter.onchange = () => {
-  filtersChanged("master", (obj) => {
-    return masterFilter.value === "" ? true : obj.Master == masterFilter.value;
-  });
+  filtersChanged('master', obj => (masterFilter.value === '' ? true : obj.Master === masterFilter.value));
 };
 
 const masterResidenceFilter = document.getElementById('masterResidenceFilter');
 masterResidenceFilter.onchange = () => {
-  filtersChanged("masterResidence", (obj) => {
-    return masterResidenceFilter.value === "" ? true : obj['Master Residence'] == masterResidenceFilter.value;
-  });
+  filtersChanged('masterResidence', obj => (masterResidenceFilter.value === '' ? true : obj['Master Residence'] === masterResidenceFilter.value));
 };
 
 const registrationDistrictFilter = document.getElementById('registrationDistrictFilter');
 registrationDistrictFilter.onchange = () => {
-  filtersChanged("registrationDistrict", (obj) => {
-    return registrationDistrictFilter.value === "" ? true : obj['Registration District'] == registrationDistrictFilter.value;
-  });
+  filtersChanged('registrationDistrict', obj => (registrationDistrictFilter.value === '' ? true : obj['Registration District'] === registrationDistrictFilter.value));
 };
 
 const sourcesFilter = document.getElementById('sourcesFilter');
 sourcesFilter.onchange = () => {
-  filtersChanged("sources", (obj) => {
-    return sourcesFilter.value === "" ? true : obj.Sources == sourcesFilter.value;
-  });
+  filtersChanged('sources', obj => (sourcesFilter.value === '' ? true : obj.Sources === sourcesFilter.value));
 };
 
 // initialize onchange for radio button filtering
 const freedRadio = document.getElementById('freedRadio');
 freedRadio.onclick = () => {
-  filtersChanged("status", (obj) => {
-    return obj.Status === "Freed";
-  });
+  filtersChanged('status', obj => obj.Status === 'Freed');
 };
 const slaveRadio = document.getElementById('slaveRadio');
 slaveRadio.onclick = () => {
-  filtersChanged("status", (obj) => {
-    return obj.Status === "Slave";
-  });
+  filtersChanged('status', obj => obj.Status === 'Slave');
 };
 const anyStatusRadio = document.getElementById('anyStatusRadio');
 anyStatusRadio.onclick = () => {
-  filtersChanged("status", (obj) => true);
+  filtersChanged('status', obj => true); // eslint-disable-line no-unused-vars
 };
 
 const maleRadio = document.getElementById('maleRadio');
 maleRadio.onclick = () => {
-  filtersChanged("sex", (obj) => {
-    return obj.Sex === "Male";
-  });
+  filtersChanged('sex', obj => obj.Sex === 'Male');
 };
 const femaleRadio = document.getElementById('femaleRadio');
 femaleRadio.onclick = () => {
-  filtersChanged("sex", (obj) => {
-    return obj.Sex === "Female";
-  });
+  filtersChanged('sex', obj => obj.Sex === 'Female');
 };
 const unspecifiedRadio = document.getElementById('unspecifiedRadio');
 unspecifiedRadio.onclick = () => {
-  filtersChanged("sex", (obj) => {
-    return obj.Sex === "Unspecified";
-  });
+  filtersChanged('sex', obj => obj.Sex === 'Unspecified');
 };
 const anySexRadio = document.getElementById('anySexRadio');
 anySexRadio.onclick = () => {
-  filtersChanged("sex", (obj) => true);
+  filtersChanged('sex', obj => true); // eslint-disable-line no-unused-vars
 };
 
 // initialize onchange for slider filtering
-ageSlider.noUiSlider.on('set', (values, handles) => {
-  const res = values.map((x) => parseFloat(x));
-  filtersChanged("age", (obj) => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1]);
+ageSlider.noUiSlider.on('set', (values) => {
+  const res = values.map(x => parseFloat(x));
+  filtersChanged('age', obj => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1]);
 });
 
-dateSlider.noUiSlider.on('set', (values, handles) => {
+dateSlider.noUiSlider.on('set', (values) => {
   const res = values.map(x => parseFloat(x));
 
   filtersChanged('registrationDate',
@@ -262,7 +241,7 @@ dateSlider.noUiSlider.on('set', (values, handles) => {
 
 // load data
 d3.csv('boc.csv').then((rawData) => {
-  data = rawData.slice(0)
+  data = rawData.slice(0);
   filteredData = rawData.slice(0);
 
   table.setData(rawData);
