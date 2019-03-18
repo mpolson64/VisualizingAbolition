@@ -103,7 +103,9 @@ const fillDatalists = () => {
     const list = document.getElementById(datalistId);
     list.innerHTML = '';
 
-    [...new Set(filteredData.map(row => row[list.attributes['data-key'].value]))].forEach((val) => {
+    Array.from([...new Set(filteredData.map(row => row[list.attributes['data-key'].value]))])
+    .sort()
+    .forEach((val) => {
       const option = document.createElement('option');
       option.value = val;
       list.appendChild(option);
