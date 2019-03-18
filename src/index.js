@@ -3,6 +3,9 @@ import Tabulator from 'tabulator-tables';
 import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
 
+import 'tabulator-tables/dist/css/tabulator.min.css';
+import 'nouislider/distribute/nouislider.min.css';
+
 // import drawHistogram from './histogramLineChart';
 
 // initialize helper values
@@ -239,6 +242,21 @@ dateSlider.noUiSlider.on('set', (values) => {
       const year = obj['Registration Date'].substr(0, 4);
       return year >= res[0] && year <= res[1];
     });
+});
+
+// initialize onclick for viz tabs
+Array.from(document.getElementsByClassName('w3-bar-item')).forEach((button) => {
+  button.onclick = () => {
+    Array.from(document.getElementsByClassName('viz')).forEach((elem) => {
+      elem.style.display = "none";
+    });
+    Array.from(document.getElementsByClassName('w3-bar-item')).forEach((elem) => {
+      elem.className = 'w3-bar-item w3-button w3-light-gray';
+    });
+
+    document.getElementById(button.id.substring(0, button.id.length - 6)).style.display = 'block';
+    button.className = 'w3-bar-item w3-button w3-dark-gray';
+  };
 });
 
 // load data
