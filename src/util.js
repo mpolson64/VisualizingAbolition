@@ -13,7 +13,7 @@ const histogram = (data, filteredData, extractor, transform) => {
   Object.keys(temp).forEach((key) => {
     res.push({
       key,
-      count: temp[key],
+      value: temp[key],
     });
   });
 
@@ -42,4 +42,14 @@ const histogramNumberic = (data, filteredData, extractor, transform) => {
   return res;
 };
 
-export { histogram, histogramNumberic };
+const coalesceHistogram = (hist) => {
+  const res = {};
+
+  hist.forEach(elem => {
+    res[elem.key] = elem.value;
+  });
+
+  return res;
+}
+
+export { histogram, histogramNumberic, coalesceHistogram };
