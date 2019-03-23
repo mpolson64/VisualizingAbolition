@@ -46,7 +46,9 @@ const coalesceHistogram = (hist) => {
   const res = {};
 
   hist.forEach(elem => {
-    res[elem.key] = elem.value;
+    if (elem.value !== 0){
+      res[elem.key] = elem.value;
+    }
   });
 
   return res;

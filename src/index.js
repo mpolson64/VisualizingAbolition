@@ -106,8 +106,13 @@ noUiSlider.create(dateSlider, {
  */
 // Fill datalists for dropdowns on control panel
 const updateActiveChart = () => {
+  console.log(activeViz);
+  
   if (activeViz === 'histogramOverTime') {
     histogramOverTime.update(data, filteredData);
+  }
+  else if (activeViz === 'pie') {
+    pie.update(data, filteredData);
   }
 };
 
