@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import d3Tip from 'd3-tip';
 
 import { histogramNumberic } from '../util';
 
@@ -35,8 +36,13 @@ const init = (data, filteredData) => {
     .range([height, 0])
     .domain(d3.extent(hist, d => d.y)).nice();
 
-  xAxis = d3.axisBottom(xScale).ticks(12);
-  yAxis = d3.axisLeft(yScale).ticks(12 * height / width);
+  xAxis = d3
+    .axisBottom(xScale)
+    .ticks(12)
+    .tickFormat(d3.format('d'));
+  yAxis = d3
+    .axisLeft(yScale)
+    .ticks(12 * height / width);
 
   plotLine = d3.line()
     .curve(d3.curveMonotoneX)
@@ -65,6 +71,14 @@ const init = (data, filteredData) => {
     .style('fill', 'none')
     .style('stroke', 'brown');
 
+
+  const tip = d3Tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(d => `${d.x}: <span style='color:red'>${d.y}</span>`);
+
+  svg.call(tip);
+
   dot = svg.append('g')
     .attr('id', 'scatter')
     .attr('transform', `translate(${margin.left},${margin.top})`)
@@ -78,15 +92,15 @@ const init = (data, filteredData) => {
     .attr('cy', d => yScale(d.y))
     .attr('stroke', 'white')
     .attr('stroke-width', '2px')
-    .style('fill', 'brown');
+    .style('fill', 'brown')
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide);
 };
 
 const update = (data, filteredData) => {
   const hist = histogramNumberic(data, filteredData, 'Registration Date', str => parseInt(str.substr(0, 4), 10));
 
-  xScale.domain(d3.extent(hist, d => d.x)).nice();
   yScale.domain(d3.extent(hist, d => d.y)).nice();
-
   yAxis = d3.axisLeft(yScale).ticks(12 * height / width);
   svg.select('.y')
     .transition()
