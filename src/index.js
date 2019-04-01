@@ -280,6 +280,9 @@ Array.from(document.getElementsByClassName('w3-bar-item')).forEach((button) => {
 });
 /* eslint-enable */
 
+// initialize onchange for internal pie selector
+document.getElementById('pieSelect').onchange = updateActiveChart;
+
 // load data
 d3.csv('boc.csv').then((rawData) => {
   data = rawData.slice(0);

@@ -101,8 +101,6 @@ const update = (data, filteredData) => {
 };
 
 const init = (data, filteredData) => {
-  document.getElementById('pieSelect').onchange = () => update(data, filteredData);
-
   width = 960;
   height = 450;
   radius = Math.min(width, height) / 2;
