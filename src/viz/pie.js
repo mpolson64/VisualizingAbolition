@@ -35,12 +35,12 @@ const init = (data, filteredData) => {
     .pie()
     .value(d => d.value);
 
-  arc = d3.svg
+  arc = d3
     .arc()
     .outerRadius(radius * 1.0)
     .innerRadius(radius * 0.4);
 
-  outerArc = d3.svg
+  outerArc = d3
     .arc()
     .innerRadius(radius * 0.5)
     .outerRadius(radius * 1);
@@ -50,10 +50,10 @@ const init = (data, filteredData) => {
   update(data, filteredData);
 };
 
-const update = (data, filteredData) => {
+const update = (data, filteredData) => {  
   const counts = coalesceHistogram(histogram(data, filteredData, 'Occupation', x => x));
 
-  const oldCounts = svg
+  let oldCounts = svg
     .select('.slices')
     .selectAll('path.slice')
     .data()
@@ -68,7 +68,7 @@ const update = (data, filteredData) => {
 
   /* ------- SLICE ARCS -------*/
 
-  const slice = svg
+  let slice = svg
     .select('.slices')
     .selectAll('path.slice')
     .data(pie(was), d => d.data.key);
@@ -78,7 +78,9 @@ const update = (data, filteredData) => {
     .insert('path')
     .attr('class', 'slice')
     .style('fill', d => color(d.data.label))
-    .each(d => this._current = d);
+    .each(function(d) {
+      this._current = d;
+    });
 
   slice = svg
     .select('.slices')
@@ -88,10 +90,10 @@ const update = (data, filteredData) => {
   slice
     .transition()
     .duration(750)
-    .attrTween('d', function (d) {
-      const interpolate = d3.interpolate(this._current, d);
-      const _this = this;
-      return (t) => {
+    .attrTween("d", function(d) {
+      var interpolate = d3.interpolate(this._current, d);
+      var _this = this;
+      return function(t) {
         _this._current = interpolate(t);
         return arc(_this._current);
       };
@@ -111,7 +113,7 @@ const update = (data, filteredData) => {
 
   /* ------- TEXT LABELS -------*/
 
-  const text = svg
+  let text = svg
     .select('.labels')
     .selectAll('text')
     .data(pie(was), d => d.data.key);
@@ -122,7 +124,9 @@ const update = (data, filteredData) => {
     .attr('dy', '.35em')
     .style('opacity', 0)
     .text(d => d.data.key)
-    .each(d => this._current = d);
+    .each(function(d) {
+      this._current = d;
+    })
 
   text = svg
     .select('.labels')
@@ -133,22 +137,22 @@ const update = (data, filteredData) => {
     .transition()
     .duration(750)
     .style('opacity', d => (d.data.value == 0 ? 0 : 1))
-    .attrTween('transform', (d) => {
-      const interpolate = d3.interpolate(this._current, d);
-      const _this = this;
-      return function (t) {
-        const d2 = interpolate(t);
+    .attrTween("transform", function(d) {
+      var interpolate = d3.interpolate(this._current, d);
+      var _this = this;
+      return function(t) {
+        var d2 = interpolate(t);
         _this._current = d2;
-        const pos = outerArc.centroid(d2);
+        var pos = outerArc.centroid(d2);
         pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
-        return `translate(${pos})`;
+        return "translate(" + pos + ")";
       };
     })
-    .styleTween('text-anchor', (d) => {
-      const interpolate = d3.interpolate(this._current, d);
-      return (t) => {
-        const d2 = interpolate(t);
-        return midAngle(d2) < Math.PI ? 'start' : 'end';
+    .styleTween("text-anchor", function(d) {
+      var interpolate = d3.interpolate(this._current, d);
+      return function(t) {
+        var d2 = interpolate(t);
+        return midAngle(d2) < Math.PI ? "start" : "end";
       };
     });
 
@@ -174,7 +178,9 @@ const update = (data, filteredData) => {
     .enter()
     .append('polyline')
     .style('opacity', 0)
-    .each(d => this._current = d);
+    .each(function(d) {
+      this._current = d;
+    });
 
   polyline = svg
     .select('.lines')
@@ -185,19 +191,19 @@ const update = (data, filteredData) => {
     .transition()
     .duration(750)
     .style('opacity', d => (d.data.value == 0 ? 0 : 1))
-    .attrTween('points', (d) => {
+    .attrTween("points", function(d) {
       this._current = this._current;
-      const interpolate = d3.interpolate(this._current, d);
-      const _this = this;
-      return (t) => {
-        const d2 = interpolate(t);
+      var interpolate = d3.interpolate(this._current, d);
+      var _this = this;
+      return function(t) {
+        var d2 = interpolate(t);
         _this._current = d2;
-        const pos = outerArc.centroid(d2);
+        var pos = outerArc.centroid(d2);
         pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
         return [arc.centroid(d2), outerArc.centroid(d2), pos];
       };
     });
-
+    
   polyline = svg
     .select('.lines')
     .selectAll('polyline')
@@ -212,7 +218,7 @@ const update = (data, filteredData) => {
 
 const mergeWithFirstEqualZero = (oldHist, newHist) => {
   const newSet = d3.set();
-  newHist.forEach(d => newSet.add(d.key));
+  Object.keys(newHist).forEach(d => newSet.add(d.key));
 
   const onlyOld = oldHist
     .filter(d => !newSet.has(d.key))

@@ -43,12 +43,20 @@ const histogramNumberic = (data, filteredData, extractor, transform) => {
 };
 
 const coalesceHistogram = (hist) => {
-  const res = {};
+  const temp = {};
+  const res = [];
 
   hist.forEach(elem => {
     if (elem.value !== 0){
-      res[elem.key] = elem.value;
+      temp[elem.key] = elem.value;
     }
+  });
+
+  Object.keys(temp).forEach((key) => {
+    res.push({
+      key,
+      value: temp[key],
+    });
   });
 
   return res;

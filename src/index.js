@@ -295,7 +295,6 @@ d3.csv('boc.csv').then((rawData) => {
   showChanged();
 
   histogramOverTime.init(data, filteredData);
-  // pie.init(data, filteredData);
-
+  pie.init(data, filteredData);
   map.init(data, filteredData);
 });
