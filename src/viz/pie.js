@@ -18,6 +18,8 @@ let outerArc;
 let key;
 
 const init = (data, filteredData) => {
+  const counts = coalesceHistogram(histogram(data, filteredData, 'Occupation', x => x));
+
  svg = d3
   .select("#pieChart")
   .append("svg")
@@ -51,37 +53,21 @@ svg.append("g").attr("class", "lines");
 svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
  key = function(d) {
-  return d.data.label;
+  return d.data.key;
   };
 
  color = d3.scaleOrdinal(d3.schemeCategory10)
- .domain([
-  "Assigned",
-  "Complete",
-  "Overdue",
-  "Terminated",
-  "Awaiting Review",
-  "Attached"
-])
-.range([
-  "#1abc9c",
-  "#27ae60",
-  "#e74c3c",
-  "#f1c40f",
-  "#34495e",
-  "#3498db",
-  "#8e44ad"
-]);
+ .domain(counts.map(pair => pair.key));
 
  console.log('done init');
 
- update(0, 0);
+ update(data, filteredData);
 };
 
 const update = (data, filteredData) => { 
   console.log('updating pie');
-  data = randomData();
-  console.log(data);
+  let counts = coalesceHistogram(histogram(data, filteredData, 'Occupation', x => x));
+  console.log(counts);
 
   var duration = 750;
   var data0 = svg
@@ -91,9 +77,9 @@ const update = (data, filteredData) => {
     .map(function(d) {
       return d.data;
     });
-  if (data0.length == 0) data0 = data;
-  var was = mergeWithFirstEqualZero(data, data0);
-  var is = mergeWithFirstEqualZero(data0, data);
+  if (data0.length == 0) data0 = counts;
+  var was = mergeWithFirstEqualZero(counts, data0);
+  var is = mergeWithFirstEqualZero(data0, counts);
 
   /* ------- SLICE ARCS -------*/
 
@@ -107,7 +93,7 @@ const update = (data, filteredData) => {
     .insert("path")
     .attr("class", "slice")
     .style("fill", function(d) {
-      return color(d.data.label);
+      return color(d.data.key);
     })
     .each(function(d) {
       this._current = d;
@@ -133,7 +119,7 @@ const update = (data, filteredData) => {
   slice = svg
     .select(".slices")
     .selectAll("path.slice")
-    .data(pie(data), key);
+    .data(pie(counts), key);
 
   slice
     .exit()
@@ -155,7 +141,7 @@ const update = (data, filteredData) => {
     .attr("dy", ".35em")
     .style("opacity", 0)
     .text(function(d) {
-      return d.data.label;
+      return d.data.key;
     })
     .each(function(d) {
       this._current = d;
@@ -194,7 +180,7 @@ const update = (data, filteredData) => {
   text = svg
     .select(".labels")
     .selectAll("text")
-    .data(pie(data), key);
+    .data(pie(counts), key);
 
   text
     .exit()
@@ -244,7 +230,7 @@ polyline
 polyline = svg
   .select(".lines")
   .selectAll("polyline")
-  .data(pie(data), key);
+  .data(pie(counts), key);
 
 polyline
   .exit()
@@ -270,18 +256,18 @@ function randomData() {
 function mergeWithFirstEqualZero(first, second) {
   var secondSet = d3.set();
   second.forEach(function(d) {
-    secondSet.add(d.label);
+    secondSet.add(d.key);
   });
 
   var onlyFirst = first
     .filter(function(d) {
-      return !secondSet.has(d.label);
+      return !secondSet.has(d.key);
     })
     .map(function(d) {
-      return { label: d.label, value: 0 };
+      return { key: d.key, value: 0 };
     });
   return d3.merge([second, onlyFirst]).sort(function(a, b) {
-    return d3.ascending(a.label, b.label);
+    return d3.ascending(a.key, b.key);
   });
 }
 
