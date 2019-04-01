@@ -15,81 +15,112 @@ let pie;
 let arc;
 let outerArc;
 
+let key;
+
 const init = (data, filteredData) => {
-  width = 960;
-  height = 450;
+ svg = d3
+  .select("#pieChart")
+  .append("svg")
+  .append("g");
+
+svg.append("g").attr("class", "slices");
+svg.append("g").attr("class", "labels");
+svg.append("g").attr("class", "lines");
+
+ width = 960,
+  height = 450,
   radius = Math.min(width, height) / 2;
 
-  svg = d3
-    .select('#pie')
-    .append('svg')
-    .append('g');
+ pie = d3
+  .pie()
+  .sort(null)
+  .value(function(d) {
+    return d.value;
+  });
 
-  svg.append('g').attr('class', 'slices');
-  svg.append('g').attr('class', 'labels');
-  svg.append('g').attr('class', 'lines');
+ arc = d3
+  .arc()
+  .outerRadius(radius * 1.0)
+  .innerRadius(radius * 0.4);
 
-  svg.attr('transform', `translate(${width / 2}, ${height / 2})`);
+ outerArc = d3
+  .arc()
+  .innerRadius(radius * 0.5)
+  .outerRadius(radius * 1);
 
-  pie = d3
-    .pie()
-    .value(d => d.value);
+svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-  arc = d3
-    .arc()
-    .outerRadius(radius * 1.0)
-    .innerRadius(radius * 0.4);
+ key = function(d) {
+  return d.data.label;
+  };
 
-  outerArc = d3
-    .arc()
-    .innerRadius(radius * 0.5)
-    .outerRadius(radius * 1);
+ color = d3.scaleOrdinal(d3.schemeCategory10)
+ .domain([
+  "Assigned",
+  "Complete",
+  "Overdue",
+  "Terminated",
+  "Awaiting Review",
+  "Attached"
+])
+.range([
+  "#1abc9c",
+  "#27ae60",
+  "#e74c3c",
+  "#f1c40f",
+  "#34495e",
+  "#3498db",
+  "#8e44ad"
+]);
 
-  color = d3.scaleOrdinal(d3.schemeCategory10);
+ console.log('done init');
 
-  update(data, filteredData);
+ update(0, 0);
 };
 
-const update = (data, filteredData) => {  
-  const counts = coalesceHistogram(histogram(data, filteredData, 'Occupation', x => x));
+const update = (data, filteredData) => { 
+  console.log('updating pie');
+  data = randomData();
+  console.log(data);
 
-  let oldCounts = svg
-    .select('.slices')
-    .selectAll('path.slice')
+  var duration = 750;
+  var data0 = svg
+    .select(".slices")
+    .selectAll("path.slice")
     .data()
-    .map(d => d.data);
-
-  if (oldCounts.length === 0) {
-    oldCounts = counts;
-  }
-
-  const was = mergeWithFirstEqualZero(counts, oldCounts);
-  const is = mergeWithFirstEqualZero(oldCounts, counts);
+    .map(function(d) {
+      return d.data;
+    });
+  if (data0.length == 0) data0 = data;
+  var was = mergeWithFirstEqualZero(data, data0);
+  var is = mergeWithFirstEqualZero(data0, data);
 
   /* ------- SLICE ARCS -------*/
 
-  let slice = svg
-    .select('.slices')
-    .selectAll('path.slice')
-    .data(pie(was), d => d.data.key);
+  var slice = svg
+    .select(".slices")
+    .selectAll("path.slice")
+    .data(pie(was), key);
 
   slice
     .enter()
-    .insert('path')
-    .attr('class', 'slice')
-    .style('fill', d => color(d.data.label))
+    .insert("path")
+    .attr("class", "slice")
+    .style("fill", function(d) {
+      return color(d.data.label);
+    })
     .each(function(d) {
       this._current = d;
     });
 
   slice = svg
-    .select('.slices')
-    .selectAll('path.slice')
-    .data(pie(is), d => d.data.key);
+    .select(".slices")
+    .selectAll("path.slice")
+    .data(pie(is), key);
 
   slice
     .transition()
-    .duration(750)
+    .duration(duration)
     .attrTween("d", function(d) {
       var interpolate = d3.interpolate(this._current, d);
       var _this = this;
@@ -100,43 +131,47 @@ const update = (data, filteredData) => {
     });
 
   slice = svg
-    .select('.slices')
-    .selectAll('path.slice')
-    .data(pie(data), d => d.data.key);
+    .select(".slices")
+    .selectAll("path.slice")
+    .data(pie(data), key);
 
   slice
     .exit()
     .transition()
-    .delay(750)
+    .delay(duration)
     .duration(0)
     .remove();
 
   /* ------- TEXT LABELS -------*/
 
-  let text = svg
-    .select('.labels')
-    .selectAll('text')
-    .data(pie(was), d => d.data.key);
+  var text = svg
+    .select(".labels")
+    .selectAll("text")
+    .data(pie(was), key);
 
   text
     .enter()
-    .append('text')
-    .attr('dy', '.35em')
-    .style('opacity', 0)
-    .text(d => d.data.key)
+    .append("text")
+    .attr("dy", ".35em")
+    .style("opacity", 0)
+    .text(function(d) {
+      return d.data.label;
+    })
     .each(function(d) {
       this._current = d;
-    })
+    });
 
-  text = svg
-    .select('.labels')
-    .selectAll('text')
-    .data(pie(is), d => d.data.key);
+    text = svg
+    .select(".labels")
+    .selectAll("text")
+    .data(pie(is), key);
 
   text
     .transition()
-    .duration(750)
-    .style('opacity', d => (d.data.value == 0 ? 0 : 1))
+    .duration(duration)
+    .style("opacity", function(d) {
+      return d.data.value == 0 ? 0 : 1;
+    })
     .attrTween("transform", function(d) {
       var interpolate = d3.interpolate(this._current, d);
       var _this = this;
@@ -157,80 +192,102 @@ const update = (data, filteredData) => {
     });
 
   text = svg
-    .select('.labels')
-    .selectAll('text')
-    .data(pie(data), d => d.data.key);
+    .select(".labels")
+    .selectAll("text")
+    .data(pie(data), key);
 
   text
     .exit()
     .transition()
-    .delay(750)
+    .delay(duration)
     .remove();
 
-  /* ------- SLICE TO TEXT POLYLINES -------*/
+    /* ------- SLICE TO TEXT POLYLINES -------*/
 
-  let polyline = svg
-    .select('.lines')
-    .selectAll('polyline')
-    .data(pie(was), d => d.data.key);
+  var polyline = svg
+  .select(".lines")
+  .selectAll("polyline")
+  .data(pie(was), key);
 
-  polyline
-    .enter()
-    .append('polyline')
-    .style('opacity', 0)
-    .each(function(d) {
-      this._current = d;
-    });
+polyline
+  .enter()
+  .append("polyline")
+  .style("opacity", 0)
+  .each(function(d) {
+    this._current = d;
+  });
 
-  polyline = svg
-    .select('.lines')
-    .selectAll('polyline')
-    .data(pie(is), d => d.data.key);
+polyline = svg
+  .select(".lines")
+  .selectAll("polyline")
+  .data(pie(is), key);
 
-  polyline
-    .transition()
-    .duration(750)
-    .style('opacity', d => (d.data.value == 0 ? 0 : 1))
-    .attrTween("points", function(d) {
-      this._current = this._current;
-      var interpolate = d3.interpolate(this._current, d);
-      var _this = this;
-      return function(t) {
-        var d2 = interpolate(t);
-        _this._current = d2;
-        var pos = outerArc.centroid(d2);
-        pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-        return [arc.centroid(d2), outerArc.centroid(d2), pos];
-      };
-    });
-    
-  polyline = svg
-    .select('.lines')
-    .selectAll('polyline')
-    .data(pie(data), d => d.data.key);
+polyline
+  .transition()
+  .duration(duration)
+  .style("opacity", function(d) {
+    return d.data.value == 0 ? 0 : 1;
+  })
+  .attrTween("points", function(d) {
+    this._current = this._current;
+    var interpolate = d3.interpolate(this._current, d);
+    var _this = this;
+    return function(t) {
+      var d2 = interpolate(t);
+      _this._current = d2;
+      var pos = outerArc.centroid(d2);
+      pos[0] = radius * 1 * (midAngle(d2) < Math.PI ? 1 : -1);
+      return [arc.centroid(d2), outerArc.centroid(d2), pos];
+    };
+  });
 
-  polyline
-    .exit()
-    .transition()
-    .delay(750)
-    .remove();
+polyline = svg
+  .select(".lines")
+  .selectAll("polyline")
+  .data(pie(data), key);
+
+polyline
+  .exit()
+  .transition()
+  .delay(duration)
+  .remove();
 };
 
-const mergeWithFirstEqualZero = (oldHist, newHist) => {
-  const newSet = d3.set();
-  Object.keys(newHist).forEach(d => newSet.add(d.key));
+function randomData() {
+  var labels = color.domain();
+  return labels
+    .map(function(label) {
+      return { label: label, value: Math.random() };
+    })
+    .filter(function() {
+      return Math.random() > 0.5;
+    })
+    .sort(function(a, b) {
+      return d3.ascending(a.label, b.label);
+    });
+}
 
-  const onlyOld = oldHist
-    .filter(d => !newSet.has(d.key))
-    .map(d => ({
-      key: d.key,
-      value: 0,
-    }));
+function mergeWithFirstEqualZero(first, second) {
+  var secondSet = d3.set();
+  second.forEach(function(d) {
+    secondSet.add(d.label);
+  });
 
-  return d3.merge([newHist, onlyOld])
-    .sort((a, b) => d3.ascending(a.key, b.key));
-};
+  var onlyFirst = first
+    .filter(function(d) {
+      return !secondSet.has(d.label);
+    })
+    .map(function(d) {
+      return { label: d.label, value: 0 };
+    });
+  return d3.merge([second, onlyFirst]).sort(function(a, b) {
+    return d3.ascending(a.label, b.label);
+  });
+}
 
-const midAngle = d => d.startAngle + (d.endAngle - d.startAngle) / 2;
+function midAngle(d) {
+  return d.startAngle + (d.endAngle - d.startAngle) / 2;
+}
 
 export { init, update };
+

@@ -1,36 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <style> 
-        .d3-tip {
-          line-height: 1;
-          font-weight: bold;
-          padding: 12px;
-          background: rgba(0, 0, 0, 0.8);
-          color: #fff;
-          border-radius: 2px;
-        } 
-        
-        /* Creates a small triangle extender for the tooltip */
-        .d3-tip:after {
-          box-sizing: border-box;
-          display: inline;
-          font-size: 10px;
-          width: 100%;
-          line-height: 1;
-          color: rgba(0, 0, 0, 0.8);
-          content: "\25BC";
-          position: absolute;
-          text-align: center;
-        }
-        
-        /* Style northward tooltips differently */
-        .d3-tip.n:after {
-          margin: -1px 0 0 0;
-          top: 100%;
-          left: 0;
-        }
-        </style>
+<style>
+    .d3-tip {
+        line-height: 1;
+        font-weight: bold;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        border-radius: 2px;
+    }
+    /* Creates a small triangle extender for the tooltip */
+    
+    .d3-tip:after {
+        box-sizing: border-box;
+        display: inline;
+        font-size: 10px;
+        width: 100%;
+        line-height: 1;
+        color: rgba(0, 0, 0, 0.8);
+        content: "\25BC";
+        position: absolute;
+        text-align: center;
+    }
+    /* Style northward tooltips differently */
+    
+    .d3-tip.n:after {
+        margin: -1px 0 0 0;
+        top: 100%;
+        left: 0;
+    }
+    
+    #pieChart {
+        border-radius: 5px 5px 0 0;
+        padding-top: 50px;
+        margin: 25px auto 0;
+        height: 100%;
+        background-color: #fff;
+    }
+    
+    #pieChart svg {
+        width: 100%;
+        height: 500px;
+    }
+    
+    #pieChart .slice {
+        stroke: white;
+        stroke-width: 5px;
+    }
+    
+    #pieChart .slice:hover {
+        opacity: 0.5;
+    }
+    
+    #pieChart .labels text {
+        background-color: #333;
+        width: 200px;
+    }
+
+    #pieChart path.slice{
+	stroke-width:5px;
+}
+
+#pieChart polyline{
+	stroke: #333;
+	stroke-width: 1px;
+	fill: none;
+}
+</style>
 
 <head>
     <!-- <link href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css" rel="stylesheet"> -->
@@ -48,17 +85,28 @@
             </tr>
             <tr>
                 <td>ID</td>
-                <td><input type="checkbox" id="idCheck" value="ID" checked></td>
-                <td><input type="number" id="idFilter"></td>
+                <td>
+                    <input type="checkbox" id="idCheck" value="ID" checked>
+                </td>
+                <td>
+                    <input type="number" id="idFilter">
+                </td>
             </tr>
             <tr>
                 <td>Registree</td>
-                <td><input type="checkbox" id="registreeCheck" value="Registree" checked></td>
-                <td><input list="registreeDatalist" id="registreeFilter"><datalist id="registreeDatalist" data-key="Registree"></datalist></td>
+                <td>
+                    <input type="checkbox" id="registreeCheck" value="Registree" checked>
+                </td>
+                <td>
+                    <input list="registreeDatalist" id="registreeFilter">
+                    <datalist id="registreeDatalist" data-key="Registree"></datalist>
+                </td>
             </tr>
             <tr>
                 <td>Status</td>
-                <td><input type="checkbox" id="statusCheck" value="Status" checked></td>
+                <td>
+                    <input type="checkbox" id="statusCheck" value="Status" checked>
+                </td>
                 <td>
                     <input type="radio" id="freedRadio" name="status"> Freed
                     <input type="radio" id="slaveRadio" name="status"> Slave
@@ -67,7 +115,9 @@
             </tr>
             <tr>
                 <td>Sex</td>
-                <td><input type="checkbox" id="sexCheck" value="Sex" checked></td>
+                <td>
+                    <input type="checkbox" id="sexCheck" value="Sex" checked>
+                </td>
                 <td>
                     <input type="radio" id="maleRadio" name="sex"> Male
                     <input type="radio" id="femaleRadio" name="sex"> Female
@@ -77,45 +127,82 @@
             </tr>
             <tr>
                 <td>Origin</td>
-                <td><input type="checkbox" id="originCheck" value="Origin" checked></td>
-                <td><input list="originDatalist" id="originFilter"><datalist id="originDatalist" data-key="Origin"></datalist></td>
+                <td>
+                    <input type="checkbox" id="originCheck" value="Origin" checked>
+                </td>
+                <td>
+                    <input list="originDatalist" id="originFilter">
+                    <datalist id="originDatalist" data-key="Origin"></datalist>
+                </td>
             </tr>
             <tr>
                 <td>Age</td>
-                <td><input type="checkbox" id="ageCheck" value="Age" checked></td>
-                <td><div class="noUiSlider" id="ageSlider"></div></td>
+                <td>
+                    <input type="checkbox" id="ageCheck" value="Age" checked>
+                </td>
+                <td>
+                    <div class="noUiSlider" id="ageSlider"></div>
+                </td>
             </tr>
             <tr>
                 <td>Occupation</td>
-                <td><input type="checkbox" id="occupationCheck" value="Occupation" checked></td>
-                <td><input list="occupationDatalist" id="occupationFilter"><datalist id="occupationDatalist" data-key="Occupation"></datalist></td>
+                <td>
+                    <input type="checkbox" id="occupationCheck" value="Occupation" checked>
+                </td>
+                <td>
+                    <input list="occupationDatalist" id="occupationFilter">
+                    <datalist id="occupationDatalist" data-key="Occupation"></datalist>
+                </td>
             </tr>
             <tr>
                 <td>Master</td>
-                <td><input type="checkbox" id="masterCheck" value="Master" checked></td>
-                <td><input list="masterDatalist" id="masterFilter"><datalist id="masterDatalist" data-key="Master"></datalist></td>
+                <td>
+                    <input type="checkbox" id="masterCheck" value="Master" checked>
+                </td>
+                <td>
+                    <input list="masterDatalist" id="masterFilter">
+                    <datalist id="masterDatalist" data-key="Master"></datalist>
+                </td>
             </tr>
             <tr>
                 <td>Master Residence</td>
-                <td><input type="checkbox" id="masterResidenceCheck" value="Master Residence" checked></td>
-                <td><input list="masterResidenceDatalist" id="masterResidenceFilter"><datalist id="masterResidenceDatalist" data-key="Master Residence"></datalist></td>
+                <td>
+                    <input type="checkbox" id="masterResidenceCheck" value="Master Residence" checked>
+                </td>
+                <td>
+                    <input list="masterResidenceDatalist" id="masterResidenceFilter">
+                    <datalist id="masterResidenceDatalist" data-key="Master Residence"></datalist>
+                </td>
             </tr>
             <tr>
                 <td>Registration Date</td>
-                <td><input type="checkbox" id="registrationDateCheck" value="Registration Date" checked></td>
-                <td><div class="noUiSlider" id="dateSlider"></div></td>
- 
+                <td>
+                    <input type="checkbox" id="registrationDateCheck" value="Registration Date" checked>
+                </td>
+                <td>
+                    <div class="noUiSlider" id="dateSlider"></div>
+                </td>
 
             </tr>
             <tr>
                 <td>Registration District</td>
-                <td><input type="checkbox" id="registrationDistrictCheck" value="Registration District" checked></td>
-                <td><input list="registrationDistrictDatalist" id="registrationDistrictFilter"><datalist id="registrationDistrictDatalist" data-key="Registration District"></datalist></td>
+                <td>
+                    <input type="checkbox" id="registrationDistrictCheck" value="Registration District" checked>
+                </td>
+                <td>
+                    <input list="registrationDistrictDatalist" id="registrationDistrictFilter">
+                    <datalist id="registrationDistrictDatalist" data-key="Registration District"></datalist>
+                </td>
             </tr>
             <tr>
                 <td>Sources</td>
-                <td><input type="checkbox" id="sourcesCheck" value="Sources" checked></td>
-                <td><input list="sourcesDatalist" id="sourcesFilter"><datalist id="sourcesDatalist" data-key="Sources"></datalist></td>
+                <td>
+                    <input type="checkbox" id="sourcesCheck" value="Sources" checked>
+                </td>
+                <td>
+                    <input list="sourcesDatalist" id="sourcesFilter">
+                    <datalist id="sourcesDatalist" data-key="Sources"></datalist>
+                </td>
             </tr>
         </table>
     </form>
