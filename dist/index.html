@@ -16,7 +16,6 @@
         box-sizing: border-box;
         display: inline;
         font-size: 10px;
-        width: 100%;
         line-height: 1;
         color: rgba(0, 0, 0, 0.8);
         content: "\25BC";
@@ -223,6 +222,13 @@
 
     <div id="pie" class="w3-container w3-animate-opacity viz" style="display:none">
         <h2>Pie</h2>
+        <select id='pieSelect'>
+            <option value='Status'>Status</option>
+            <option value='Sex'>Sex</option>
+            <option value='Origin'>Origin</option>
+            <option value='Occupation'>Occupation</option>
+            <option value='Registration District'>Registration District</option>
+        </select>
         <div id="pieChart"></div>
     </div>
 

@@ -30,7 +30,7 @@ const mergeWithFirstEqualZero = (first, second) => {
 };
 
 const update = (data, filteredData) => {
-  const counts = coalesceHistogram(histogram(data, filteredData, 'Occupation', x => x));
+  const counts = coalesceHistogram(histogram(data, filteredData, document.getElementById('pieSelect').value, x => x));
 
   const duration = 750;
   let data0 = svg
@@ -99,6 +99,8 @@ const update = (data, filteredData) => {
 };
 
 const init = (data, filteredData) => {
+  document.getElementById('pieSelect').onchange = () => update(data, filteredData);
+
   svg = d3
     .select('#pieChart')
     .append('svg')
@@ -114,7 +116,7 @@ const init = (data, filteredData) => {
 
   pie = d3
     .pie()
-    .sort(null)
+    .sort((null))
     .value(d => d.value);
 
   arc = d3
