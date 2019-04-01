@@ -5,6 +5,9 @@ import wNumb from 'wnumb';
 
 import * as histogramOverTime from './viz/histogramOverTime';
 import * as pie from './viz/pie';
+import * as map from './viz/map';
+import Datamap from "datamaps";
+
 
 import 'tabulator-tables/dist/css/tabulator.min.css';
 import 'nouislider/distribute/nouislider.min.css';
@@ -292,5 +295,7 @@ d3.csv('boc.csv').then((rawData) => {
   showChanged();
 
   histogramOverTime.init(data, filteredData);
-  pie.init(data, filteredData);
+  // pie.init(data, filteredData);
+
+  map.init(data, filteredData);
 });
