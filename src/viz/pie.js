@@ -87,6 +87,8 @@ const update = (data, filteredData) => {
     .select('.slices')
     .selectAll('path.slice')
     .data(pie(counts), key)
+    .attr('stroke', 'white')
+    .attr('stroke-width', '2px')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
 
@@ -101,18 +103,20 @@ const update = (data, filteredData) => {
 const init = (data, filteredData) => {
   document.getElementById('pieSelect').onchange = () => update(data, filteredData);
 
+  width = 960;
+  height = 450;
+  radius = Math.min(width, height) / 2;
+
   svg = d3
     .select('#pieChart')
     .append('svg')
+    .attr('height', height)
+    .attr('width', width)
     .append('g');
 
   svg.append('g').attr('class', 'slices');
   svg.append('g').attr('class', 'labels');
   svg.append('g').attr('class', 'lines');
-
-  width = 960;
-  height = 450;
-  radius = Math.min(width, height) / 2;
 
   pie = d3
     .pie()
