@@ -25,7 +25,7 @@ const update = (data, filteredData) => {
   const bubbleData = hist.map(elem => ({
     name: elem.key,
     count: elem.value,
-    radius: Math.sqrt(elem.value),
+    radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
     latitude: coordinates[elem.key][0],
     longitude: coordinates[elem.key][1],
     fillKey: elem.key,
@@ -37,10 +37,6 @@ const update = (data, filteredData) => {
 };
 
 const init = (data, filteredData) => {
-  const center = Object.values(coordinates)
-    .reduce((acc, arr) => [acc[0] + arr[0], acc[1] + arr[1]])
-    .map(x => x / Object.keys(coordinates).length);
-
   const color = d3v4.scaleOrdinal(d3v4.schemeCategory10);
   const fills = Object.assign(
     {},
@@ -55,8 +51,8 @@ const init = (data, filteredData) => {
     width: 1000,
     setProjection(element) { // eslint-disable-line
       const projection = d3.geo.equirectangular() // eslint-disable-line
-        .center([center[1], center[0]])
-        .scale(1800);
+        .center([35, -13])
+        .scale(2750);
 
       const path = d3.geo.path() // eslint-disable-line
         .projection(projection);
