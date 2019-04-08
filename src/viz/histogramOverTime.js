@@ -114,7 +114,7 @@ const update = (data, filteredData) => {
     .style('stroke-width', '2px')
     .style('stroke', 'brown');
 
-  d3.selectAll('circle')
+  svg.selectAll('circle')
     .data(hist)
     .transition()
     .duration(750)
@@ -122,7 +122,7 @@ const update = (data, filteredData) => {
     .attr('cy', d => yScale(d.y))
     .style('fill', 'brown');
 
-  d3.selectAll('circle')
+  svg.selectAll('circle')
     .data(hist)
     .enter()
     .append('circle')
@@ -130,7 +130,7 @@ const update = (data, filteredData) => {
     .attr('cy', d => yScale(d.y))
     .attr('r', 5);
 
-  d3.selectAll('circle')
+  svg.selectAll('circle')
     .data(hist)
     .exit()
     .remove();
