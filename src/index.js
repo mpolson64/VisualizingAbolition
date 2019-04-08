@@ -112,6 +112,8 @@ const updateActiveChart = () => {
     histogramOverTime.update(data, filteredData);
   } else if (activeViz === 'pie') {
     pie.update(data, filteredData);
+  } else if (activeViz === 'map') {
+    map.update(data, filteredData);
   }
 };
 
