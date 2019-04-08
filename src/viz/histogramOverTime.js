@@ -75,7 +75,7 @@ const init = (data, filteredData) => {
   const tip = d3Tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
-    .html(d => `${d.x}: <span style='color:red'>${d.y}</span>`);
+    .html(d => `${d.x}: ${d.y} slaves`);
 
   svg.call(tip);
 
