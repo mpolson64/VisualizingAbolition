@@ -24,13 +24,16 @@ const update = (data, filteredData) => {
 
   const bubbleData = hist.map(elem => ({
     name: elem.key,
+    count: elem.value,
     radius: Math.sqrt(elem.value),
     latitude: coordinates[elem.key][0],
     longitude: coordinates[elem.key][1],
     fillKey: elem.key,
   }));
 
-  map.bubbles(bubbleData);
+  map.bubbles(bubbleData, {
+    popupTemplate: (geo, bubbleDatum) => `<div class=hoverinfo>${bubbleDatum.name}: ${bubbleDatum.count} slaves</div>`,
+  });
 };
 
 const init = (data, filteredData) => {
