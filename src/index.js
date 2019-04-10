@@ -4,7 +4,7 @@ import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
 
 import * as map from './viz/map';
-import * as pie from './viz/pie';
+import * as donut from './viz/donut';
 import * as histogramOverTime from './viz/histogramOverTime';
 
 import 'tabulator-tables/dist/css/tabulator.min.css';
@@ -109,8 +109,8 @@ noUiSlider.create(dateSlider, {
 const updateActiveChart = () => {
   if (activeViz === 'histogramOverTime') {
     histogramOverTime.update(data, filteredData);
-  } else if (activeViz === 'pie') {
-    pie.update(data, filteredData);
+  } else if (activeViz === 'donut') {
+    donut.update(data, filteredData);
   } else if (activeViz === 'map') {
     map.update(data, filteredData);
   }
@@ -281,8 +281,8 @@ Array.from(document.getElementsByClassName('w3-bar-item')).forEach((button) => {
 });
 /* eslint-enable */
 
-// initialize onchange for internal pie selector
-document.getElementById('pieSelect').onchange = updateActiveChart;
+// initialize onchange for internal donut selector
+document.getElementById('donutSelect').onchange = updateActiveChart;
 
 // load data
 d3.csv('boc.csv').then((rawData) => {
@@ -295,6 +295,6 @@ d3.csv('boc.csv').then((rawData) => {
   showChanged();
 
   map.init(data, filteredData);
-  pie.init(data, filteredData);
+  donut.init(data, filteredData);
   histogramOverTime.init(data, filteredData);
 });

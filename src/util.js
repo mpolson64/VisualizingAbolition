@@ -62,4 +62,6 @@ const coalesceHistogram = (hist) => {
   return res;
 };
 
-export { histogram, histogramNumberic, coalesceHistogram };
+const tooltip = (key, value) => `${key}: ${value} ${value === 1 ? 'slave' : 'slaves'}`;
+
+export { histogram, histogramNumberic, coalesceHistogram, tooltip };

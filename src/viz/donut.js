@@ -30,7 +30,7 @@ const mergeWithFirstEqualZero = (first, second) => {
 };
 
 const update = (data, filteredData) => {
-  const counts = coalesceHistogram(histogram(data, filteredData, document.getElementById('pieSelect').value, x => x));
+  const counts = coalesceHistogram(histogram(data, filteredData, document.getElementById('donutSelect').value, x => x));
 
   const duration = 750;
   let data0 = svg
@@ -106,7 +106,7 @@ const init = (data, filteredData) => {
   radius = Math.min(width, height) / 2;
 
   svg = d3
-    .select('#pieChart')
+    .select('#donutChart')
     .append('svg')
     .attr('height', height)
     .attr('width', width)
