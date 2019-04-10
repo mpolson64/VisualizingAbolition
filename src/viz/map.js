@@ -1,7 +1,7 @@
 import * as d3v4 from 'd3';
 import * as Datamap from 'datamaps';
 import d3Tip from 'd3-tip';
-import { histogram, tooltip } from '../util';
+import { histogramLocation, tooltip } from '../util';
 
 // TODO: get rid of this lookup table
 // Note that coordinates are [lat, lon]
@@ -21,16 +21,57 @@ const coordinates = {
 let map;
 
 const update = (data, filteredData) => {
-  const hist = histogram(data, filteredData, 'Registration District', x => x);
+  let bubbleData;
 
-  const bubbleData = hist.map(elem => ({
-    name: elem.key,
-    count: elem.value,
-    radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
-    latitude: coordinates[elem.key][0],
-    longitude: coordinates[elem.key][1],
-    fillKey: elem.key,
-  }));
+  const originMapRadio = document.getElementById('originMapRadio');
+  const registrationDistrictMapRadio = document.getElementById('registrationDistrictMapRadio');
+
+  if (originMapRadio.cheked) {
+    const histLoc = histogramLocation(data, filteredData, 'Origin', x => x);
+
+    bubbleData = histLoc.map((elem) => {
+      const coord = elem.key.split(',').map(parseFloat);
+      return {
+        name: [...elem.tags].join(', '),
+        count: elem.value,
+        radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
+        latitude: coord[0],
+        longitude: coord[1],
+        fillKey: elem.key,
+      };
+    });
+  } else if (registrationDistrictMapRadio.checked) {
+    const histLoc = histogramLocation(data, filteredData, 'Registration District', x => x);
+
+    bubbleData = histLoc.map((elem) => {
+      const coord = elem.key.split(',').map(parseFloat);
+      return {
+        name: [...elem.tags].join(', '),
+        count: elem.value,
+        radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
+        latitude: coord[0],
+        longitude: coord[1],
+        fillKey: elem.key,
+      };
+    });
+  } else {
+    const histLoc = {
+      ...histogramLocation(data, filteredData, 'Origin', x => x),
+      ...histogramLocation(data, filteredData, 'Registration District', x => x),
+    };
+
+    bubbleData = histLoc.map((elem) => {
+      const coord = elem.key.split(',').map(parseFloat);
+      return {
+        name: [...elem.tags].join(', '),
+        count: elem.value,
+        radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
+        latitude: coord[0],
+        longitude: coord[1],
+        fillKey: elem.key,
+      };
+    });
+  }
 
   map.bubbles(bubbleData, {
     popupOnHover: false,
@@ -51,12 +92,13 @@ const update = (data, filteredData) => {
 };
 
 const init = (data, filteredData) => {
+  const allCoords = [...new Set(histogramLocation(data, filteredData, 'Registration District', x => x).map(obj => obj.key))];
+
   const color = d3v4.scaleOrdinal(d3v4.schemeCategory10);
-  const fills = Object.assign(
-    {},
-    ...Object.keys(coordinates)
-      .map(k => ({ [k]: color(k) })),
-  );
+  const fills = {};
+  allCoords.forEach((coord) => {
+    fills[coord] = color(coord);
+  });
   fills.defaultFill = '#ABDDA4';
 
   map = new Datamap({

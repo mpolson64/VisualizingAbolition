@@ -42,6 +42,36 @@ const histogramNumberic = (data, filteredData, extractor, transform) => {
   return res;
 };
 
+const histogramLocation = (data, filteredData, extractor, transform) => {
+  const res = [];
+  const temp = {};
+
+  data.forEach((obj) => {
+    const coord = [obj[`${extractor} Latitude`], obj[`${extractor} Longitude`]].map(transform);
+
+    temp[coord] = {};
+    temp[coord].count = 0;
+    temp[coord].tags = new Set();
+  });
+
+  filteredData.forEach((obj) => {
+    const coord = [obj[`${extractor} Latitude`], obj[`${extractor} Longitude`]].map(transform);
+
+    temp[coord].count += 1;
+    temp[coord].tags.add(obj[extractor]);
+  });
+
+  Object.keys(temp).forEach((key) => {
+    res.push({
+      key,
+      value: temp[key].count,
+      tags: temp[key].tags,
+    });
+  });
+
+  return res;
+};
+
 const coalesceHistogram = (hist) => {
   const temp = {};
   const res = [];
@@ -65,5 +95,5 @@ const coalesceHistogram = (hist) => {
 const tooltip = (key, value) => `${key}: ${value} ${value === 1 ? 'slave' : 'slaves'}`;
 
 export {
-  histogram, histogramNumberic, coalesceHistogram, tooltip,
+  histogram, histogramNumberic, histogramLocation, coalesceHistogram, tooltip,
 };
