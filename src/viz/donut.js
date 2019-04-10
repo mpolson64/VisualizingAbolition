@@ -2,7 +2,7 @@
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 
-import { histogram, coalesceHistogram } from '../util';
+import { histogram, coalesceHistogram, tooltip } from '../util';
 
 let width;
 let height;
@@ -46,7 +46,7 @@ const update = (data, filteredData) => {
   const tip = d3Tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
-    .html(d => `${d.data.key}: ${d.data.value} slaves`);
+    .html(d => tooltip(d.data.key, d.data.value));
 
   svg.call(tip);
 

@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 
-import { histogramNumberic } from '../util';
+import { histogramNumberic, tooltip } from '../util';
 
 let margin;
 let width;
@@ -75,7 +75,7 @@ const init = (data, filteredData) => {
   const tip = d3Tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
-    .html(d => `${d.x}: ${d.y} slaves`);
+    .html(d => tooltip(d.x, d.y));
 
   svg.call(tip);
 

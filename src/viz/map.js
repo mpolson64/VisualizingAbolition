@@ -1,6 +1,7 @@
 import * as d3v4 from 'd3';
 import * as Datamap from 'datamaps';
-import { histogram } from '../util';
+import d3Tip from 'd3-tip';
+import { histogram, tooltip } from '../util';
 
 // TODO: get rid of this lookup table
 // Note that coordinates are [lat, lon]
@@ -31,9 +32,20 @@ const update = (data, filteredData) => {
     fillKey: elem.key,
   }));
 
-  map.bubbles(bubbleData, {
-    popupTemplate: (geo, bubbleDatum) => `<div class=hoverinfo>${bubbleDatum.name}: ${bubbleDatum.count} slaves</div>`,
-  });
+  map.bubbles(bubbleData);
+
+  const svg = d3v4.select('.datamap');
+
+  const tip = d3Tip()
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(d => tooltip(d.name, d.count));
+
+  svg.call(tip);
+
+  d3v4.selectAll('.datamaps-bubble')
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide);
 };
 
 const init = (data, filteredData) => {
