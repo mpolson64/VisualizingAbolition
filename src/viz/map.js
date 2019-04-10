@@ -32,7 +32,9 @@ const update = (data, filteredData) => {
     fillKey: elem.key,
   }));
 
-  map.bubbles(bubbleData);
+  map.bubbles(bubbleData, {
+    popupOnHover: false,
+  });
 
   const svg = d3v4.select('.datamap');
 
