@@ -13,20 +13,6 @@ import 'tabulator-tables/dist/css/tabulator.min.css';
 import 'nouislider/distribute/nouislider.min.css';
 
 // initialize helper values
-const checkIds = [
-  'idCheck',
-  'registreeCheck',
-  'statusCheck',
-  'sexCheck',
-  'originCheck',
-  'ageCheck',
-  'occupationCheck',
-  'masterCheck',
-  'masterResidenceCheck',
-  'registrationDateCheck',
-  'registrationDistrictCheck',
-  'sourcesCheck',
-];
 const datalistIds = [
   'registreeDatalist',
   'statusDatalist',
@@ -41,7 +27,6 @@ const datalistIds = [
 
 /* eslint-disable */
 const predicates = {
-  id: x => true,
   registree: x => true,
   status: x => true,
   origin: x => true,
@@ -71,7 +56,7 @@ const table = new Tabulator(
     pagination: 'local',
     paginationSize: 20,
     columns: [
-      { title: "ID", field: "ID", bottomCalc: 'count' },
+      { title: "ID", field: "ID" },
       { title: "Registree", field: "Registree" },
       { title: "Status", field: "Status" },
       { title: "Sex", field: "Sex" },
@@ -162,13 +147,15 @@ const filtersChanged = (key, newPredicate) => {
   table.setData(filteredData);
   fillDatalists(filteredData);
 
-  updateActiveChart();
-};
+  if (filteredData.length === data.length) {
+    document.getElementById('filtersHeader').innerHTML = 'Filters';
+  } else if (filteredData.length === 1) {
+    document.getElementById('filtersHeader').innerHTML = 'Filtered: 1 registree';
+  } else {
+    document.getElementById('filtersHeader').innerHTML = `Filtered: ${filteredData.length} registrees`;
+  }
 
-// initialize onchange for id filtering
-const idFilter = document.getElementById('idFilter');
-idFilter.onchange = () => {
-  filtersChanged('id', obj => (idFilter.value === '' ? true : obj.ID === idFilter.value));
+  updateActiveChart();
 };
 
 // initialize onchange for all string matching filtering

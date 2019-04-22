@@ -21,6 +21,10 @@
         margin-top: 37px;
     }
 
+    .noUi-connect {
+        background: #684c00;
+    }
+
     .column {
         float: left;
     }
@@ -76,19 +80,10 @@
 
 <body>
     <div class="row">
-        <div id='controlPanel' class='column left'>
+        <div id='filters' class='column left'>
+            <h2 id='filtersHeader'>Filters</h2>
             <form>
                 <table>
-                    <tr>
-                        <th>Field</th>
-                        <th>Filter</th>
-                    </tr>
-                    <tr>
-                        <td>ID</td>
-                        <td>
-                            <input type="number" id="idFilter">
-                        </td>
-                    </tr>
                     <tr>
                         <td>Registree</td>
                         <td>
@@ -177,12 +172,6 @@
             </div>
 
             <div id="map" class="w3-container w3-animate-opacity viz">
-                <h2>Map</h2>
-                <!-- <form>
-                    <input type="radio" id="originMapRadio" name="map"> Origin
-                    <input type="radio" id="registrationDistrictMapRadio" name="map" checked> Registration District
-                    <input type="radio" id="combinedMapRadio" name="map"> Combined
-                </form> -->
                 <select id='mapSelect'>
                     <option value='Registration District'>Registration District</option>
                     <option value='Origin'>Origin</option>
@@ -192,7 +181,6 @@
             </div>
 
             <div id="donut" class="w3-container w3-animate-opacity viz" style="display:none">
-                <h2>Donut</h2>
                 <select id='donutSelect'>
                     <option value='Status'>Status</option>
                     <option value='Sex'>Sex</option>
@@ -206,7 +194,6 @@
             </div>
 
             <div id="histogramOverTime" class="w3-container w3-animate-opacity viz" style="display:none">
-                <h2>Histogram</h2>
                 <div id="histogramOverTimeChart"></div>
             </div>
         </div>
