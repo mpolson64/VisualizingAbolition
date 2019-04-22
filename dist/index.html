@@ -2,20 +2,44 @@
 <html lang="en">
 
 <style>
-    .column {
+
+tr
+{
+  padding: 0px;
+}
+td
+{
+
+  padding: 0px;
+}
+
+table
+{
+ padding: 0px;  
+border-collapse: collapse;
+}
+
+.noUiSlider {
+margin-right:25px;
+margin-top:37px;
+}
+
+.column {
         float: left;
-        padding: 10px;
     }
     
     .left {
-        width: 33%;
+        width: 40%;
+
         overflow: scroll;
+
     }
     
     .right {
-        width: 67%;
+        width: 60%;
     }
     
+
     .row:after {
         content: "";
         display: table;
@@ -236,7 +260,6 @@
     <div id="table"></div>
 
     <a id="downloadAllBtn" href="../wp-content/uploads/2019/04/boc.csv">Download dataset</a>
-    <!-- <a id="downloadAllBtn" href="boc.csv">Download dataset</a> -->
 
     <script type="text/javascript" src="main.js"></script>
 </body>
