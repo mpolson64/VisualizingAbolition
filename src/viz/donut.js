@@ -101,8 +101,8 @@ const update = (data, filteredData) => {
 };
 
 const init = (data, filteredData) => {
-  width = 960;
-  height = 450;
+  width = 800;
+  height = 400;
   radius = Math.min(width, height) / 2;
 
   svg = d3

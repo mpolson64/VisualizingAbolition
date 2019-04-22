@@ -1,3 +1,5 @@
+console.log('Found script!');
+
 import * as d3 from 'd3';
 import Tabulator from 'tabulator-tables';
 import noUiSlider from 'nouislider';
@@ -62,7 +64,7 @@ let activeViz = 'map';
 const table = new Tabulator(
   '#table',
   {
-    height: '200px',
+    height: '500px',
     layout: 'fitColumns',
     pagination: 'local',
     paginationSize: 20,
@@ -286,6 +288,7 @@ document.getElementById('donutSelect').onchange = updateActiveChart;
 
 // load data
 d3.csv('boc.csv').then((rawData) => {
+// d3.csv('../wp-content/uploads/2019/04/boc.csv').then((rawData) => {
   data = rawData.slice(0);
   filteredData = rawData.slice(0);
 
