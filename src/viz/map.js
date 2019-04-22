@@ -10,10 +10,9 @@ let map;
 const update = (data, filteredData) => {
   let bubbleData;
 
-  const originMapRadio = document.getElementById('originMapRadio');
-  const registrationDistrictMapRadio = document.getElementById('registrationDistrictMapRadio');
+  const view = document.getElementById('mapSelect').value;
 
-  if (originMapRadio.cheked) {
+  if (view === 'Origin') {
     const histLoc = histogramLocation(data, filteredData, 'Origin', x => x);
 
     bubbleData = histLoc.map((elem) => {
@@ -27,7 +26,7 @@ const update = (data, filteredData) => {
         fillKey: elem.key,
       };
     });
-  } else if (registrationDistrictMapRadio.checked) {
+  } else if (view === 'Registration District') {
     const histLoc = histogramLocation(data, filteredData, 'Registration District', x => x);
 
     bubbleData = histLoc.map((elem) => {

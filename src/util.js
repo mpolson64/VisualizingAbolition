@@ -92,7 +92,7 @@ const coalesceHistogram = (hist) => {
   return res;
 };
 
-const tooltip = (key, value) => `${key}: ${value} ${value === 1 ? 'slave' : 'slaves'}`;
+const tooltip = (key, value) => `${key}: ${value} ${value === 1 ? 'registree' : 'registrees'}`;
 
 export {
   histogram, histogramNumberic, histogramLocation, coalesceHistogram, tooltip,

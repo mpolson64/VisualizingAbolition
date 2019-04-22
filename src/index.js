@@ -29,6 +29,8 @@ const checkIds = [
 ];
 const datalistIds = [
   'registreeDatalist',
+  'statusDatalist',
+  'sexDatalist',
   'originDatalist',
   'occupationDatalist',
   'masterDatalist',
@@ -68,6 +70,20 @@ const table = new Tabulator(
     layout: 'fitColumns',
     pagination: 'local',
     paginationSize: 20,
+    columns: [
+      { title: "ID", field: "ID", bottomCalc: 'count' },
+      { title: "Registree", field: "Registree" },
+      { title: "Status", field: "Status" },
+      { title: "Sex", field: "Sex" },
+      { title: "Origin", field: "Origin" },
+      { title: "Age", field: "Age" },
+      { title: "Occupation", field: "Occupation" },
+      { title: "Master", field: "Master" },
+      { title: "Master Residence", field: "Registree" },
+      { title: "Registration Date", field: "Registration Date" },
+      { title: "Registration District", field: "Registration District" },
+      { title: "Sources", field: "Sources" },
+    ],
   },
 );
 
@@ -133,25 +149,6 @@ const fillDatalists = () => {
   });
 };
 
-// update cols of table when the show? checkboxes are changed
-const showChanged = () => {
-  const newColumns = [];
-
-  checkIds.forEach((checkId) => {
-    const checkbox = document.getElementById(checkId);
-
-    if (checkbox.checked) {
-      newColumns.push({
-        title: checkbox.value,
-        field: checkbox.value,
-        bottomCalc: checkId === 'idCheck' ? 'count' : null,
-      });
-    }
-  });
-
-  table.setColumns(newColumns);
-};
-
 // update everything when the filters change
 const filtersChanged = (key, newPredicate) => {
   // set predicates and filter data
@@ -168,12 +165,6 @@ const filtersChanged = (key, newPredicate) => {
   updateActiveChart();
 };
 
-// initialize onclicks for checkboxes
-checkIds.forEach((checkId) => {
-  const checkbox = document.getElementById(checkId);
-  checkbox.onclick = showChanged;
-});
-
 // initialize onchange for id filtering
 const idFilter = document.getElementById('idFilter');
 idFilter.onchange = () => {
@@ -184,6 +175,16 @@ idFilter.onchange = () => {
 const registreeFilter = document.getElementById('registreeFilter');
 registreeFilter.onchange = () => {
   filtersChanged('registree', obj => (registreeFilter.value === '' ? true : obj.Registree === registreeFilter.value));
+};
+
+const statusFilter = document.getElementById('statusFilter');
+statusFilter.onchange = () => {
+  filtersChanged('status', obj => (statusFilter.value === '' ? true : obj.Status === statusFilter.value));
+};
+
+const sexFilter = document.getElementById('sexFilter');
+sexFilter.onchange = () => {
+  filtersChanged('sex', obj => (sexFilter.value === '' ? true : obj.Sex === sexFilter.value));
 };
 
 const originFilter = document.getElementById('originFilter');
@@ -214,37 +215,6 @@ registrationDistrictFilter.onchange = () => {
 const sourcesFilter = document.getElementById('sourcesFilter');
 sourcesFilter.onchange = () => {
   filtersChanged('sources', obj => (sourcesFilter.value === '' ? true : obj.Sources === sourcesFilter.value));
-};
-
-// initialize onchange for radio button filtering
-const freedRadio = document.getElementById('freedRadio');
-freedRadio.onclick = () => {
-  filtersChanged('status', obj => obj.Status === 'Freed');
-};
-const slaveRadio = document.getElementById('slaveRadio');
-slaveRadio.onclick = () => {
-  filtersChanged('status', obj => obj.Status === 'Slave');
-};
-const anyStatusRadio = document.getElementById('anyStatusRadio');
-anyStatusRadio.onclick = () => {
-  filtersChanged('status', obj => true); // eslint-disable-line no-unused-vars
-};
-
-const maleRadio = document.getElementById('maleRadio');
-maleRadio.onclick = () => {
-  filtersChanged('sex', obj => obj.Sex === 'Male');
-};
-const femaleRadio = document.getElementById('femaleRadio');
-femaleRadio.onclick = () => {
-  filtersChanged('sex', obj => obj.Sex === 'Female');
-};
-const unspecifiedRadio = document.getElementById('unspecifiedRadio');
-unspecifiedRadio.onclick = () => {
-  filtersChanged('sex', obj => obj.Sex === 'Unspecified');
-};
-const anySexRadio = document.getElementById('anySexRadio');
-anySexRadio.onclick = () => {
-  filtersChanged('sex', obj => true); // eslint-disable-line no-unused-vars
 };
 
 // initialize onchange for slider filtering
@@ -295,7 +265,6 @@ d3.csv('boc.csv').then((rawData) => {
   table.setData(rawData);
 
   fillDatalists();
-  showChanged();
 
   map.init(data, filteredData);
   donut.init(data, filteredData);
