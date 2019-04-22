@@ -1,13 +1,13 @@
-console.log('Found script!');
-
 import * as d3 from 'd3';
 import Tabulator from 'tabulator-tables';
 import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
+import * as jsyaml from 'js-yaml';
 
 import * as map from './viz/map';
 import * as donut from './viz/donut';
 import * as histogramOverTime from './viz/histogramOverTime';
+import { getFiltersState } from './util';
 
 import 'tabulator-tables/dist/css/tabulator.min.css';
 import 'nouislider/distribute/nouislider.min.css';
@@ -156,6 +156,9 @@ const filtersChanged = (key, newPredicate) => {
   }
 
   updateActiveChart();
+
+  document.getElementById('downloadFilteredBtn').setAttribute('href', `data:text/plain;charset=utf-8,${d3.csvFormat(filteredData)}`);
+  document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
 };
 
 // initialize onchange for all string matching filtering
@@ -256,4 +259,7 @@ d3.csv('boc.csv').then((rawData) => {
   map.init(data, filteredData);
   donut.init(data, filteredData);
   histogramOverTime.init(data, filteredData);
+
+  document.getElementById('downloadFilteredBtn').setAttribute('href', `data:text/plain;charset=utf-8,${d3.csvFormat(filteredData)}`);
+  document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
 });
