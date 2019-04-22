@@ -95,17 +95,17 @@ const coalesceHistogram = (hist) => {
 const tooltip = (key, value) => `${key}: ${value} ${value === 1 ? 'registree' : 'registrees'}`;
 
 const getFiltersState = () => ({
-  "Registree": document.getElementById('registreeFilter').value,
-  "Status": document.getElementById('statusFilter').value,
-  "Sex": document.getElementById('sexFilter').value,
-  "Origin": document.getElementById('originFilter').value,
-  "Age": document.getElementById('ageSlider').noUiSlider.get(),
-  "Occupation": document.getElementById('occupationFilter').value,
-  "Master": document.getElementById('masterFilter').value,
-  "Master Residence": document.getElementById('masterResidenceFilter').value,
-  "Registration Date": document.getElementById('dateSlider').noUiSlider.get(),
-  "Registration District": document.getElementById('registrationDistrictFilter').value,
-  "Sources": document.getElementById('sourcesFilter').value,
+  Registree: document.getElementById('registreeFilter').value,
+  Status: document.getElementById('statusFilter').value,
+  Sex: document.getElementById('sexFilter').value,
+  Origin: document.getElementById('originFilter').value,
+  Age: document.getElementById('ageSlider').noUiSlider.get(),
+  Occupation: document.getElementById('occupationFilter').value,
+  Master: document.getElementById('masterFilter').value,
+  'Master Residence': document.getElementById('masterResidenceFilter').value,
+  'Registration Date': document.getElementById('dateSlider').noUiSlider.get(),
+  'Registration District': document.getElementById('registrationDistrictFilter').value,
+  Sources: document.getElementById('sourcesFilter').value,
 });
 
 export {
