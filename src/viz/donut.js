@@ -45,7 +45,7 @@ const update = (data, filteredData) => {
   /* -------- TIP -------------*/
   const tip = d3Tip()
     .attr('class', 'd3-tip')
-    .offset([-10, 0])
+    .offset([-115, 0])
     .html(d => tooltip(d.data.key, d.data.value));
 
   svg.call(tip);
@@ -102,7 +102,7 @@ const update = (data, filteredData) => {
 
 const init = (data, filteredData) => {
   width = 800;
-  height = 400;
+  height = 500;
   radius = Math.min(width, height) / 2;
 
   svg = d3

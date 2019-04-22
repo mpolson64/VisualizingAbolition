@@ -74,7 +74,7 @@ const init = (data, filteredData) => {
 
   const tip = d3Tip()
     .attr('class', 'd3-tip')
-    .offset([-10, 0])
+    .offset([-115, 0])
     .html(d => tooltip(d.x, d.y));
 
   svg.call(tip);

@@ -67,7 +67,7 @@ const update = (data, filteredData) => {
 
   const tip = d3Tip()
     .attr('class', 'd3-tip')
-    .offset([-10, 0])
+    .offset([-115, 0])
     .html(d => tooltip(d.name, d.count));
 
   svg.call(tip);
@@ -89,7 +89,7 @@ const init = (data, filteredData) => {
 
   map = new Datamap({
     element: document.getElementById('mapChart'),
-    height: 400,
+    height: 600,
     width: 800,
     setProjection(element) { // eslint-disable-line
       const projection = d3.geo.equirectangular() // eslint-disable-line
