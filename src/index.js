@@ -56,7 +56,7 @@ const table = new Tabulator(
     pagination: 'local',
     paginationSize: 20,
     columns: [
-      { title: 'ID', field: 'ID' },
+      // { title: 'ID', field: 'ID' },
       { title: 'Registree', field: 'Registree' },
       { title: 'Status', field: 'Status' },
       { title: 'Sex', field: 'Sex' },
@@ -248,8 +248,8 @@ document.getElementById('donutSelect').onchange = updateActiveChart;
 document.getElementById('mapSelect').onchange = updateActiveChart;
 
 // load data
-d3.csv('boc.csv').then((rawData) => {
-// d3.csv('../wp-content/uploads/2019/04/boc.csv').then((rawData) => {
+// d3.csv('boc.csv').then((rawData) => {
+d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
   data = rawData.slice(0);
   filteredData = rawData.slice(0);
 

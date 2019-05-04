@@ -3,9 +3,12 @@ import * as Datamap from 'datamaps';
 import d3Tip from 'd3-tip';
 import { histogramLocation, tooltip } from '../util';
 
-const radiusScaling = 0.5;
+const radiusScaling = 0.85;
+const radiusMin = 2.5;
 
 let map;
+
+const radiusScaleFloor = x => Math.max(Math.sqrt(x) * radiusScaling, radiusMin);
 
 const update = (data, filteredData) => {
   let bubbleData;
@@ -20,7 +23,7 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
+        radius: radiusScaleFloor(elem.value),
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'origin',
@@ -34,7 +37,7 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: Math.sqrt(elem.value) * radiusScaling, // area of circle proportional
+        radius: radiusScaleFloor(elem.value),
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'district',
@@ -48,7 +51,7 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
+        radius: radiusScaleFloor(elem.value),
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'origin',
@@ -62,7 +65,7 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: Math.sqrt(elem.value) * radiusScaling, // area of circle proportional
+        radius: radiusScaleFloor(elem.value),
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'district',
@@ -103,8 +106,8 @@ const init = (data, filteredData) => {
     width: 800,
     setProjection(element) { // eslint-disable-line
       const projection = d3.geo.equirectangular() // eslint-disable-line
-        .center([43, -22])
-        .scale(1000);
+        .center([50, -15])
+        .scale(850);
 
       const path = d3.geo.path() // eslint-disable-line
         .projection(projection);
