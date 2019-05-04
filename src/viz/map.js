@@ -13,7 +13,7 @@ const update = (data, filteredData) => {
   const view = document.getElementById('mapSelect').value;
 
   if (view === 'Origin') {
-    const histLoc = histogramLocation(data, filteredData, 'Origin', x => x);
+    const histLoc = histogramLocation(data, filteredData, 'Origin', x => x.match(/\(([^)]+)\)/).pop());
 
     bubbleData = histLoc.map((elem) => {
       const coord = elem.key.split(',').map(parseFloat);
@@ -23,7 +23,7 @@ const update = (data, filteredData) => {
         radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
         latitude: coord[0],
         longitude: coord[1],
-        fillKey: elem.key,
+        fillKey: 'origin',
       };
     });
   } else if (view === 'Registration District') {
@@ -37,16 +37,27 @@ const update = (data, filteredData) => {
         radius: Math.sqrt(elem.value) * radiusScaling, // area of circle proportional
         latitude: coord[0],
         longitude: coord[1],
-        fillKey: elem.key,
+        fillKey: 'district',
       };
     });
   } else {
-    const histLoc = {
-      ...histogramLocation(data, filteredData, 'Origin', x => x),
-      ...histogramLocation(data, filteredData, 'Registration District', x => x),
-    };
+    const histLocOrigin = histogramLocation(data, filteredData, 'Origin', x => x.match(/\(([^)]+)\)/).pop());
 
-    bubbleData = histLoc.map((elem) => {
+    const bubbleDataOrigin = histLocOrigin.map((elem) => {
+      const coord = elem.key.split(',').map(parseFloat);
+      return {
+        name: [...elem.tags].join(', '),
+        count: elem.value,
+        radius: Math.sqrt(elem.value) * 1.25, // area of circle proportional
+        latitude: coord[0],
+        longitude: coord[1],
+        fillKey: 'origin',
+      };
+    });
+
+    const histLocDistrict = histogramLocation(data, filteredData, 'Registration District', x => x);
+
+    const bubbleDataDistrict = histLocDistrict.map((elem) => {
       const coord = elem.key.split(',').map(parseFloat);
       return {
         name: [...elem.tags].join(', '),
@@ -54,9 +65,11 @@ const update = (data, filteredData) => {
         radius: Math.sqrt(elem.value) * radiusScaling, // area of circle proportional
         latitude: coord[0],
         longitude: coord[1],
-        fillKey: elem.key,
+        fillKey: 'district',
       };
     });
+
+    bubbleData = bubbleDataOrigin.concat(bubbleDataDistrict);
   }
 
   map.bubbles(bubbleData, {
@@ -78,14 +91,11 @@ const update = (data, filteredData) => {
 };
 
 const init = (data, filteredData) => {
-  const allCoords = [...new Set(histogramLocation(data, filteredData, 'Registration District', x => x).map(obj => obj.key))];
-
-  const color = d3v4.scaleOrdinal(d3v4.schemeCategory10);
-  const fills = {};
-  allCoords.forEach((coord) => {
-    fills[coord] = color(coord);
-  });
-  fills.defaultFill = '#ABDDA4';
+  const fills = {
+    district: '#efdc99',
+    origin: '#684C00',
+    defaultFill: '#CCCCCC',
+  };
 
   map = new Datamap({
     element: document.getElementById('mapChart'),

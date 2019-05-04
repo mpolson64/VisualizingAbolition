@@ -47,7 +47,7 @@ const histogramLocation = (data, filteredData, extractor, transform) => {
   const temp = {};
 
   data.forEach((obj) => {
-    const coord = [obj[`${extractor} Latitude`], obj[`${extractor} Longitude`]].map(transform);
+    const coord = [obj[`${extractor} Latitude`], obj[`${extractor} Longitude`]];
 
     temp[coord] = {};
     temp[coord].count = 0;
@@ -55,18 +55,20 @@ const histogramLocation = (data, filteredData, extractor, transform) => {
   });
 
   filteredData.forEach((obj) => {
-    const coord = [obj[`${extractor} Latitude`], obj[`${extractor} Longitude`]].map(transform);
+    const coord = [obj[`${extractor} Latitude`], obj[`${extractor} Longitude`]];
 
     temp[coord].count += 1;
-    temp[coord].tags.add(obj[extractor]);
+    temp[coord].tags.add(transform(obj[extractor]));
   });
 
   Object.keys(temp).forEach((key) => {
-    res.push({
-      key,
-      value: temp[key].count,
-      tags: temp[key].tags,
-    });
+    if (!temp[key].tags.has('Unspecified')) {
+      res.push({
+        key,
+        value: temp[key].count,
+        tags: temp[key].tags,
+      });
+    }
   });
 
   return res;
