@@ -8,7 +8,7 @@ const radiusMin = 2.5;
 
 let map;
 
-const radiusScaleFloor = x => Math.max(Math.sqrt(x) * radiusScaling, radiusMin);
+const radiusScaleFloor = x => (x === 0 ? 0 : Math.max(Math.sqrt(x) * radiusScaling, radiusMin));
 
 const update = (data, filteredData) => {
   let bubbleData;
