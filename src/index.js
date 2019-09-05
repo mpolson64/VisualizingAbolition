@@ -108,7 +108,6 @@ noUiSlider.create(dateSlider, {
 /*
  * HELPER FUNCTIONS
  */
-// Fill datalists for dropdowns on control panel
 const updateActiveChart = () => {
   if (activeViz === 'histogramOverTime') {
     histogramOverTime.update(data, filteredData);
@@ -119,6 +118,7 @@ const updateActiveChart = () => {
   }
 };
 
+// Fill datalists for dropdowns on control panel
 const fillDatalists = () => {
   datalistIds.forEach((datalistId) => {
     const list = document.getElementById(datalistId);
@@ -157,7 +157,6 @@ const filtersChanged = (key, newPredicate) => {
 
   updateActiveChart();
 
-  document.getElementById('downloadFilteredBtn').setAttribute('href', `data:text/plain;charset=utf-8,${d3.csvFormat(filteredData)}`);
   document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
 };
 
@@ -169,42 +168,42 @@ registreeFilter.onchange = () => {
 
 const statusFilter = document.getElementById('statusFilter');
 statusFilter.onchange = () => {
-  filtersChanged('status', obj => (statusFilter.value === '' ? true : obj.Status === statusFilter.value));
+  filtersChanged('status', obj => obj.Status.toLowerCase().includes(statusFilter.value.toLowerCase()));
 };
 
 const sexFilter = document.getElementById('sexFilter');
 sexFilter.onchange = () => {
-  filtersChanged('sex', obj => (sexFilter.value === '' ? true : obj.Sex === sexFilter.value));
+  filtersChanged('sex', obj => obj.Sex.toLowerCase().includes(sexFilter.value.toLowerCase()));
 };
 
 const originFilter = document.getElementById('originFilter');
 originFilter.onchange = () => {
-  filtersChanged('origin', obj => (originFilter.value === '' ? true : obj.Origin === originFilter.value));
+  filtersChanged('origin', obj => obj.Origin.toLowerCase().includes(originFilter.value.toLowerCase()));
 };
 
 const occupationFilter = document.getElementById('occupationFilter');
 occupationFilter.onchange = () => {
-  filtersChanged('occupation', obj => (occupationFilter.value === '' ? true : obj.Occupation === occupationFilter.value));
+  filtersChanged('occupation', obj => obj.Occupation.toLowerCase().includes(occupationFilter.value.toLowerCase()));
 };
 
 const masterFilter = document.getElementById('masterFilter');
 masterFilter.onchange = () => {
-  filtersChanged('master', obj => (masterFilter.value === '' ? true : obj.Master === masterFilter.value));
+  filtersChanged('master', obj => obj.Origin.toLowerCase().includes(masterFilter.value.toLowerCase()));
 };
 
 const masterResidenceFilter = document.getElementById('masterResidenceFilter');
 masterResidenceFilter.onchange = () => {
-  filtersChanged('masterResidence', obj => (masterResidenceFilter.value === '' ? true : obj['Master Residence'] === masterResidenceFilter.value));
+  filtersChanged('masterResidence', obj => obj['Master Residence'].toLowerCase().includes(masterResidenceFilter.value.toLowerCase()));
 };
 
 const registrationDistrictFilter = document.getElementById('registrationDistrictFilter');
 registrationDistrictFilter.onchange = () => {
-  filtersChanged('registrationDistrict', obj => (registrationDistrictFilter.value === '' ? true : obj['Registration District'] === registrationDistrictFilter.value));
+  filtersChanged('registrationDistrict', obj => obj['Registration District'].toLowerCase().includes(registrationDistrictFilter.value.toLowerCase()));
 };
 
 const sourcesFilter = document.getElementById('sourcesFilter');
 sourcesFilter.onchange = () => {
-  filtersChanged('sources', obj => (sourcesFilter.value === '' ? true : obj.Sources === sourcesFilter.value));
+  filtersChanged('sources', obj => obj.Sources.toLowerCase().includes(sourcesFilter.value.toLowerCase()));
 };
 
 // initialize onchange for slider filtering
@@ -261,6 +260,6 @@ d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
   donut.init(data, filteredData);
   histogramOverTime.init(data, filteredData);
 
-  document.getElementById('downloadFilteredBtn').setAttribute('href', `data:text/plain;charset=utf-8,${d3.csvFormat(filteredData)}`);
+  document.getElementById('downloadFilteredBtn').onclick = () => table.download('csv', 'OceansAndContinentsFiltered.csv');
   document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
 });

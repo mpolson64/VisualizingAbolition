@@ -69,7 +69,7 @@ const init = (data, filteredData) => {
     .datum(hist)
     .attr('d', plotLine)
     .style('fill', 'none')
-    .style('stroke', 'brown');
+    .style('stroke', '#684c00');
 
 
   const tip = d3Tip()
@@ -92,7 +92,7 @@ const init = (data, filteredData) => {
     .attr('cy', d => yScale(d.y))
     .attr('stroke', 'white')
     .attr('stroke-width', '2px')
-    .style('fill', 'brown')
+    .style('fill', '#684c00')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
 };
@@ -112,7 +112,7 @@ const update = (data, filteredData) => {
     .attr('d', plotLine)
     .style('fill', 'none')
     .style('stroke-width', '2px')
-    .style('stroke', 'brown');
+    .style('stroke', '#684c00');
 
   svg.selectAll('circle')
     .data(hist)
@@ -120,7 +120,7 @@ const update = (data, filteredData) => {
     .duration(750)
     .attr('cx', d => xScale(d.x))
     .attr('cy', d => yScale(d.y))
-    .style('fill', 'brown');
+    .style('fill', '#864c00');
 
   svg.selectAll('circle')
     .data(hist)

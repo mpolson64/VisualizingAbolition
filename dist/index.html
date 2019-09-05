@@ -5,48 +5,48 @@
     tr {
         padding: 0px;
     }
-
+    
     td {
-
+        
         padding: 0px;
     }
-
+    
     table {
         padding: 0px;
         border-collapse: collapse;
     }
-
+    
     .noUiSlider {
         margin-right: 25px;
         margin-top: 37px;
     }
-
+    
     .noUi-connect {
         background: #684c00;
     }
-
+    
     .column {
         float: left;
     }
-
+    
     .left {
         width: 40%;
-
+        
         overflow: scroll;
-
+        
     }
-
+    
     .right {
         width: 60%;
     }
-
-
+    
+    
     .row:after {
         content: "";
         display: table;
         clear: both;
     }
-
+    
     .d3-tip {
         line-height: 1;
         padding: 12px;
@@ -54,7 +54,7 @@
         color: #fff;
         border-radius: 2px;
     }
-
+    
     .d3-tip:after {
         box-sizing: border-box;
         display: inline;
@@ -66,7 +66,7 @@
         position: absolute;
         text-align: center;
     }
-
+    
     .d3-tip.n:after {
         margin: -1px 0 0 0;
         top: 100%;
@@ -144,7 +144,7 @@
                         <td>
                             <div class="noUiSlider" id="dateSlider"></div>
                         </td>
-
+                        
                     </tr>
                     <tr>
                         <td>Registration District</td>
@@ -163,25 +163,25 @@
                 </table>
             </form>
         </div>
-
+        
         <div id='vizualizers' class='column right'>
             <div class="w3-bar w3-light-gray">
                 <button id="donutButton" class="w3-bar-item w3-button">Donut</button>
                 <button id="histogramOverTimeButton" class="w3-bar-item w3-button">Histogram</button>
                 <button id="mapButton" class="w3-bar-item w3-button w3-dark-gray">Map</button>
             </div>
-
+            
             <div id="map" class="w3-container w3-animate-opacity viz">
                 <div style="padding-top: 10px; padding-bottom: 10px; width: 100%;">
                     <select id='mapSelect'>
                         <option value='Registration District'>Registration District</option>
                         <option value='Origin'>Origin</option>
-                        <option value='Combined'>Combined</option>
+                        <option value='Both'>Both</option>
                     </select>
                 </div>
                 <div id="mapChart"></div>
             </div>
-
+            
             <div id="donut" class="w3-container w3-animate-opacity viz" style="display:none">
                 <div style="padding-top: 10px; padding-bottom: 10px; width: 100%;">
                     <select id='donutSelect' style="padding: 10px; widows: 100%;">
@@ -196,22 +196,18 @@
                 </div>
                 <div id="donutChart"></div>
             </div>
-
+            
             <div id="histogramOverTime" class="w3-container w3-animate-opacity viz" style="display:none">
                 <div id="histogramOverTimeChart"></div>
             </div>
         </div>
     </div>
-
+    
     <div id="table"></div>
-
-    <a id="downloadRawBtn" href="../wp-content/uploads/2019/05/boc.csv" download="OceansAndContinentsRaw.csv">Download
-        raw dataset</a> | <a id="downloadFilteredBtn" download="OceansAndContinentsFiltered.csv">Download filtered
-        dataset</a> | <a id="downloadFilterStateBtn" download="OceansAndContinentsFilterState.yaml">Download filter
-        state</a>
-
-        <!-- <script type="text/javascript" src="main.js"></script> -->
-
+    
+    <a id="downloadRawBtn" href="../wp-content/uploads/2019/05/boc.csv" download="OceansAndContinentsRaw.csv">Download raw dataset</a> | <a id="downloadFilteredBtn">Download filtered dataset</a> | <a id="downloadFilterStateBtn" download="OceansAndContinentsFilterState.yaml">Download filter state</a>
+    
+    <!-- <script type="text/javascript" src="main.js"></script> -->
 </body>
 
 </html>
