@@ -26,7 +26,7 @@ const datalistIds = [
 ];
 
 /* eslint-disable */
-const predicates = {
+let predicates = {
   registree: x => true,
   status: x => true,
   origin: x => true,
@@ -134,10 +134,8 @@ const fillDatalists = () => {
   });
 };
 
-// update everything when the filters change
-const filtersChanged = (key, newPredicate) => {
-  // set predicates and filter data
-  predicates[key] = newPredicate;
+const filtersChanged = () => {
+  // filter data
   const reducedPredicate = Object
     .values(predicates)
     .reduce((composed, predicate) => item => composed(item) && predicate(item));
@@ -163,64 +161,112 @@ const filtersChanged = (key, newPredicate) => {
 // initialize onchange for all string matching filtering
 const registreeFilter = document.getElementById('registreeFilter');
 registreeFilter.onchange = () => {
-  filtersChanged('registree', obj => (registreeFilter.value === '' ? true : obj.Registree === registreeFilter.value));
+  predicates.registree = obj => (registreeFilter.value === '' ? true : obj.Registree === registreeFilter.value);
+  filtersChanged();
 };
 
 const statusFilter = document.getElementById('statusFilter');
 statusFilter.onchange = () => {
-  filtersChanged('status', obj => obj.Status.toLowerCase().includes(statusFilter.value.toLowerCase()));
+  predicates.status = obj => obj.Status.toLowerCase().includes(statusFilter.value.toLowerCase());
 };
 
 const sexFilter = document.getElementById('sexFilter');
 sexFilter.onchange = () => {
-  filtersChanged('sex', obj => obj.Sex.toLowerCase().includes(sexFilter.value.toLowerCase()));
+  predicates.sex = obj => obj.Sex.toLowerCase().includes(sexFilter.value.toLowerCase());
+  filtersChanged();
 };
 
 const originFilter = document.getElementById('originFilter');
 originFilter.onchange = () => {
-  filtersChanged('origin', obj => obj.Origin.toLowerCase().includes(originFilter.value.toLowerCase()));
+  predicates.origin = obj => obj.Origin.toLowerCase().includes(originFilter.value.toLowerCase());
+  filtersChanged();
 };
 
 const occupationFilter = document.getElementById('occupationFilter');
 occupationFilter.onchange = () => {
-  filtersChanged('occupation', obj => obj.Occupation.toLowerCase().includes(occupationFilter.value.toLowerCase()));
+  predicates.occupation = obj => obj
+    .Occupation
+    .toLowerCase()
+    .includes(occupationFilter.value.toLowerCase());
+
+  filtersChanged();
 };
 
 const masterFilter = document.getElementById('masterFilter');
 masterFilter.onchange = () => {
-  filtersChanged('master', obj => obj.Origin.toLowerCase().includes(masterFilter.value.toLowerCase()));
+  predicates.master = obj => obj.Origin.toLowerCase().includes(masterFilter.value.toLowerCase());
+  filtersChanged();
 };
 
 const masterResidenceFilter = document.getElementById('masterResidenceFilter');
 masterResidenceFilter.onchange = () => {
-  filtersChanged('masterResidence', obj => obj['Master Residence'].toLowerCase().includes(masterResidenceFilter.value.toLowerCase()));
+  predicates.masterResidence = obj => obj['Master Residence'].toLowerCase().includes(masterResidenceFilter.value.toLowerCase());
+  filtersChanged();
 };
 
 const registrationDistrictFilter = document.getElementById('registrationDistrictFilter');
 registrationDistrictFilter.onchange = () => {
-  filtersChanged('registrationDistrict', obj => obj['Registration District'].toLowerCase().includes(registrationDistrictFilter.value.toLowerCase()));
+  predicates.registrationDistrict = obj => obj['Registration District'].toLowerCase().includes(registrationDistrictFilter.value.toLowerCase());
 };
 
 const sourcesFilter = document.getElementById('sourcesFilter');
 sourcesFilter.onchange = () => {
-  filtersChanged('sources', obj => obj.Sources.toLowerCase().includes(sourcesFilter.value.toLowerCase()));
+  predicates.sources = obj => obj.Sources.toLowerCase().includes(sourcesFilter.value.toLowerCase());
 };
 
 // initialize onchange for slider filtering
-ageSlider.noUiSlider.on('set', (values) => {
-  const res = values.map(x => parseFloat(x));
-  filtersChanged('age', obj => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1]);
-});
+const initOnSetForSliders = () => {
+  ageSlider.noUiSlider.on('change', (values) => {
+    const res = values.map(x => parseFloat(x));
+    predicates.age = obj => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1];
+    filtersChanged();
+  });
 
-dateSlider.noUiSlider.on('set', (values) => {
-  const res = values.map(x => parseFloat(x));
+  dateSlider.noUiSlider.on('change', (values) => {
+    const res = values.map(x => parseFloat(x));
 
-  filtersChanged('registrationDate',
-    (obj) => {
+    predicates.registrationDate = (obj) => {
       const year = obj['Registration Date'].substr(0, 4);
       return year >= res[0] && year <= res[1];
-    });
-});
+    };
+    filtersChanged();
+  });
+};
+initOnSetForSliders();
+
+// initialize onclick for reset filters button
+const resetFiltersButton = document.getElementById('resetFiltersButton');
+resetFiltersButton.onclick = () => {
+  registreeFilter.value = '';
+  statusFilter.value = '';
+  sexFilter.value = '';
+  originFilter.value = '';
+  occupationFilter.value = '';
+  masterFilter.value = '';
+  masterResidenceFilter.value = '';
+  registrationDistrictFilter.value = '';
+  sourcesFilter.value = '';
+
+  ageSlider.noUiSlider.set([0, 100]);
+  dateSlider.noUiSlider.set([1856, 1875]);
+
+  /* eslint-disable no-unused-vars */
+  predicates = {
+    registree: x => true,
+    status: x => true,
+    origin: x => true,
+    age: x => true,
+    occupation: x => true,
+    master: x => true,
+    masterResidence: x => true,
+    registrationDate: x => true,
+    registrationDistrict: x => true,
+    sources: x => true,
+  };
+  /* eslint-enable no-unused-vars */
+  
+  filtersChanged();
+};
 
 // initialize onclick for viz tabs
 /* eslint-disable */
@@ -247,8 +293,8 @@ document.getElementById('donutSelect').onchange = updateActiveChart;
 document.getElementById('mapSelect').onchange = updateActiveChart;
 
 // load data
-// d3.csv('boc.csv').then((rawData) => {
-d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
+d3.csv('boc.csv').then((rawData) => {
+// d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
   data = rawData.slice(0);
   filteredData = rawData.slice(0);
 
