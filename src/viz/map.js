@@ -91,6 +91,18 @@ const update = (data, filteredData) => {
   d3v4.selectAll('.datamaps-bubble')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
+
+  const gs = svg.selectAll(function () { return this.childNodes; }).filter('g');
+
+  svg.call(d3v4.zoom()
+    .extent(
+      [
+        [0, 0],
+        [document.getElementById('mapChart').offsetWidth, document.getElementById('mapChart').offsetHeight],
+      ],
+    )
+    .scaleExtent([0, 8])
+    .on('zoom', () => gs.attr('transform', d3v4.event.transform)));
 };
 
 const init = (data, filteredData, height, width) => {
