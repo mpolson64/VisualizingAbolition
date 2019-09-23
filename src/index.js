@@ -196,7 +196,7 @@ occupationFilter.onchange = () => {
 
 const masterFilter = document.getElementById('masterFilter');
 masterFilter.onchange = () => {
-  predicates.master = obj => obj.Origin.toLowerCase().includes(masterFilter.value.toLowerCase());
+  predicates.master = obj => obj.Master.toLowerCase().includes(masterFilter.value.toLowerCase());
   filtersChanged();
 };
 
