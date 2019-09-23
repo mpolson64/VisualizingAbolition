@@ -12,10 +12,6 @@ import { getFiltersState } from './util';
 import 'tabulator-tables/dist/css/tabulator.min.css';
 import 'nouislider/distribute/nouislider.min.css';
 
-// initialize viz dimmensions
-const fullHeight = 600;
-const fullWidth = 1600;
-
 // initialize helper values
 const datalistIds = [
   'registreeDatalist',
@@ -304,20 +300,19 @@ const toggleHideFilters = () => {
     viz.style.width = '50%';
 
     button.textContent = '<<';
-
-    map.init(data, filteredData, fullHeight, fullWidth / 2);
-    donut.init(data, filteredData, fullHeight, fullWidth / 2);
-    histogramOverTime.init(data, filteredData, fullHeight, fullWidth / 2);
   } else {
     filters.style.width = '0%';
     viz.style.width = '100%';
 
     button.textContent = '>>';
-
-    map.init(data, filteredData, fullHeight, fullWidth);
-    donut.init(data, filteredData, fullHeight, fullWidth);
-    histogramOverTime.init(data, filteredData, fullHeight, fullWidth);
   }
+
+  // on timeout so that the transition has time to play
+  setTimeout(() => {
+    map.init(data, filteredData, 600, viz.offsetWidth - 10);
+    donut.init(data, filteredData, 600, viz.offsetWidth - 10);
+    histogramOverTime.init(data, filteredData, 600, viz.offsetWidth - 10);
+  }, 500);
 };
 document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
 
@@ -335,9 +330,10 @@ d3.csv('boc.csv').then((rawData) => {
 
   fillDatalists();
 
-  map.init(data, filteredData, fullHeight, fullWidth / 2);
-  donut.init(data, filteredData, fullHeight, fullWidth / 2);
-  histogramOverTime.init(data, filteredData, fullHeight, fullWidth / 2);
+  const viz = document.getElementById('vizualizers');
+  map.init(data, filteredData, 600, viz.offsetWidth - 10);
+  donut.init(data, filteredData, 600, viz.offsetWidth - 10);
+  histogramOverTime.init(data, filteredData, 600, viz.offsetWidth - 10);
 
   document.getElementById('downloadFilteredBtn').onclick = () => table.download('csv', 'OceansAndContinentsFiltered.csv');
   document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
