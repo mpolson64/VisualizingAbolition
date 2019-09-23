@@ -93,17 +93,19 @@ const update = (data, filteredData) => {
     .on('mouseout', tip.hide);
 };
 
-const init = (data, filteredData) => {
+const init = (data, filteredData, height, width) => {
+  const mapChart = document.getElementById('mapChart');
+  mapChart.innerHTML = '';
+
   const fills = {
     district: '#efdc99',
     origin: '#684C00',
     defaultFill: '#CCCCCC',
   };
-
   map = new Datamap({
-    element: document.getElementById('mapChart'),
-    height: 600,
-    width: 800,
+    element: mapChart,
+    height,
+    width,
     setProjection(element) { // eslint-disable-line
       const projection = d3.geo.equirectangular() // eslint-disable-line
         .center([50, -15])

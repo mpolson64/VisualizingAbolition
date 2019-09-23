@@ -15,7 +15,9 @@ let svg;
 let line;
 let dot; // eslint-disable-line no-unused-vars
 
-const init = (data, filteredData) => {
+const init = (data, filteredData, rawHeight, rawWidth) => {
+  document.getElementById('histogramOverTimeChart').innerHTML = '';
+
   const hist = histogramNumberic(data, filteredData, 'Registration Date', str => parseInt(str.substr(0, 4), 10));
 
   margin = {
@@ -25,8 +27,8 @@ const init = (data, filteredData) => {
     left: 50,
   };
 
-  width = 800 - margin.left - margin.right;
-  height = 400 - margin.top - margin.bottom;
+  width = rawWidth - margin.left - margin.right;
+  height = rawHeight - margin.top - margin.bottom;
 
   xScale = d3.scaleLinear()
     .range([0, width])

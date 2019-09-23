@@ -4,18 +4,16 @@ import d3Tip from 'd3-tip';
 
 import { histogram, coalesceHistogram, tooltip } from '../util';
 
-let width;
-let height;
 let radius;
 
 let svg;
 
-let color;
+const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 let pie;
 let arc;
 
-let key;
+const key = d => d.data.key;
 
 const mergeWithFirstEqualZero = (first, second) => {
   const secondSet = d3.set();
@@ -100,9 +98,8 @@ const update = (data, filteredData) => {
     .remove();
 };
 
-const init = (data, filteredData) => {
-  width = 800;
-  height = 500;
+const init = (data, filteredData, height, width) => {
+  document.getElementById('donutChart').innerHTML = '';
   radius = Math.min(width, height) / 2;
 
   svg = d3
@@ -118,7 +115,6 @@ const init = (data, filteredData) => {
 
   pie = d3
     .pie()
-    .sort((null))
     .value(d => d.value);
 
   arc = d3
@@ -127,10 +123,6 @@ const init = (data, filteredData) => {
     .innerRadius(radius * 0.4);
 
   svg.attr('transform', `translate(${width / 2}, ${height / 2})`);
-
-  key = d => d.data.key;
-
-  color = d3.scaleOrdinal(d3.schemeCategory10);
 
   update(data, filteredData);
 };
