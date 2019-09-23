@@ -29,6 +29,7 @@ const datalistIds = [
 let predicates = {
   registree: x => true,
   status: x => true,
+  sex: x => true,
   origin: x => true,
   age: x => true,
   occupation: x => true,
@@ -168,11 +169,12 @@ registreeFilter.onchange = () => {
 const statusFilter = document.getElementById('statusFilter');
 statusFilter.onchange = () => {
   predicates.status = obj => obj.Status.toLowerCase().includes(statusFilter.value.toLowerCase());
+  filtersChanged();
 };
 
 const sexFilter = document.getElementById('sexFilter');
 sexFilter.onchange = () => {
-  predicates.sex = obj => obj.Sex.toLowerCase().includes(sexFilter.value.toLowerCase());
+  predicates.sex = obj => obj.Sex.toLowerCase() === sexFilter.value.toLowerCase();
   filtersChanged();
 };
 
@@ -300,19 +302,22 @@ const toggleHideFilters = () => {
     viz.style.width = '50%';
 
     button.textContent = '<<';
+
+    // we need to do this halving and doubling because the transition makes the width
+    // not take effect instantly
+    map.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
+    donut.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
+    histogramOverTime.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
   } else {
     filters.style.width = '0%';
     viz.style.width = '100%';
 
     button.textContent = '>>';
-  }
 
-  // on timeout so that the transition has time to play
-  setTimeout(() => {
-    map.init(data, filteredData, 600, viz.offsetWidth - 10);
-    donut.init(data, filteredData, 600, viz.offsetWidth - 10);
-    histogramOverTime.init(data, filteredData, 600, viz.offsetWidth - 10);
-  }, 500);
+    map.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
+    donut.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
+    histogramOverTime.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
+  }
 };
 document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
 
