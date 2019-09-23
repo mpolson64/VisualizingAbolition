@@ -270,7 +270,9 @@ resetFiltersButton.onclick = () => {
 
 // initialize onclick for viz tabs
 /* eslint-disable */
-Array.from(document.getElementsByClassName('w3-bar-item')).forEach((button) => {
+Array.from(document.getElementsByClassName('w3-bar-item'))
+.filter((button) => button.id != 'toggleFilterButton')
+.forEach((button) => {
   button.onclick = () => {
     Array.from(document.getElementsByClassName('viz')).forEach((elem) => {
       elem.style.display = 'none';
@@ -287,6 +289,23 @@ Array.from(document.getElementsByClassName('w3-bar-item')).forEach((button) => {
   };
 });
 /* eslint-enable */
+
+const toggleHideFilters = () => {
+  const filters = document.getElementById('filters');
+  const viz = document.getElementById('vizualizers');
+  const button = document.getElementById('toggleFilterButton');
+
+  if (button.textContent === '>>') {
+    filters.style.width = '50%';
+    viz.style.width = '50%';
+    button.textContent = '<<';
+  } else {
+    filters.style.width = '0%';
+    viz.style.width = '100%';
+    button.textContent = '>>';
+  }
+};
+document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
 
 // initialize onchange for internal viz selectors
 document.getElementById('donutSelect').onchange = updateActiveChart;

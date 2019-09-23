@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .filters {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #F00;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        
+        #viz {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="panel" class="filters">
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus auctor non massa in gravida. Suspendisse eu lectus nec turpis facilisis molestie. Pellentesque semper in nisi ut elementum. Duis quis justo nibh. Praesent nec magna blandit arcu viverra maximus. Ut consectetur leo sit amet nunc congue tincidunt. Donec sed nisl mauris. Nunc ultricies urna elit, ut ornare felis interdum non. Pellentesque in tellus libero. Curabitur sollicitudin dapibus orci. Sed posuere risus mattis mi dictum auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer non magna ac velit iaculis elementum. Maecenas elementum sapien vitae ex congue tristique. Donec tempor nisl quis odio tempor, eget efficitur elit egestas. Integer hendrerit eros id lectus gravida aliquet. Sed quis lectus vitae sapien finibus lobortis. Sed eleifend vel odio et bibendum. Proin a faucibus nulla, nec egestas massa. Proin sed mauris non dui consectetur vehicula. Pellentesque pellentesque, nibh id pharetra tristique, lectus lectus ornare diam, sit amet luctus ligula diam dictum magna. Mauris non mi tellus. Etiam malesuada purus ex, vel mattis mi lobortis at. Nullam tincidunt iaculis ultricies. Vestibulum elementum semper est mollis posuere. Aliquam elementum, erat a aliquam faucibus, neque dolor volutpat tortor, viverra viverra velit eros id sapien. Ut ornare vestibulum quam, at vehicula diam tempor et. Phasellus enim arcu, bibendum consectetur ultricies in, iaculis vitae lectus. Morbi eu purus euismod, bibendum tellus at, cursus mauris. Phasellus eget nisi vitae metus mattis aliquet. Vestibulum eleifend nunc vel placerat vulputate.
+        </div>
+    </div>
+
+    <div id="viz">
+        <button class="openbtn" onclick="toggleNav()">Toggle Filters</button>
+        <h2>Visualizations</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus auctor non massa in gravida. Suspendisse eu lectus nec turpis facilisis molestie. Pellentesque semper in nisi ut elementum. Duis quis justo nibh. Praesent nec magna blandit arcu viverra maximus. Ut consectetur leo sit amet nunc congue tincidunt. Donec sed nisl mauris. Nunc ultricies urna elit, ut ornare felis interdum non. Pellentesque in tellus libero. Curabitur sollicitudin dapibus orci. Sed posuere risus mattis mi dictum auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer non magna ac velit iaculis elementum. Maecenas elementum sapien vitae ex congue tristique. Donec tempor nisl quis odio tempor, eget efficitur elit egestas. Integer hendrerit eros id lectus gravida aliquet. Sed quis lectus vitae sapien finibus lobortis. Sed eleifend vel odio et bibendum. Proin a faucibus nulla, nec egestas massa. Proin sed mauris non dui consectetur vehicula. Pellentesque pellentesque, nibh id pharetra tristique, lectus lectus ornare diam, sit amet luctus ligula diam dictum magna. Mauris non mi tellus. Etiam malesuada purus ex, vel mattis mi lobortis at. Nullam tincidunt iaculis ultricies. Vestibulum elementum semper est mollis posuere. Aliquam elementum, erat a aliquam faucibus, neque dolor volutpat tortor, viverra viverra velit eros id sapien. Ut ornare vestibulum quam, at vehicula diam tempor et. Phasellus enim arcu, bibendum consectetur ultricies in, iaculis vitae lectus. Morbi eu purus euismod, bibendum tellus at, cursus mauris. Phasellus eget nisi vitae metus mattis aliquet. Vestibulum eleifend nunc vel placerat vulputate.
+        </p>
+    </div>
+
+    <script>
+        let isOpen = false;
+
+        function openNav() {
+            document.getElementById("panel").style.width = "500px";
+            document.getElementById("viz").style.marginLeft = "500px";
+            isOpen = true;
+        }
+
+        function closeNav() {
+            document.getElementById("panel").style.width = "0";
+            document.getElementById("viz").style.marginLeft = "0";
+            isOpen = false;
+        }
+
+        function toggleNav() {
+            if (isOpen) {
+                closeNav();
+            } else {
+                openNav();
+            }
+        }
+
+        openNav();
+    </script>
+
+</body>
+
+</html>
