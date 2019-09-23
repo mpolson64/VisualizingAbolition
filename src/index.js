@@ -49,7 +49,7 @@ let activeViz = 'map';
 
 // initialize table
 const table = new Tabulator(
-  '#table',
+  '#tableChart',
   {
     height: '500px',
     layout: 'fitColumns',
@@ -264,7 +264,7 @@ resetFiltersButton.onclick = () => {
     sources: x => true,
   };
   /* eslint-enable no-unused-vars */
-  
+
   filtersChanged();
 };
 
