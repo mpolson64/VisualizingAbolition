@@ -83,14 +83,15 @@ const update = (data, filteredData) => {
 
   const tip = d3Tip()
     .attr('class', 'd3-tip')
-    .offset([-115, 0])
+    // .offset([-115, 0])
     .html(d => tooltip(d.name, d.count));
 
   svg.call(tip);
 
   d3v4.selectAll('.datamaps-bubble')
     .on('mouseover', tip.show)
-    .on('mouseout', tip.hide);
+    .on('mouseout', tip.hide)
+    .on('click', d => console.log(d));
 
   const gs = svg.selectAll(function () { return this.childNodes; }).filter('g');
 

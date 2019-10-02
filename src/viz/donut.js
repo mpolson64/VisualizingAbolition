@@ -43,7 +43,7 @@ const update = (data, filteredData) => {
   /* -------- TIP -------------*/
   const tip = d3Tip()
     .attr('class', 'd3-tip')
-    .offset([-115, 0])
+    // .offset([-115, 0])
     .html(d => tooltip(d.data.key, d.data.value));
 
   svg.call(tip);
@@ -88,7 +88,8 @@ const update = (data, filteredData) => {
     .attr('stroke', 'white')
     .attr('stroke-width', '2px')
     .on('mouseover', tip.show)
-    .on('mouseout', tip.hide);
+    .on('mouseout', tip.hide)
+    .on('click', d => console.log(d));
 
   slice
     .exit()

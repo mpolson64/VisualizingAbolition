@@ -76,7 +76,7 @@ const init = (data, filteredData, rawHeight, rawWidth) => {
 
   const tip = d3Tip()
     .attr('class', 'd3-tip')
-    .offset([-115, 0])
+    // .offset([-115, 0])
     .html(d => tooltip(d.x, d.y));
 
   svg.call(tip);
@@ -96,7 +96,8 @@ const init = (data, filteredData, rawHeight, rawWidth) => {
     .attr('stroke-width', '2px')
     .style('fill', '#684c00')
     .on('mouseover', tip.show)
-    .on('mouseout', tip.hide);
+    .on('mouseout', tip.hide)
+    .on('click', d => console.log(d));
 };
 
 const update = (data, filteredData) => {
