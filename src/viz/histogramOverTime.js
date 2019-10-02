@@ -97,7 +97,7 @@ const init = (data, filteredData, rawHeight, rawWidth) => {
     .style('fill', '#684c00')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
-    .on('click', d => console.log(d));
+    .on('click', d => console.log(`registration date => ${d.x}`));
 };
 
 const update = (data, filteredData) => {

@@ -89,7 +89,7 @@ const update = (data, filteredData) => {
     .attr('stroke-width', '2px')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
-    .on('click', d => console.log(d));
+    .on('click', d => console.log(`${document.getElementById('donutSelect').value} => ${d.data.key}`));
 
   slice
     .exit()

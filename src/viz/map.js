@@ -91,7 +91,7 @@ const update = (data, filteredData) => {
   d3v4.selectAll('.datamaps-bubble')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
-    .on('click', d => console.log(d));
+    .on('click', d => console.log(`${d.fillKey} => ${d.name}`));
 
   const gs = svg.selectAll(function () { return this.childNodes; }).filter('g');
 
