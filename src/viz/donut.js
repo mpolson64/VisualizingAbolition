@@ -89,7 +89,30 @@ const update = (data, filteredData) => {
     .attr('stroke-width', '2px')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
-    .on('click', d => console.log(`${document.getElementById('donutSelect').value} => ${d.data.key}`));
+    .on('click', (d) => {
+      tip.hide();
+
+      let filter;
+      const filterName = document.getElementById('donutSelect').value;
+      if (filterName === 'Status') {
+        filter = document.getElementById('statusFilter');
+      } else if (filterName === 'Sex') {
+        filter = document.getElementById('sexFilter');
+      } else if (filterName === 'Origin') {
+        filter = document.getElementById('originFilter');
+      } else if (filterName === 'Occupation') {
+        filter = document.getElementById('occupationFilter');
+      } else if (filterName === 'Master') {
+        filter = document.getElementById('masterFilter');
+      } else if (filterName === 'Master Residence') {
+        filter = document.getElementById('masterResidenceFilter');
+      } else if (filterName === 'Registration District') {
+        filter = document.getElementById('registrationDistrictFilter');
+      }
+
+      filter.value = d.data.key;
+      filter.onchange();
+    });
 
   slice
     .exit()

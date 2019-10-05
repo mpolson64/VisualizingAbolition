@@ -209,22 +209,24 @@ masterResidenceFilter.onchange = () => {
 const registrationDistrictFilter = document.getElementById('registrationDistrictFilter');
 registrationDistrictFilter.onchange = () => {
   predicates.registrationDistrict = obj => obj['Registration District'].toLowerCase().includes(registrationDistrictFilter.value.toLowerCase());
+  filtersChanged();
 };
 
 const sourcesFilter = document.getElementById('sourcesFilter');
 sourcesFilter.onchange = () => {
   predicates.sources = obj => obj.Sources.toLowerCase().includes(sourcesFilter.value.toLowerCase());
+  filtersChanged();
 };
 
 // initialize onchange for slider filtering
 const initOnSetForSliders = () => {
-  ageSlider.noUiSlider.on('change', (values) => {
+  ageSlider.noUiSlider.on('set', (values) => {
     const res = values.map(x => parseFloat(x));
     predicates.age = obj => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1];
     filtersChanged();
   });
 
-  dateSlider.noUiSlider.on('change', (values) => {
+  dateSlider.noUiSlider.on('set', (values) => {
     const res = values.map(x => parseFloat(x));
 
     predicates.registrationDate = (obj) => {

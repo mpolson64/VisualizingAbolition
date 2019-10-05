@@ -91,7 +91,18 @@ const update = (data, filteredData) => {
   d3v4.selectAll('.datamaps-bubble')
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide)
-    .on('click', d => console.log(`${d.fillKey} => ${d.name}`));
+    .on('click', (d) => {
+      tip.hide();
+
+      let filter;
+      if (d.fillKey === 'district') {
+        filter = document.getElementById('registrationDistrictFilter');
+      } else if (d.fillKey === 'origin') { // TODO: Something is up with this look at the console
+        filter = document.getElementById('originFilter');
+      }
+      filter.value = d.name;
+      filter.onchange();
+    });
 
   const gs = svg.selectAll(function () { return this.childNodes; }).filter('g');
 
