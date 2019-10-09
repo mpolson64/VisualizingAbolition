@@ -220,13 +220,13 @@ sourcesFilter.onchange = () => {
 
 // initialize onchange for slider filtering
 const initOnSetForSliders = () => {
-  ageSlider.noUiSlider.on('set', (values) => {
+  ageSlider.noUiSlider.on('change', (values) => {
     const res = values.map(x => parseFloat(x));
     predicates.age = obj => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1];
     filtersChanged();
   });
 
-  dateSlider.noUiSlider.on('set', (values) => {
+  dateSlider.noUiSlider.on('change', (values) => {
     const res = values.map(x => parseFloat(x));
 
     predicates.registrationDate = (obj) => {
