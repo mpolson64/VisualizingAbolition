@@ -220,13 +220,13 @@ sourcesFilter.onchange = () => {
 
 // initialize onchange for slider filtering
 const initOnSetForSliders = () => {
-  ageSlider.noUiSlider.on('change', (values) => {
+  ageSlider.noUiSlider.on('set', (values) => {
     const res = values.map(x => parseFloat(x));
     predicates.age = obj => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1];
     filtersChanged();
   });
 
-  dateSlider.noUiSlider.on('change', (values) => {
+  dateSlider.noUiSlider.on('set', (values) => {
     const res = values.map(x => parseFloat(x));
 
     predicates.registrationDate = (obj) => {
@@ -328,8 +328,8 @@ document.getElementById('donutSelect').onchange = updateActiveChart;
 document.getElementById('mapSelect').onchange = updateActiveChart;
 
 // load data
-d3.csv('boc.csv').then((rawData) => {
-// d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
+// d3.csv('boc.csv').then((rawData) => {
+d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
   data = rawData.slice(0);
   filteredData = rawData.slice(0);
 
