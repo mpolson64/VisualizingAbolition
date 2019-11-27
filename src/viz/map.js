@@ -114,7 +114,10 @@ const update = (data, filteredData) => {
     .scaleExtent([0, 8])
     .on('zoom', () => {
       svg.selectAll('g').attr('transform', d3v4.event.transform);
-      // svg.selectAll('.datamaps-bubble').attr('r', 15 / d3v4.event.transform.k); // TODO: This rescales the bubbles to radius 15, make them keep radius
+      svg.selectAll('.datamaps-bubble').each((d) => { // lol this is n^2 don't tell anyone
+        const { name, radius } = d;
+        svg.selectAll('.datamaps-bubble').filter(dInner => dInner.name === name).attr('r', radius / d3v4.event.transform.k);
+      });
     }));
 };
 
