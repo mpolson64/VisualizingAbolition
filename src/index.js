@@ -55,7 +55,7 @@ const table = new Tabulator(
     height: '500px',
     layout: 'fitColumns',
     pagination: 'local',
-    paginationSize: 20,
+    paginationSize: 100,
     columns: [
       // { title: 'ID', field: 'ID' },
       { title: 'Registree', field: 'Registree' },
@@ -341,11 +341,12 @@ const openFullscreen = () => {
 
   // have to lag for whatever reason
   setTimeout(() => {
-    map.init(data, filteredData, elem.offsetHeight - bar.offsetHeight, elem.offsetWidth);
-    donut.init(data, filteredData, elem.offsetHeight - bar.offsetHeight, elem.offsetWidth);
+    map.init(data, filteredData, elem.offsetHeight - bar.offsetHeight - 100, elem.offsetWidth);
+    donut.init(data, filteredData, elem.offsetHeight - bar.offsetHeight - 100, elem.offsetWidth);
     histogramOverTime.init(
-      data, filteredData, elem.offsetHeight - bar.offsetHeight, elem.offsetWidth,
+      data, filteredData, elem.offsetHeight - bar.offsetHeight - 100, elem.offsetWidth,
     );
+    table.setHeight(elem.offsetHeight - bar.offsetHeight - 100);
   }, 500);
 
   // eslint-disable-next-line no-use-before-define
