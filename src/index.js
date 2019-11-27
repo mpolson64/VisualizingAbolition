@@ -275,7 +275,7 @@ resetFiltersButton.onclick = () => {
 // initialize onclick for viz tabs
 /* eslint-disable */
 Array.from(document.getElementsByClassName('w3-bar-item'))
-.filter((button) => button.id != 'toggleFilterButton')
+.filter((button) => !(button.id === 'toggleFilterButton' || button.id === 'fullscreenButton'))
 .forEach((button) => {
   button.onclick = () => {
     Array.from(document.getElementsByClassName('viz')).forEach((elem) => {
@@ -322,6 +322,58 @@ const toggleHideFilters = () => {
   }
 };
 document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
+
+// fullscreen
+const openFullscreen = () => {
+  const elem = document.getElementById('vizualizers');
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+
+  const bar = document.getElementById('bar');
+
+  // have to lag for whatever reason
+  setTimeout(() => {
+    map.init(data, filteredData, elem.offsetHeight - bar.offsetHeight, elem.offsetWidth);
+    donut.init(data, filteredData, elem.offsetHeight - bar.offsetHeight, elem.offsetWidth);
+    histogramOverTime.init(
+      data, filteredData, elem.offsetHeight - bar.offsetHeight, elem.offsetWidth,
+    );
+  }, 500);
+
+  // eslint-disable-next-line no-use-before-define
+  document.getElementById('fullscreenButton').onclick = closeFullscreen;
+};
+
+const closeFullscreen = () => {
+  const elem = document.getElementById('vizualizers');
+
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) { /* Firefox */
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE/Edge */
+    document.msExitFullscreen();
+  }
+  setTimeout(() => {
+    map.init(data, filteredData, 600, elem.offsetWidth - 10);
+    donut.init(data, filteredData, 600, elem.offsetWidth - 10);
+    histogramOverTime.init(data, filteredData, 600, elem.offsetWidth - 10);
+  }, 500);
+
+  document.getElementById('fullscreenButton').onclick = openFullscreen;
+};
+
+document.getElementById('fullscreenButton').onclick = openFullscreen;
 
 // initialize onchange for internal viz selectors
 document.getElementById('donutSelect').onchange = updateActiveChart;
