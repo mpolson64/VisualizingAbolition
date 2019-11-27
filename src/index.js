@@ -351,6 +351,8 @@ const openFullscreen = () => {
 
   // eslint-disable-next-line no-use-before-define
   document.getElementById('fullscreenButton').onclick = closeFullscreen;
+  document.getElementById('toggleFilterButton').onclick = () => {};
+  document.getElementById('fullscreenButton').innerHTML = '<i class="fas fa-compress"></i>';
 };
 
 const closeFullscreen = () => {
@@ -372,6 +374,8 @@ const closeFullscreen = () => {
   }, 500);
 
   document.getElementById('fullscreenButton').onclick = openFullscreen;
+  document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
+  document.getElementById('fullscreenButton').innerHTML = '<i class="fas fa-expand"></i>';
 };
 
 document.getElementById('fullscreenButton').onclick = openFullscreen;
