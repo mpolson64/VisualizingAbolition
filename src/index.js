@@ -294,16 +294,19 @@ Array.from(document.getElementsByClassName('w3-bar-item'))
 });
 /* eslint-enable */
 
+let isFiltersHidden = false;
 const toggleHideFilters = () => {
   const filters = document.getElementById('filters');
   const viz = document.getElementById('vizualizers');
   const button = document.getElementById('toggleFilterButton');
 
-  if (button.textContent === '>>') {
+  if (isFiltersHidden) {
+    isFiltersHidden = false;
+
     filters.style.width = '50%';
     viz.style.width = '50%';
 
-    button.textContent = '<<';
+    button.innerHTML = '<i class="fas fa-caret-left"></i>';
 
     // we need to do this halving and doubling because the transition makes the width
     // not take effect instantly
@@ -311,10 +314,12 @@ const toggleHideFilters = () => {
     donut.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
     histogramOverTime.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
   } else {
+    isFiltersHidden = true;
+
     filters.style.width = '0%';
     viz.style.width = '100%';
 
-    button.textContent = '>>';
+    button.innerHTML = '<i class="fas fa-caret-right"></i>';
 
     map.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
     donut.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
