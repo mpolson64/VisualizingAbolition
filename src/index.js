@@ -7,6 +7,7 @@ import * as jsyaml from 'js-yaml';
 import * as map from './viz/map';
 import * as donut from './viz/donut';
 import * as histogramOverTime from './viz/histogramOverTime';
+import * as split from './viz/split';
 import { getFiltersState } from './util';
 
 import 'tabulator-tables/dist/css/tabulator.min.css';
@@ -110,12 +111,15 @@ noUiSlider.create(dateSlider, {
  * HELPER FUNCTIONS
  */
 const updateActiveChart = () => {
+  console.log(activeViz);
   if (activeViz === 'histogramOverTime') {
     histogramOverTime.update(data, filteredData);
   } else if (activeViz === 'donut') {
     donut.update(data, filteredData);
   } else if (activeViz === 'map') {
     map.update(data, filteredData);
+  } else if (activeViz === 'split') {
+    split.update(data, filteredData);
   }
 };
 
@@ -313,6 +317,7 @@ const toggleHideFilters = () => {
     map.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
     donut.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
     histogramOverTime.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
+    split.init(data, filteredData, 600, viz.offsetWidth / 2 - 10);
   } else {
     isFiltersHidden = true;
 
@@ -324,6 +329,7 @@ const toggleHideFilters = () => {
     map.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
     donut.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
     histogramOverTime.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
+    split.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
   }
 };
 document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
@@ -351,6 +357,7 @@ const openFullscreen = () => {
     histogramOverTime.init(
       data, filteredData, elem.offsetHeight - bar.offsetHeight - 100, elem.offsetWidth,
     );
+    split.init(data, filteredData, elem.offsetHeight - bar.offsetHeight - 100, elem.offsetWidth);
     table.setHeight(elem.offsetHeight - bar.offsetHeight - 100);
   }, 500);
 
@@ -376,6 +383,8 @@ const closeFullscreen = () => {
     map.init(data, filteredData, 600, elem.offsetWidth - 10);
     donut.init(data, filteredData, 600, elem.offsetWidth - 10);
     histogramOverTime.init(data, filteredData, 600, elem.offsetWidth - 10);
+    split.init(data, filteredData, 600, elem.offsetWidth - 10);
+    table.setHeight(500);
   }, 500);
 
   document.getElementById('fullscreenButton').onclick = openFullscreen;
@@ -403,6 +412,7 @@ d3.csv('boc.csv').then((rawData) => {
   map.init(data, filteredData, 600, viz.offsetWidth - 10);
   donut.init(data, filteredData, 600, viz.offsetWidth - 10);
   histogramOverTime.init(data, filteredData, 600, viz.offsetWidth - 10);
+  split.init(data, filteredData, 600, viz.offsetWidth - 10);
 
   document.getElementById('downloadFilteredBtn').onclick = () => table.download('csv', 'OceansAndContinentsFiltered.csv');
   document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
