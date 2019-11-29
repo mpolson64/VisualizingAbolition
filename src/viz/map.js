@@ -79,7 +79,7 @@ const update = (data, filteredData) => {
     popupOnHover: false,
   });
 
-  const svg = d3v4.select('.datamap');
+  const svg = d3v4.selectAll('.datamap');
 
   const tip = d3Tip()
     .attr('class', 'd3-tip')

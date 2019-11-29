@@ -6,8 +6,8 @@ import * as splitHistogramOverTime from './splitViz/splitHistogramOverTime';
 let table;
 
 const init = (data, filteredData, height, width) => {
-  const adjustedHeight = height / 2 - 100;
-  const adjustedWidth = width / 2 - 100;
+  const adjustedHeight = height / 2 - 50;
+  const adjustedWidth = width / 2 - 50;
   splitDonut.init(data, filteredData, adjustedHeight, adjustedWidth);
   splitMap.init(data, filteredData, adjustedHeight, adjustedWidth);
   splitHistogramOverTime.init(data, filteredData, adjustedHeight, adjustedWidth);
