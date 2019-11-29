@@ -398,6 +398,9 @@ document.getElementById('fullscreenButton').onclick = openFullscreen;
 document.getElementById('donutSelect').onchange = updateActiveChart;
 document.getElementById('mapSelect').onchange = updateActiveChart;
 
+document.getElementById('splitDonutSelect').onchange = updateActiveChart;
+document.getElementById('splitMapSelect').onchange = updateActiveChart;
+
 // load data
 d3.csv('boc.csv').then((rawData) => {
 // d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
