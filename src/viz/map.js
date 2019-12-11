@@ -8,6 +8,7 @@ const radiusMin = 2.5;
 
 let map;
 
+let zoomLevel = 1;
 const radiusScaleFloor = x => (x === 0 ? 0 : Math.max(Math.sqrt(x) * radiusScaling, radiusMin));
 
 const update = (data, filteredData) => {
@@ -23,7 +24,7 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: radiusScaleFloor(elem.value),
+        radius: radiusScaleFloor(elem.value) / zoomLevel,
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'origin',
@@ -37,13 +38,14 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: radiusScaleFloor(elem.value),
+        radius: radiusScaleFloor(elem.value) / zoomLevel,
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'district',
       };
     });
   } else {
+    map.bubbles([]);
     const histLocOrigin = histogramLocation(data, filteredData, 'Origin', x => x.match(/\(([^)]+)\)/).pop());
 
     const bubbleDataOrigin = histLocOrigin.map((elem) => {
@@ -51,7 +53,7 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: radiusScaleFloor(elem.value),
+        radius: radiusScaleFloor(elem.value) / zoomLevel,
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'origin',
@@ -65,60 +67,62 @@ const update = (data, filteredData) => {
       return {
         name: [...elem.tags].join(', '),
         count: elem.value,
-        radius: radiusScaleFloor(elem.value),
+        radius: radiusScaleFloor(elem.value) / zoomLevel,
         latitude: coord[0],
         longitude: coord[1],
         fillKey: 'district',
       };
     });
 
-    bubbleData = bubbleDataOrigin.concat(bubbleDataDistrict);
+    bubbleData = bubbleDataDistrict.concat(bubbleDataOrigin);
   }
 
-  map.bubbles(bubbleData, {
-    popupOnHover: false,
-  });
-
-  const svg = d3v4.selectAll('.datamap');
-
-  const tip = d3Tip()
-    .attr('class', 'd3-tip')
-    .offset([-115, 0])
-    .html(d => tooltip(d.name, d.count));
-
-  svg.call(tip);
-
-  d3v4.selectAll('.datamaps-bubble')
-    .on('mouseover', tip.show)
-    .on('mouseout', tip.hide)
-    .on('click', (d) => {
-      tip.hide();
-
-      let filter;
-      if (d.fillKey === 'district') {
-        filter = document.getElementById('registrationDistrictFilter');
-      } else if (d.fillKey === 'origin') { // TODO: Something is up with this look at the console
-        filter = document.getElementById('originFilter');
-      }
-      filter.value = d.name;
-      filter.onchange();
+  setTimeout(() => {
+    map.bubbles(bubbleData, {
+      popupOnHover: false,
     });
+    const svg = d3v4.selectAll('.datamap');
 
-  svg.call(d3v4.zoom()
-    .extent(
-      [
-        [0, 0],
-        [document.getElementById('mapChart').offsetWidth, document.getElementById('mapChart').offsetHeight],
-      ],
-    )
-    .scaleExtent([0, 8])
-    .on('zoom', () => {
-      svg.selectAll('g').attr('transform', d3v4.event.transform);
-      svg.selectAll('.datamaps-bubble').each((d) => { // lol this is n^2 don't tell anyone
-        const { name, radius } = d;
-        svg.selectAll('.datamaps-bubble').filter(dInner => dInner.name === name).attr('r', radius / d3v4.event.transform.k);
+    const tip = d3Tip()
+      .attr('class', 'd3-tip')
+      // .offset([-115, 0])
+      .html(d => tooltip(d.name, d.count));
+
+    svg.call(tip);
+
+    d3v4.selectAll('.datamaps-bubble')
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+      .on('click', (d) => {
+        tip.hide();
+
+        let filter;
+        if (d.fillKey === 'district') {
+          filter = document.getElementById('registrationDistrictFilter');
+        } else if (d.fillKey === 'origin') { // TODO: Something is up with this look at the console
+          filter = document.getElementById('originFilter');
+        }
+        filter.value = d.name;
+        filter.onchange();
       });
-    }));
+
+    svg.call(d3v4.zoom()
+      .extent(
+        [
+          [0, 0],
+          [document.getElementById('mapChart').offsetWidth, document.getElementById('mapChart').offsetHeight],
+        ],
+      )
+      .scaleExtent([0, 8])
+      .on('zoom', () => {
+        zoomLevel = d3v4.event.transform.k;
+        svg.selectAll('g').attr('transform', d3v4.event.transform);
+        svg.selectAll('.datamaps-bubble').each((d) => { // lol this is n^2 don't tell anyone
+          const { name, count } = d;
+          svg.selectAll('.datamaps-bubble').filter(dInner => dInner.name === name).attr('r', radiusScaleFloor(count) / zoomLevel);
+        });
+      }));
+  }, 100);
 };
 
 const init = (data, filteredData, height, width) => {

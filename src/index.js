@@ -121,6 +121,9 @@ const updateActiveChart = () => {
   } else if (activeViz === 'split') {
     split.update(data, filteredData);
   }
+
+  const elem = document.getElementById('vizualizers');
+  Array.from(document.getElementsByClassName('d3-tip')).forEach(tip => elem.appendChild(tip));
 };
 
 // Fill datalists for dropdowns on control panel
@@ -359,6 +362,8 @@ const openFullscreen = () => {
     );
     split.init(data, filteredData, elem.offsetHeight - bar.offsetHeight - 100, elem.offsetWidth);
     table.setHeight(elem.offsetHeight - bar.offsetHeight - 100);
+
+    setTimeout(() => Array.from(document.getElementsByClassName('d3-tip')).forEach(tip => elem.appendChild(tip)), 250);
   }, 500);
 
   // eslint-disable-next-line no-use-before-define

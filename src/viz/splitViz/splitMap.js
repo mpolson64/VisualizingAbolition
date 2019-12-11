@@ -83,7 +83,7 @@ const update = (data, filteredData) => {
 
   const tip = d3Tip()
     .attr('class', 'd3-tip')
-    .offset([-115, 0])
+    // .offset([-115, 0])
     .html(d => tooltip(d.name, d.count));
 
   svg.call(tip);
