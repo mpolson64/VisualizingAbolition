@@ -282,13 +282,15 @@ resetFiltersButton.onclick = () => {
 // initialize onclick for viz tabs
 /* eslint-disable */
 Array.from(document.getElementsByClassName('w3-bar-item'))
-.filter((button) => !(button.id === 'toggleFilterButton' || button.id === 'fullscreenButton'))
+.filter((button) => !(button.id === 'toggleFilterButton' || button.id === 'fullscreenButton' || button.id === 'resetFiltersButton'))
 .forEach((button) => {
   button.onclick = () => {
     Array.from(document.getElementsByClassName('viz')).forEach((elem) => {
       elem.style.display = 'none';
     });
-    Array.from(document.getElementsByClassName('w3-bar-item')).forEach((elem) => {
+    Array.from(document.getElementsByClassName('w3-bar-item'))
+    .filter((button) => !(button.id === 'toggleFilterButton' || button.id === 'fullscreenButton' || button.id === 'resetFiltersButton'))
+    .forEach((elem) => {
       elem.className = 'w3-bar-item w3-button w3-light-gray';
     });
 
