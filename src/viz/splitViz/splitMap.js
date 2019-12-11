@@ -136,8 +136,8 @@ const init = (data, filteredData, height, width) => {
     width,
     setProjection(element) { // eslint-disable-line
       const projection = d3.geo.equirectangular() // eslint-disable-line
-        .center([50, -15])
-        .scale(850);
+        .center([80, -25])
+        .scale(500);
 
       const path = d3.geo.path() // eslint-disable-line
         .projection(projection);
