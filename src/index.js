@@ -2,8 +2,7 @@ import * as d3 from 'd3';
 import Tabulator from 'tabulator-tables';
 import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
-import * as jsyaml from 'js-yaml';
-import * as screenfull from 'screenfull';
+import screenfull from 'screenfull';
 
 import * as map from './viz/map';
 import * as donut from './viz/donut';
@@ -164,7 +163,7 @@ const filtersChanged = () => {
 
   updateActiveChart();
 
-  document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
+  document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${JSON.stringify(getFiltersState())}`);
 };
 
 // initialize onchange for all string matching filtering
@@ -416,5 +415,5 @@ d3.csv('boc.csv').then((rawData) => {
   split.init(data, filteredData, 600, viz.offsetWidth - 10);
 
   document.getElementById('downloadFilteredBtn').onclick = () => table.download('csv', 'OceansAndContinentsFiltered.csv');
-  document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${jsyaml.dump(getFiltersState())}`);
+  document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${JSON.stringify(getFiltersState())}`);
 });
