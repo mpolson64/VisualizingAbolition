@@ -3,6 +3,7 @@ import Tabulator from 'tabulator-tables';
 import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
 import * as jsyaml from 'js-yaml';
+import * as screenfull from 'screenfull';
 
 import * as map from './viz/map';
 import * as donut from './viz/donut';
@@ -346,15 +347,7 @@ document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
 const openFullscreen = () => {
   const elem = document.getElementById('vizualizers');
 
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    elem.msRequestFullscreen();
-  }
+  screenfull.request(elem);
 
   const bar = document.getElementById('bar');
 
@@ -381,15 +374,8 @@ const openFullscreen = () => {
 const closeFullscreen = () => {
   const elem = document.getElementById('vizualizers');
 
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.mozCancelFullScreen) { /* Firefox */
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE/Edge */
-    document.msExitFullscreen();
-  }
+  screenfull.exit(elem);
+
   setTimeout(() => {
     map.init(data, filteredData, 600, elem.offsetWidth - 10);
     donut.init(data, filteredData, 600, elem.offsetWidth - 10);
