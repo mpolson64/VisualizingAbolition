@@ -1,8 +1,6 @@
 /* eslint-disable no-underscore-dangle, func-names */
 import * as d3 from 'd3';
-import d3Tip from 'd3-tip';
-
-import { histogram, coalesceHistogram, tooltip } from '../util';
+import { histogram, coalesceHistogram } from '../util';
 
 let radius;
 
@@ -40,14 +38,6 @@ const update = (data, filteredData) => {
   const was = mergeWithFirstEqualZero(counts, data0);
   const is = mergeWithFirstEqualZero(data0, counts);
 
-  /* -------- TIP -------------*/
-  const tip = d3Tip()
-    .attr('class', 'd3-tip')
-    // .offset([-115, 0])
-    .html(d => tooltip(d.data.key, d.data.value));
-
-  svg.call(tip);
-
   /* ------- SLICE ARCS -------*/
 
   let slice = svg
@@ -81,17 +71,28 @@ const update = (data, filteredData) => {
       };
     });
 
+  const tooltipDiv = d3.select('#vizualizers').append('div')
+    .style('opacity', 0)
+    .attr('class', 'tooltip');
+
   slice = svg
     .select('.slices')
     .selectAll('path.slice')
     .data(pie(counts), key)
     .attr('stroke', 'white')
     .attr('stroke-width', '2px')
-    .on('mouseover', tip.show)
-    .on('mouseout', tip.hide)
+    .on('mouseover', (d) => {
+      tooltipDiv.transition()
+        .style('opacity', 0.9);
+      tooltipDiv.html(`${d.data.key}: ${d.data.value}`)
+        .style('left', `${d3.event.pageX - 35}px`)
+        .style('top', `${d3.event.pageY - 30}px`);
+    })
+    .on('mouseout', (d) => {
+      tooltipDiv.transition()
+        .style('opacity', 0);
+    })
     .on('click', (d) => {
-      tip.hide();
-
       let filter;
       const filterName = document.getElementById('donutSelect').value;
       if (filterName === 'Status') {

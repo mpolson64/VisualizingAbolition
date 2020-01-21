@@ -1,6 +1,5 @@
 import * as d3v4 from 'd3';
 import * as Datamap from 'datamaps';
-import d3Tip from 'd3-tip';
 import { histogramLocation, tooltip } from '../util';
 
 const radiusScaling = 0.85;
@@ -83,19 +82,23 @@ const update = (data, filteredData) => {
     });
     const svg = d3v4.selectAll('.datamap');
 
-    const tip = d3Tip()
-      .attr('class', 'd3-tip')
-      // .offset([-115, 0])
-      .html(d => tooltip(d.name, d.count));
-
-    svg.call(tip);
+    const tooltipDiv = d3v4.select('#vizualizers').append('div')
+      .style('opacity', 0)
+      .attr('class', 'tooltip');
 
     d3v4.selectAll('.datamaps-bubble')
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)
+      .on('mouseover', (d) => {
+        tooltipDiv.transition()
+          .style('opacity', 0.9);
+        tooltipDiv.html(`${d.name}: ${d.count}`)
+          .style('left', `${d3v4.event.pageX - 35}px`)
+          .style('top', `${d3v4.event.pageY - 30}px`);
+      })
+      .on('mouseout', (d) => {
+        tooltipDiv.transition()
+          .style('opacity', 0);
+      })
       .on('click', (d) => {
-        tip.hide();
-
         let filter;
         if (d.fillKey === 'district') {
           filter = document.getElementById('registrationDistrictFilter');

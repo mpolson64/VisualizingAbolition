@@ -2,6 +2,13 @@
 <html lang="en">
 
 <style>
+    .tooltip {
+        position: absolute;
+        padding: 0 10px;
+        opacity: 0;
+        background: whitesmoke;
+    }
+
     .flex-container {
         display: flex;
         flex-flow: row wrap;
@@ -89,7 +96,7 @@
 
 <head>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css"> -->
 </head>
 
 <body>
@@ -174,18 +181,15 @@
                             <datalist id="sourcesDatalist" data-key="Sources"></datalist>
                         </td>
                     </tr>
-                    <!-- <tr>
-                        <td>
-                            <button id="resetFiltersButton" type="button">Reset</button>
-                        </td>
-                    </tr> -->
+
                 </table>
             </form>
         </div>
 
         <div id='vizualizers' class='column right'>
             <div id='bar' class="w3-bar w3-light-gray">
-                <button id="toggleFilterButton" class="w3-bar-item w3-button"><i class="fas fa-caret-left"></i></button>
+                <!-- <button id="toggleFilterButton" class="w3-bar-item w3-button"><i class="fas fa-caret-left"></i></button> -->
+                <button id="toggleFilterButton" class="w3-bar-item w3-button"><i class="fa fa-caret-left"></i></button>
 
                 <button id="tableButton" class="w3-bar-item w3-button">Database</button>
                 <button id="donutButton" class="w3-bar-item w3-button">Donut</button>
@@ -193,7 +197,8 @@
                 <button id="mapButton" class="w3-bar-item w3-button w3-dark-gray">Map</button>
                 <button id="splitButton" class="w3-bar-item w3-button">Split</button>
 
-                <button id="fullscreenButton" class="w3-bar-item w3-button w3-right"><i class="fas fa-expand"></i></button>
+                <!-- <button id="fullscreenButton" class="w3-bar-item w3-button w3-right"><i class="fas fa-expand"></i></button> -->
+                <button id="fullscreenButton" class="w3-bar-item w3-button w3-right"><i class="fa fa-expand"></i></button>
 
                 <button id="resetFiltersButton" class="w3-bar-item w3-button w3-right">Reset</button>
             </div>

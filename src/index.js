@@ -66,7 +66,7 @@ const table = new Tabulator(
       { title: 'Age', field: 'Age' },
       { title: 'Occupation', field: 'Occupation' },
       { title: 'Master', field: 'Master' },
-      { title: 'Master Residence', field: 'Registree' },
+      { title: 'Master Residence', field: 'Master Residence' },
       { title: 'Registration Date', field: 'Registration Date' },
       { title: 'Registration District', field: 'Registration District' },
       { title: 'Sources', field: 'Sources' },
@@ -123,7 +123,7 @@ const updateActiveChart = () => {
   }
 
   const elem = document.getElementById('vizualizers');
-  Array.from(document.getElementsByClassName('d3-tip')).forEach(tip => elem.appendChild(tip));
+  setTimeout(() => Array.from(document.getElementsByClassName('d3-tip')).forEach(tip => elem.appendChild(tip)), 250);
 };
 
 // Fill datalists for dropdowns on control panel
@@ -315,7 +315,8 @@ const toggleHideFilters = () => {
     filters.style.width = '50%';
     viz.style.width = '50%';
 
-    button.innerHTML = '<i class="fas fa-caret-left"></i>';
+    // button.innerHTML = '<i class="fas fa-caret-left"></i>';
+    button.innerHTML = '<i class="fa fa-caret-left"></i>';
 
     // we need to do this halving and doubling because the transition makes the width
     // not take effect instantly
@@ -329,7 +330,9 @@ const toggleHideFilters = () => {
     filters.style.width = '0%';
     viz.style.width = '100%';
 
-    button.innerHTML = '<i class="fas fa-caret-right"></i>';
+    // button.innerHTML = '<i class="fas fa-caret-right"></i>';
+    button.innerHTML = '<i class="fa fa-caret-left"></i>';
+
 
     map.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
     donut.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
@@ -371,7 +374,8 @@ const openFullscreen = () => {
   // eslint-disable-next-line no-use-before-define
   document.getElementById('fullscreenButton').onclick = closeFullscreen;
   document.getElementById('toggleFilterButton').onclick = () => {};
-  document.getElementById('fullscreenButton').innerHTML = '<i class="fas fa-compress"></i>';
+  // document.getElementById('fullscreenButton').innerHTML = '<i class="fas fa-compress"></i>';
+  document.getElementById('fullscreenButton').innerHTML = '<i class="fa fa-compress"></i>';
 };
 
 const closeFullscreen = () => {
@@ -396,7 +400,8 @@ const closeFullscreen = () => {
 
   document.getElementById('fullscreenButton').onclick = openFullscreen;
   document.getElementById('toggleFilterButton').onclick = toggleHideFilters;
-  document.getElementById('fullscreenButton').innerHTML = '<i class="fas fa-expand"></i>';
+  // document.getElementById('fullscreenButton').innerHTML = '<i class="fas fa-expand"></i>';
+  document.getElementById('fullscreenButton').innerHTML = '<i class="fa fa-expand"></i>';
 };
 
 document.getElementById('fullscreenButton').onclick = openFullscreen;
