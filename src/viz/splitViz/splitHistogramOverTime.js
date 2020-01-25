@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { histogramNumberic } from '../../util';
+import { histogramNumberic, updateMouseover } from '../../util';
 
 let margin;
 let width;
@@ -71,10 +71,6 @@ const init = (data, filteredData, rawHeight, rawWidth) => {
     .style('fill', 'none')
     .style('stroke', '#684c00');
 
-  const tooltipDiv = d3.select('#vizualizers').append('div')
-    .style('opacity', 0)
-    .attr('class', 'tooltip');
-
   dot = svg.append('g')
     .attr('id', 'scatter')
     .attr('transform', `translate(${margin.left},${margin.top})`)
@@ -89,17 +85,7 @@ const init = (data, filteredData, rawHeight, rawWidth) => {
     .attr('stroke', 'white')
     .attr('stroke-width', '2px')
     .style('fill', '#684c00')
-    .on('mouseover', (d) => {
-      tooltipDiv.transition()
-        .style('opacity', 0.9);
-      tooltipDiv.html(`${d.x}: ${d.y}`)
-        .style('left', `${d3.event.pageX - 35}px`)
-        .style('top', `${d3.event.pageY - 30}px`);
-    })
-    .on('mouseout', (d) => {
-      tooltipDiv.transition()
-        .style('opacity', 0);
-    })
+    .on('mouseover', d => updateMouseover(d.x, d.y))
     .on('click', (d) => {
       const dateSlider = document.getElementById('dateSlider');
       dateSlider.noUiSlider.set([d.x, d.x]);

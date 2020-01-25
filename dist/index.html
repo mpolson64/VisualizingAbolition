@@ -2,11 +2,12 @@
 <html lang="en">
 
 <style>
-    .tooltip {
-        position: absolute;
-        padding: 0 10px;
-        opacity: 0;
-        background: whitesmoke;
+    .mouseover {
+    color: white;
+    border-radius: 5px;
+    background: #684c00;
+    padding: 10px;
+    margin: 10px
     }
 
     .flex-container {
@@ -187,7 +188,7 @@
         </div>
 
         <div id='vizualizers' class='column right'>
-            <div id='bar' class="w3-bar w3-light-gray">
+            <div id='bar' class="w3-bar w3-light-gray"  style="font-size: 12px">
                 <!-- <button id="toggleFilterButton" class="w3-bar-item w3-button"><i class="fas fa-caret-left"></i></button> -->
                 <button id="toggleFilterButton" class="w3-bar-item w3-button"><i class="fa fa-caret-left"></i></button>
 
@@ -195,12 +196,15 @@
                 <button id="donutButton" class="w3-bar-item w3-button">Donut</button>
                 <button id="histogramOverTimeButton" class="w3-bar-item w3-button">Histogram</button>
                 <button id="mapButton" class="w3-bar-item w3-button w3-dark-gray">Map</button>
-                <button id="splitButton" class="w3-bar-item w3-button">Split</button>
-
-                <!-- <button id="fullscreenButton" class="w3-bar-item w3-button w3-right"><i class="fas fa-expand"></i></button> -->
+                
                 <button id="fullscreenButton" class="w3-bar-item w3-button w3-right"><i class="fa fa-expand"></i></button>
 
-                <button id="resetFiltersButton" class="w3-bar-item w3-button w3-right">Reset</button>
+                <button id="resetFiltersButton" class="w3-bar-item w3-button w3-right"><i class="fa fa-undo"></i></button>
+                <button id="splitButton" class="w3-bar-item w3-button w3-right"><i class="fa fa-th-large"></i></button>
+            </div>
+
+            <div id='mouseover' class='mouseover'>
+                Hover over an element for details...
             </div>
 
             <div id="map" class="w3-container w3-animate-opacity viz">

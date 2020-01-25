@@ -94,7 +94,10 @@ const coalesceHistogram = (hist) => {
   return res;
 };
 
-const tooltip = (key, value) => `${key}: ${value} ${value === 1 ? 'registree' : 'registrees'}`;
+const updateMouseover = (key, value) => {
+  const label = document.getElementById('mouseover');
+  label.innerHTML = `${key}: ${value} ${value !== 1 ? 'registrees' : 'registree'}`;
+};
 
 const getFiltersState = () => ({
   Registree: document.getElementById('registreeFilter').value,
@@ -111,5 +114,5 @@ const getFiltersState = () => ({
 });
 
 export {
-  histogram, histogramNumberic, histogramLocation, coalesceHistogram, tooltip, getFiltersState,
+  histogram, histogramNumberic, histogramLocation, coalesceHistogram, updateMouseover, getFiltersState,
 };

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle, func-names */
 import * as d3 from 'd3';
-import { histogram, coalesceHistogram } from '../util';
+import { histogram, coalesceHistogram, updateMouseover } from '../util';
 
 let radius;
 
@@ -71,27 +71,13 @@ const update = (data, filteredData) => {
       };
     });
 
-  const tooltipDiv = d3.select('#vizualizers').append('div')
-    .style('opacity', 0)
-    .attr('class', 'tooltip');
-
   slice = svg
     .select('.slices')
     .selectAll('path.slice')
     .data(pie(counts), key)
     .attr('stroke', 'white')
     .attr('stroke-width', '2px')
-    .on('mouseover', (d) => {
-      tooltipDiv.transition()
-        .style('opacity', 0.9);
-      tooltipDiv.html(`${d.data.key}: ${d.data.value}`)
-        .style('left', `${d3.event.pageX - 35}px`)
-        .style('top', `${d3.event.pageY - 30}px`);
-    })
-    .on('mouseout', (d) => {
-      tooltipDiv.transition()
-        .style('opacity', 0);
-    })
+    .on('mouseover', d => updateMouseover(d.data.key, d.data.value))
     .on('click', (d) => {
       let filter;
       const filterName = document.getElementById('donutSelect').value;

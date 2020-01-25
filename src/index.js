@@ -288,11 +288,11 @@ Array.from(document.getElementsByClassName('w3-bar-item'))
     Array.from(document.getElementsByClassName('w3-bar-item'))
     .filter((button) => !(button.id === 'toggleFilterButton' || button.id === 'fullscreenButton' || button.id === 'resetFiltersButton'))
     .forEach((elem) => {
-      elem.className = 'w3-bar-item w3-button w3-light-gray';
+      elem.className = elem.id !== 'splitButton' ? 'w3-bar-item w3-button w3-light-gray' : 'w3-bar-item w3-button w3-light-gray w3-right';
     });
 
     document.getElementById(button.id.substring(0, button.id.length - 6)).style.display = 'block';
-    button.className = 'w3-bar-item w3-button w3-dark-gray';
+    button.className = button.id !== 'splitButton' ? 'w3-bar-item w3-button w3-dark-gray' : 'w3-bar-item w3-button w3-dark-gray w3-right';
 
     activeViz = button.id.substring(0, button.id.length - 6);
     updateActiveChart();
@@ -394,8 +394,8 @@ document.getElementById('splitDonutSelect').onchange = updateActiveChart;
 document.getElementById('splitMapSelect').onchange = updateActiveChart;
 
 // load data
-d3.csv('boc.csv').then((rawData) => {
-// d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
+// d3.csv('boc.csv').then((rawData) => {
+d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
   data = rawData.slice(0);
   filteredData = rawData.slice(0);
 
