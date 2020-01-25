@@ -276,12 +276,6 @@ resetFiltersButton.onclick = () => {
   filtersChanged();
 };
 
-// disable fullscreen in Safari lol (Dear my replacement: This is awful pls dont emulate me. -mpo)
-const isSafari = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
-if (isSafari) {
-  document.getElementById('resetFiltersButton').style.visibility = 'hidden';
-}
-
 // initialize onclick for viz tabs
 /* eslint-disable */
 Array.from(document.getElementsByClassName('w3-bar-item'))
@@ -334,7 +328,7 @@ const toggleHideFilters = () => {
     viz.style.width = '100%';
 
     // button.innerHTML = '<i class="fas fa-caret-right"></i>';
-    button.innerHTML = '<i class="fa fa-caret-left"></i>';
+    button.innerHTML = '<i class="fa fa-caret-right"></i>';
 
 
     map.init(data, filteredData, 600, viz.offsetWidth * 2 - 10);
@@ -399,9 +393,15 @@ document.getElementById('mapSelect').onchange = updateActiveChart;
 document.getElementById('splitDonutSelect').onchange = updateActiveChart;
 document.getElementById('splitMapSelect').onchange = updateActiveChart;
 
+// disable fullscreen in Safari lol (Dear my replacement: This is awful pls dont emulate me. -mpo)
+const isSafari = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
+if (isSafari) {
+  document.getElementById('fullscreenButton').parentElement.removeChild(document.getElementById('fullscreenButton'));
+}
+
 // load data
-d3.csv('boc.csv').then((rawData) => {
-// d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
+// d3.csv('boc.csv').then((rawData) => {
+d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
   data = rawData.slice(0);
   filteredData = rawData.slice(0);
 
