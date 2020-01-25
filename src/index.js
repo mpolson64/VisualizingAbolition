@@ -276,6 +276,12 @@ resetFiltersButton.onclick = () => {
   filtersChanged();
 };
 
+// disable fullscreen in Safari lol (Dear my replacement: This is awful pls dont emulate me. -mpo)
+const isSafari = navigator.userAgent.indexOf('Safari') !== -1 && navigator.userAgent.indexOf('Chrome') === -1;
+if (isSafari) {
+  document.getElementById('resetFiltersButton').style.visibility = 'hidden';
+}
+
 // initialize onclick for viz tabs
 /* eslint-disable */
 Array.from(document.getElementsByClassName('w3-bar-item'))
@@ -394,8 +400,8 @@ document.getElementById('splitDonutSelect').onchange = updateActiveChart;
 document.getElementById('splitMapSelect').onchange = updateActiveChart;
 
 // load data
-// d3.csv('boc.csv').then((rawData) => {
-d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
+d3.csv('boc.csv').then((rawData) => {
+// d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
   data = rawData.slice(0);
   filteredData = rawData.slice(0);
 
