@@ -16,6 +16,7 @@ const update = (data, filteredData) => {
   const view = document.getElementById('mapSelect').value;
 
   if (view === 'Origin') {
+    map.bubbles([]);
     const histLoc = histogramLocation(data, filteredData, 'Origin', x => x.match(/\(([^)]+)\)/).pop());
 
     bubbleData = histLoc.map((elem) => {
@@ -30,6 +31,7 @@ const update = (data, filteredData) => {
       };
     });
   } else if (view === 'Registration District') {
+    map.bubbles([]);
     const histLoc = histogramLocation(data, filteredData, 'Registration District', x => x);
 
     bubbleData = histLoc.map((elem) => {
@@ -107,8 +109,10 @@ const update = (data, filteredData) => {
         zoomLevel = d3v4.event.transform.k;
         svg.selectAll('g').attr('transform', d3v4.event.transform);
         svg.selectAll('.datamaps-bubble').each((d) => { // lol this is n^2 don't tell anyone
-          const { name, count } = d;
-          svg.selectAll('.datamaps-bubble').filter(dInner => dInner.name === name).attr('r', radiusScaleFloor(count) / zoomLevel);
+          const { name, fillKey, count } = d;
+          svg.selectAll('.datamaps-bubble')
+            .filter(dInner => dInner.name === name && dInner.fillKey === fillKey)
+            .attr('r', radiusScaleFloor(count) / zoomLevel);
         });
       }));
   }, 100);
