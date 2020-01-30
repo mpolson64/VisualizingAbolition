@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle, func-names */
 import * as d3 from 'd3';
-import { histogram, coalesceHistogram, updateMouseover } from '../../util';
+import {
+  histogram, coalesceHistogram, updateMouseover, resetMousover,
+} from '../../util';
 
 let radius;
 
@@ -78,6 +80,7 @@ const update = (data, filteredData) => {
     .attr('stroke', 'white')
     .attr('stroke-width', '2px')
     .on('mouseover', d => updateMouseover(d.data.key, d.data.value))
+    .on('mouseout', resetMousover)
     .on('click', (d) => {
       let filter;
       const filterName = document.getElementById('splitDonutSelect').value;

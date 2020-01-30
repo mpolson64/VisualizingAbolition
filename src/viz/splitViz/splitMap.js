@@ -1,6 +1,6 @@
 import * as d3v4 from 'd3';
 import * as Datamap from 'datamaps';
-import { histogramLocation, updateMouseover } from '../../util';
+import { histogramLocation, updateMouseover, resetMousover } from '../../util';
 
 const radiusScaling = 0.85;
 const radiusMin = 2.5;
@@ -85,6 +85,7 @@ const update = (data, filteredData) => {
 
   d3v4.selectAll('.datamaps-bubble')
     .on('mouseover', d => updateMouseover(d.name, d.count))
+    .on('mouseout', resetMousover)
     .on('click', (d) => {
       let filter;
       if (d.fillKey === 'district') {

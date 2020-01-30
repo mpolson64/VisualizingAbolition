@@ -99,6 +99,11 @@ const updateMouseover = (key, value) => {
   label.innerHTML = `${key}: ${value} ${value !== 1 ? 'registrees' : 'registree'}`;
 };
 
+const resetMousover = () => {
+  const label = document.getElementById('mouseover');
+  label.innerHTML = 'Hover over an element for details...';
+};
+
 const getFiltersState = () => ({
   Registree: document.getElementById('registreeFilter').value,
   Status: document.getElementById('statusFilter').value,
@@ -114,5 +119,11 @@ const getFiltersState = () => ({
 });
 
 export {
-  histogram, histogramNumberic, histogramLocation, coalesceHistogram, updateMouseover, getFiltersState,
+  histogram,
+  histogramNumberic,
+  histogramLocation,
+  coalesceHistogram,
+  updateMouseover,
+  resetMousover,
+  getFiltersState,
 };

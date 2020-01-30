@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { histogramNumberic, updateMouseover } from '../../util';
+import { histogramNumberic, updateMouseover, resetMousover } from '../../util';
 
 let margin;
 let width;
@@ -86,6 +86,7 @@ const init = (data, filteredData, rawHeight, rawWidth) => {
     .attr('stroke-width', '2px')
     .style('fill', '#684c00')
     .on('mouseover', d => updateMouseover(d.x, d.y))
+    .on('mouseout', resetMousover)
     .on('click', (d) => {
       const dateSlider = document.getElementById('dateSlider');
       dateSlider.noUiSlider.set([d.x, d.x]);
