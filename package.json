@@ -1,7 +1,7 @@
 {
-  "name": "oceansandcontinentstestbed",
+  "name": "visualizingabolition",
   "version": "1.0.0",
-  "description": "Testing playground for Oceans and Continents database page",
+  "description": "Inset for the database page on Visualizing Abolition",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mpolson64/OceansAndContinentsTESTBED.git"
+    "url": "git+https://github.com/mpolson64/VisualizingAbolition.git"
   },
   "author": "mpolson64",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mpolson64/OceansAndContinentsTESTBED/issues"
+    "url": "https://github.com/mpolson64/VisualizingAbolition/issues"
   },
-  "homepage": "https://github.com/mpolson64/OceansAndContinentsTESTBED#readme",
+  "homepage": "https://github.com/mpolson64/VisualizingAbolition#readme",
   "devDependencies": {
     "css-loader": "^2.1.1",
     "csv-loader": "^3.0.2",

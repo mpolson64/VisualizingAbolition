@@ -58,18 +58,11 @@ const table = new Tabulator(
     pagination: 'local',
     paginationSize: 100,
     columns: [
-      // { title: 'ID', field: 'ID' },
-      { title: 'Registree', field: 'Registree' },
-      { title: 'Status', field: 'Status' },
-      { title: 'Sex', field: 'Sex' },
-      { title: 'Origin', field: 'Origin' },
-      { title: 'Age', field: 'Age' },
-      { title: 'Occupation', field: 'Occupation' },
-      { title: 'Master', field: 'Master' },
-      { title: 'Master Residence', field: 'Master Residence' },
-      { title: 'Registration Date', field: 'Registration Date' },
-      { title: 'Registration District', field: 'Registration District' },
-      { title: 'Sources', field: 'Sources' },
+      { title: 'Sender', field: 'sender' },
+      { title: 'Receiver', field: 'receiver' },
+      { title: 'Imputed Origin', field: 'origin' },
+      { title: 'Sent', field: 'dateSent' },
+      { title: 'Summary', field: 'summary' },
     ],
   },
 );
@@ -401,20 +394,34 @@ if (isSafari) {
 
 // load data
 // d3.csv('boc.csv').then((rawData) => {
-d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
-  data = rawData.slice(0);
-  filteredData = rawData.slice(0);
+// // d3.csv('../wp-content/uploads/2019/05/boc.csv').then((rawData) => {
+//   data = rawData.slice(0);
+//   filteredData = rawData.slice(0);
 
-  table.setData(rawData);
+//   table.setData(rawData);
 
-  fillDatalists();
+//   fillDatalists();
 
-  const viz = document.getElementById('vizualizers');
-  map.init(data, filteredData, 600, viz.offsetWidth - 10);
-  donut.init(data, filteredData, 600, viz.offsetWidth - 10);
-  histogramOverTime.init(data, filteredData, 600, viz.offsetWidth - 10);
-  split.init(data, filteredData, 600, viz.offsetWidth - 10);
+//   const viz = document.getElementById('vizualizers');
+//   map.init(data, filteredData, 600, viz.offsetWidth - 10);
+//   donut.init(data, filteredData, 600, viz.offsetWidth - 10);
+//   histogramOverTime.init(data, filteredData, 600, viz.offsetWidth - 10);
+//   split.init(data, filteredData, 600, viz.offsetWidth - 10);
 
-  document.getElementById('downloadFilteredBtn').onclick = () => table.download('csv', 'OceansAndContinentsFiltered.csv');
-  document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${JSON.stringify(getFiltersState())}`);
-});
+//   document.getElementById('downloadFilteredBtn').onclick = () => table.download('csv', 'OceansAndContinentsFiltered.csv');
+//   document.getElementById('downloadFilterStateBtn').setAttribute('href', `data:text/plain;charset=utf-8,${JSON.stringify(getFiltersState())}`);
+// });
+
+const request = new XMLHttpRequest();
+request.open('GET', 'database17.json', true);
+
+request.onload = (_error) => {
+  data = JSON.parse(request.responseText);
+  console.log(data);
+
+  filteredData = data;
+
+  table.setData(data);
+};
+
+request.send(null);
