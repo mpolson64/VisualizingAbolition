@@ -15,30 +15,21 @@ import 'nouislider/distribute/nouislider.min.css';
 
 // initialize helper values
 const datalistIds = [
-  'registreeDatalist',
-  'statusDatalist',
-  'sexDatalist',
-  'originDatalist',
-  'occupationDatalist',
-  'masterDatalist',
-  'masterResidenceDatalist',
-  'registrationDistrictDatalist',
-  'sourcesDatalist',
+  'senderDatalist',
+  'receiverDatalist',
+  'imputedOriginDatalist',
+  'sourceDatalist',
 ];
 
 /* eslint-disable */
 let predicates = {
-  registree: x => true,
-  status: x => true,
-  sex: x => true,
-  origin: x => true,
-  age: x => true,
-  occupation: x => true,
-  master: x => true,
-  masterResidence: x => true,
-  registrationDate: x => true,
-  registrationDistrict: x => true,
-  sources: x => true,
+  sent: x => true,
+  received: x => true,
+  summary: x => true,
+  sender: x => true,
+  receiver: x => true,
+  imputed_origin: x => true,
+  source: x => true,
 };
 /* eslint-enable */
 
@@ -60,22 +51,23 @@ const table = new Tabulator(
     columns: [
       { title: 'Sender', field: 'sender' },
       { title: 'Receiver', field: 'receiver' },
-      { title: 'Imputed Origin', field: 'origin' },
+      { title: 'Origin', field: 'origin' },
       { title: 'Sent', field: 'dateSent' },
+      { title: 'Received', field: 'dateReceived' },
       { title: 'Summary', field: 'summary' },
     ],
   },
 );
 
 // initialize sliders
-const ageSlider = document.getElementById('ageSlider');
+const sentSlider = document.getElementById('sentSlider');
 
-noUiSlider.create(ageSlider, {
-  start: [0, 100],
+noUiSlider.create(sentSlider, {
+  start: [1800, 1900],
   connect: true,
   range: {
-    min: 0,
-    max: 100,
+    min: 1800,
+    max: 1900,
   },
   tooltips: true,
   format: wNumb({
@@ -84,14 +76,14 @@ noUiSlider.create(ageSlider, {
   step: 1,
 });
 
-const dateSlider = document.getElementById('dateSlider');
+const receivedSlider = document.getElementById('receivedSlider');
 
-noUiSlider.create(dateSlider, {
-  start: [1856, 1875],
+noUiSlider.create(receivedSlider, {
+  start: [1800, 1900],
   connect: true,
   range: {
-    min: 1856,
-    max: 1875,
+    min: 1800,
+    max: 1900,
   },
   tooltips: true,
   format: wNumb({
@@ -157,77 +149,47 @@ const filtersChanged = () => {
 };
 
 // initialize onchange for all string matching filtering
-const registreeFilter = document.getElementById('registreeFilter');
-registreeFilter.onchange = () => {
-  predicates.registree = obj => (registreeFilter.value === '' ? true : obj.Registree === registreeFilter.value);
+const senderFilter = document.getElementById('senderFilter');
+senderFilter.onchange = () => {
+  predicates.sender = obj => obj.sender.toLowerCase().includes(senderFilter.value.toLowerCase());
   filtersChanged();
 };
 
-const statusFilter = document.getElementById('statusFilter');
-statusFilter.onchange = () => {
-  predicates.status = obj => obj.Status.toLowerCase().includes(statusFilter.value.toLowerCase());
+const receiverFilter = document.getElementById('receiverFilter');
+receiverFilter.onchange = () => {
+  predicates.receiver = obj => (obj.receiver !== undefined ? obj.receiver.toLowerCase().includes(receiverFilter.value.toLowerCase()) : false);
   filtersChanged();
 };
 
-const sexFilter = document.getElementById('sexFilter');
-sexFilter.onchange = () => {
-  predicates.sex = obj => obj.Sex.toLowerCase() === sexFilter.value.toLowerCase();
+const imputedOriginFilter = document.getElementById('imputedOriginFilter');
+imputedOriginFilter.onchange = () => {
+  predicates.imputed_origin = obj => (obj.impor !== undefined ? obj.impor.toLowerCase().includes(imputedOriginFilter.value.toLowerCase()) : false);
   filtersChanged();
 };
 
-const originFilter = document.getElementById('originFilter');
-originFilter.onchange = () => {
-  predicates.origin = obj => obj.Origin.toLowerCase().includes(originFilter.value.toLowerCase());
-  filtersChanged();
-};
-
-const occupationFilter = document.getElementById('occupationFilter');
-occupationFilter.onchange = () => {
-  predicates.occupation = obj => obj
-    .Occupation
-    .toLowerCase()
-    .includes(occupationFilter.value.toLowerCase());
-
-  filtersChanged();
-};
-
-const masterFilter = document.getElementById('masterFilter');
-masterFilter.onchange = () => {
-  predicates.master = obj => obj.Master.toLowerCase().includes(masterFilter.value.toLowerCase());
-  filtersChanged();
-};
-
-const masterResidenceFilter = document.getElementById('masterResidenceFilter');
-masterResidenceFilter.onchange = () => {
-  predicates.masterResidence = obj => obj['Master Residence'].toLowerCase().includes(masterResidenceFilter.value.toLowerCase());
-  filtersChanged();
-};
-
-const registrationDistrictFilter = document.getElementById('registrationDistrictFilter');
-registrationDistrictFilter.onchange = () => {
-  predicates.registrationDistrict = obj => obj['Registration District'].toLowerCase().includes(registrationDistrictFilter.value.toLowerCase());
-  filtersChanged();
-};
-
-const sourcesFilter = document.getElementById('sourcesFilter');
-sourcesFilter.onchange = () => {
-  predicates.sources = obj => obj.Sources.toLowerCase().includes(sourcesFilter.value.toLowerCase());
+const sourceFilter = document.getElementById('sourceFilter');
+sourceFilter.onchange = () => {
+  predicates.source = obj => obj.source.toLowerCase().includes(sourceFilter.value.toLowerCase());
   filtersChanged();
 };
 
 // initialize onchange for slider filtering
 const initOnSetForSliders = () => {
-  ageSlider.noUiSlider.on('set', (values) => {
+  sentSlider.noUiSlider.on('set', (values) => {
     const res = values.map(x => parseFloat(x));
-    predicates.age = obj => parseFloat(obj.Age) >= res[0] && parseFloat(obj.Age) <= res[1];
+
+    predicates.sent = (obj) => {
+      const year = obj.dateSent.substr(0, 4);
+      return year >= res[0] && year <= res[1];
+    };
     filtersChanged();
   });
 
-  dateSlider.noUiSlider.on('set', (values) => {
+  receivedSlider.noUiSlider.on('set', (values) => {
     const res = values.map(x => parseFloat(x));
 
-    predicates.registrationDate = (obj) => {
-      const year = obj['Registration Date'].substr(0, 4);
+    predicates.received = (obj) => {
+      const year = obj.dateReceived.substr(0, 4);
       return year >= res[0] && year <= res[1];
     };
     filtersChanged();
@@ -238,31 +200,20 @@ initOnSetForSliders();
 // initialize onclick for reset filters button
 const resetFiltersButton = document.getElementById('resetFiltersButton');
 resetFiltersButton.onclick = () => {
-  registreeFilter.value = '';
-  statusFilter.value = '';
-  sexFilter.value = '';
-  originFilter.value = '';
-  occupationFilter.value = '';
-  masterFilter.value = '';
-  masterResidenceFilter.value = '';
-  registrationDistrictFilter.value = '';
-  sourcesFilter.value = '';
-
-  ageSlider.noUiSlider.set([0, 100]);
-  dateSlider.noUiSlider.set([1856, 1875]);
+  senderFilter.value = '';
+  receiverFilter.value = '';
+  imputedOriginFilter.value = '';
+  sourceFilter.value = '';
 
   /* eslint-disable no-unused-vars */
   predicates = {
-    registree: x => true,
-    status: x => true,
-    origin: x => true,
-    age: x => true,
-    occupation: x => true,
-    master: x => true,
-    masterResidence: x => true,
-    registrationDate: x => true,
-    registrationDistrict: x => true,
-    sources: x => true,
+    sent: x => true,
+    received: x => true,
+    summary: x => true,
+    sender: x => true,
+    receiver: x => true,
+    imputed_origin: x => true,
+    source: x => true,
   };
   /* eslint-enable no-unused-vars */
 
@@ -422,6 +373,8 @@ request.onload = (_error) => {
   filteredData = data;
 
   table.setData(data);
+
+  fillDatalists();
 };
 
 request.send(null);
